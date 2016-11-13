@@ -33,18 +33,18 @@ public class MemberTypeController {
 	@RequestMapping(value = "/getMemberType/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<MemberType> getMemberTypeById(@PathVariable("id") String id) {
-		MemberType community = memberTypeServ.findMemberTypeById(Long.parseLong(id));
-		return new ResponseEntity<MemberType>(community, HttpStatus.OK);
+		MemberType memberType = memberTypeServ.findMemberTypeById(Long.parseLong(id));
+		return new ResponseEntity<MemberType>(memberType, HttpStatus.OK);
 	}
 
 	// saveMemberType.do
 	@RequestMapping(value = "/saveMemberType", method = { RequestMethod.POST, RequestMethod.PUT })
-	public ResponseEntity<String> createMemberType(@RequestBody MemberType community) {
+	public ResponseEntity<String> createMemberType(@RequestBody MemberType memberType) {
 		try {
-			if (community.getMemberTypeId() == 0) {
-				memberTypeServ.save(community);
+			if (memberType.getMemberTypeId() == 0) {
+				memberTypeServ.save(memberType);
 			} else {
-				memberTypeServ.update(community);
+				memberTypeServ.update(memberType);
 			}
 			return new ResponseEntity<String>("200", HttpStatus.OK);
 		} catch (Exception e) {
