@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @Entity
 public class Account implements Serializable{
 	@Id
@@ -19,6 +21,7 @@ public class Account implements Serializable{
 	@OneToOne
 	private Member member;
 	@OneToMany(mappedBy="account",cascade={CascadeType.ALL})
+	@JsonIgnore
 	private List<Transaction> transaction;
 	public long getAccountId() {
 		return accountId;
