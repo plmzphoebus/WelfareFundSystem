@@ -1,0 +1,50 @@
+package com.mfu.servicebean;
+
+import java.util.List;
+
+import javax.ejb.Remote;
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import com.mfu.entity.Transaction;
+import com.mfu.service.TransactionService;
+@Stateless
+@Remote(TransactionService.class)
+public class TransactionServiceBean implements TransactionService {
+	@PersistenceContext(unitName="welfareFund")
+	EntityManager em ; 
+	@Override
+	public void save(Transaction transaction) {
+		// TODO Auto-generated method stub
+		this.em.persist(transaction);
+	}
+
+	@Override
+	public void update(Transaction transaction) {
+		// TODO Auto-generated method stub
+		this.em.merge(transaction);
+	}
+
+	@Override
+	public Transaction findSavingFundById(long id) {
+		// TODO Auto-generated method stub
+		return this.em.find(Transaction.class, id);
+	}
+
+	@Override
+	public List<Transaction> getAllRSavingFund() {
+		// TODO Auto-generated method stub
+		return this.em.createQuery("SELECT ent FROM Transaction ent").getResultList();
+	}
+
+	@Override
+	public void delete(long id) {
+		// TODO Auto-generated method stub
+		Transaction transaction = findSavingFundById(id);
+		if(transaction !=null){
+			this.em.remove(transaction);
+		}
+	}
+
+}
