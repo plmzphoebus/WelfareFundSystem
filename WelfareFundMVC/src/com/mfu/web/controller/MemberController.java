@@ -23,7 +23,7 @@ public class MemberController {
 	@EJB(mappedName = "ejb:/WelfareFundSystemEJB//MemberServiceBean!com.mfu.service.MemberService")
 	MemberService memberServ;
 	
-	@RequestMapping(value = "listMember", method = RequestMethod.GET)
+	@RequestMapping(value = "/listMember", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<List<Member>> getAllMember(){
 		List<Member> listMember = memberServ.getAllMember();
