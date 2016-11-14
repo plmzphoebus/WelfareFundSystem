@@ -42,14 +42,14 @@ public class Member implements Serializable{
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Community community;
 	
-	@OneToOne(cascade={CascadeType.ALL})
+	@OneToOne(cascade={CascadeType.ALL} , fetch = FetchType.EAGER)
 	private Beneficiary beneficiary; 
 	
 	@OneToMany(mappedBy = "member", cascade = { CascadeType.ALL })
 	@JsonIgnore
 	private List<ReceiveWelfare> receiveWelfare;
 	
-	@OneToOne(cascade={CascadeType.ALL})
+	@OneToOne(cascade={CascadeType.ALL} , fetch = FetchType.EAGER)
 	private Account account;
 	
 

@@ -26,6 +26,8 @@
         <script type="text/javascript" src="assets/js/core/libraries/jquery.min.js"></script>
         <script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
         <script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
+        <script type="text/javascript" src="assets/js/angular.min.js"></script>
+        <script type="text/javascript" src="assets/js/app.js"></script>
         <!-- /core JS files -->
         <!-- Theme JS files -->
         <script type="text/javascript" src="assets/js/plugins/visualization/d3/d3.min.js"></script>
@@ -127,16 +129,16 @@
                                         <i class="icon-menu" title="Main Menu"></i>
                                     </li>
                                     <li class="${indexpage }">
-                                        <a href="index.html"><i class="icon-home4"></i> <span>Dashboard</span></a>
+                                        <a href="index.jsp"><i class="icon-home4"></i> <span>Dashboard</span></a>
                                     </li>
                                     <li>
                                         <a href="#"><i class="icon-file-text"></i> <span> Member Management</span></a>
                                         <ul>
                                             <li class="${newMember }">
-                                                <a href="newMember.html"><i class=" icon-file-plus"></i>New Member</a>
+                                                <a href="newMember.jsp"><i class=" icon-file-plus"></i>New Member</a>
                                             </li>
                                             <li class="${allMember }">
-                                                <a href="allMembers.html"><i class="icon-files-empty"></i>View all Members</a>
+                                                <a href="allMember.jsp"><i class="icon-files-empty"></i>View all Members</a>
                                             </li>
                                         </ul>
                                     </li>
@@ -146,10 +148,10 @@
                                         <a href="#"><i class="icon-images2"></i> <span>Welfare Management</span></a>
                                         <ul>
                                             <li class="${newWelfare }">
-                                                <a href="newWelfare.html" data-toggle="modal"><i class="icon-plus3"></i>New Welfare</a>    
+                                                <a href="newWelfare.jsp" data-toggle="modal"><i class="icon-plus3"></i>New Welfare</a>    
                                             </li>
                                             <li class="${allWelfare }">
-                                                <a href="allWelfares.html"><i class="icon-images3"></i>View all Welfare</a>
+                                                <a href="allWelfares.jsp"><i class="icon-images3"></i>View all Welfare</a>
                                             </li>
                                         </ul>
                                     </li>
