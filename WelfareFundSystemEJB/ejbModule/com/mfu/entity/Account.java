@@ -19,6 +19,7 @@ public class Account implements Serializable{
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private long accountId;
 	@OneToOne
+	@JsonIgnore
 	private Member member;
 	@OneToMany(mappedBy="account",cascade={CascadeType.ALL})
 	@JsonIgnore

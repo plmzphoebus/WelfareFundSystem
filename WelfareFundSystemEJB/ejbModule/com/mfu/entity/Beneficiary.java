@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @Entity
 public class Beneficiary implements Serializable {
 	@Id
@@ -23,8 +25,10 @@ public class Beneficiary implements Serializable {
 	private String occupation;
 	private String relationship;
 	private String citizenId;
+	private double revenue ;
 	
 	@OneToOne
+	@JsonIgnore
 	private Member member;
 	
 	
@@ -93,6 +97,12 @@ public class Beneficiary implements Serializable {
 	}
 	public void setCitizenId(String citizenId) {
 		this.citizenId = citizenId;
+	}
+	public double getRevenue() {
+		return revenue;
+	}
+	public void setRevenue(double revenue) {
+		this.revenue = revenue;
 	}
 	
 	

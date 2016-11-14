@@ -53,7 +53,7 @@ public class AccountServiceBean implements AccountService {
 	@Override
 	public List<Transaction> getTransactionByAccount(long accountId) {
 		// TODO Auto-generated method stub
-		return this.em.createQuery("SELECT ent FROM Transaction ent WHERE ent.account.accountId =: accountId")
+		return this.em.createQuery("SELECT ent FROM Transaction ent WHERE ent.account.accountId =:accountId")
 				.setParameter("accountId", accountId).getResultList();
 	}
 

@@ -4,7 +4,7 @@
 <welfare:staffTemplate title="All Members">
 	<jsp:attribute name="allMember">active</jsp:attribute>
 	<jsp:attribute name="content">
-		<div class="panel panel-flat">
+		<div class="panel panel-flat" ng-app="myApp" >
 						<div class="panel-heading">
 							<h5 class="panel-title"> <i class="icon-users2"></i> All Members</h5>
 							<div class="heading-elements">
@@ -30,15 +30,15 @@
 									<th width="10%" class="text-center">Actions</th>
 								</tr>
 							</thead>
-							<tbody>
-								<tr>
-                                    <td>593333333</td>
-									<td>นางสาววารุณี</td>
-									<td>เสนาไชย</td>
-                                    <td>กลางธงชัย</td>
-									<td>0811111111</td>									
-									<td>8 มีนาคม 2559</td>
-                                    <td>รายปี</td>
+							<tbody ng-controller="allMemberCtrl">
+								<tr ng-repeat="member in members">
+                                    <td>{{member.memberId}}</td>
+									<td>{{member.firstName}}</td>
+									<td>{{member.lastName}}</td>
+                                    <td>{{member.community.communityName}}</td>
+									<td>{{member.mobileTel}}</td>									
+									<td>{{member.entranceDate | date:"dd-MM-yyyy"}}</td>
+                                    <td>{{member.preferPayment.preferPaymentName}}</td>
 									<td class="text-center">
 										<ul class="icons-list">
 											<li class="dropdown">
@@ -48,7 +48,7 @@
 
 												<ul class="dropdown-menu dropdown-menu-right">
                                                     <li><a
-											href="memberDetail.html">View</a></li>
+											href="memberDetail.jsp?id={{member.memberId}}&acid={{member.account.accountId}}">View</a></li>
 													<li><a href="#">Edit</a></li>
 													<li><a href="#">Delete</a></li>													
 												</ul>
@@ -56,58 +56,6 @@
 										</ul>
 									</td>
 								</tr>
-								<tr>
-                                    <td>592222222</td>
-									<td>นางสิริรัตน์</td>
-									<td>บัณฑิตถาวร</td>
-                                    <td>กกส้มโฮง</td>
-									<td>0811225413</td>									
-									<td>4 พฤภาคม 2559</td>
-                                    <td>รายครึ่งปี</td>
-									<td class="text-center">
-										<ul class="icons-list">
-											<li class="dropdown">
-												<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-													<i class="icon-menu9"></i>
-												</a>
-
-												<ul class="dropdown-menu dropdown-menu-right">
-                                                    <li><a
-											href="memberDetail.html">View</a></li>
-													<li><a href="#">Edit</a></li>
-													<li><a href="#">Delete</a></li>													
-												</ul>
-											</li>
-										</ul>
-									</td>
-								</tr>								
-								<tr>
-                                    <td>591111111</td>
-									<td>นางสาวสมสนุก</td>
-									<td>โมทศรี</td>
-                                    <td>เอื้ออาทร</td>
-									<td>0811111111</td>									
-									<td>8 มีนาคม 2559</td>
-                                    <td>รายเดือน</td>
-									<td class="text-center">
-										<ul class="icons-list">
-											<li class="dropdown">
-												<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-													<i class="icon-menu9"></i>
-												</a>
-
-												<ul class="dropdown-menu dropdown-menu-right">
-                                                    <li><a
-											href="memberDetail.html">View</a></li>
-													<li><a href="#">Edit</a></li>
-													<li><a href="#">Delete</a></li>													
-												</ul>
-											</li>
-										</ul>
-									</td>
-								</tr>
-								
-								
 							</tbody>
 						</table>
 					</div>
