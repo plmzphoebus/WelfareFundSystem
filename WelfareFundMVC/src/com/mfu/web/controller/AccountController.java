@@ -1,5 +1,6 @@
 package com.mfu.web.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -44,8 +45,15 @@ public class AccountController {
 	@ResponseBody
 	public ResponseEntity<String> savingFund(@RequestBody Transaction transaction) {
 		try {
+			Date date = new Date();
+			System.out.println("Date "+date);
 			System.out.println(transaction.getStartDate());
 			System.out.println(transaction.getAccount().getAccountId());
+			transaction.setDate(date);
+			transaction.setAccount(accountServ.findAccountById(transaction.getAccount().getAccountId()));
+			System.out.println("Date "+transaction.getDate());
+			transServ.save(transaction);
+			
 			return new ResponseEntity<String>("200",HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("400",HttpStatus.BAD_REQUEST);
