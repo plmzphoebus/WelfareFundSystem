@@ -156,6 +156,17 @@
                                         </ul>
                                     </li>
                                     <li>
+                                        <a href="#"><i class="icon-images2"></i> <span>Community Management</span></a>
+                                        <ul>
+                                            <li class="${newCommunity }">
+                                                <a href="newCommunity.jsp" data-toggle="modal"><i class="icon-plus3"></i>New Community</a>    
+                                            </li>
+                                            <li class="${allCommunity }">
+                                                <a href="allCommunity.jsp"><i class="icon-images3"></i>View all Community</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
                                         <a href="#"><i class="icon-film2"></i> <span>Commitee Management</span></a>
                                         <ul>
                                             <li>
