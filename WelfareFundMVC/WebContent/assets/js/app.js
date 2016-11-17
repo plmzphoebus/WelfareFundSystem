@@ -57,6 +57,58 @@ angular.module('myApp', [])
             $scope.memberTypes = response;
         })
     })
+    .controller('allCommunityCtrl', function($scope,CommunityService,$http){
+    	$scope.data = '';
+    	CommunityService.getallCommunity().then(function(response){
+    		$scope.communities = response ;
+    	})
+    	$scope.deleteCommunity = function(communityId){
+    		console.log(communityId);
+    		$http.delete("deleteCommunity/"+communityId+".do").then(function(response){
+    			console.log(response);
+    			window.location.reload();
+    		},function(error){
+    			window.location.reload();
+    			console.log(error);
+    		})
+    	};
+    })
+    .controller('allWelfareCtrl', function($scope,WelfareService,$http){
+    	WelfareService.getallWelfare().then(function(response){
+    		$scope.welfares = response;
+    	});
+    })
+    .controller('newWelfareCtrl', function($scope,WelfareService,$http){
+    	$scope.data = '' ;
+    	$scope.saveWelfare = function(){
+    		var amountofDate = $("input[name='amountofDate[]']").map(function(){return $(this).val();}).get();
+    		var amountofMoney = $("input[name='welfareMoney[]']").map(function(){return $(this).val();}).get();
+    		console.log("amountofDate",amountofDate);
+    		console.log("amountofDate",amountofMoney);
+    		$scope.data.conditional = [] ;
+    		for(var i = 0 ; i< amountofDate.length ; i++){
+    			console.log(i);
+    			$scope.data.conditional[i].amountofDate = amountofDate[i];
+    		}
+    		for(var i = 0 ; i< amountofMoney.length ; i++){
+    			console.log(i);
+    			$scope.data.conditional[i].welfareMoney = amountofMoney[i];
+    		}
+    		console.log("data",$scope.data)
+    	}
+    })
+    .controller('newCommunityCtrl', function($scope,CommunityService,$http){
+    	$scope.data = '';
+    	$scope.saveCommunity = function(){
+    		$http.post("saveCommunity.do",$scope.data).then(function(response){
+        		console.log(response);
+        		window.location.href = 'allCommunity.jsp';
+        	},function(error){
+        		console.log(error);
+        	});
+    	}
+    	
+    })
     .service('MemberService', function($http) {
         return {
             getMember: function() {
@@ -87,6 +139,22 @@ angular.module('myApp', [])
             getallCommunity: function() {
                 // $http returns a promise, which has a then function, which also returns a promise.
                 return $http.get('listallCommunity.do')
+                    .then(function(response) {
+                        // In the response, resp.data contains the result. Check the console to see all of the data returned.
+                        console.log('Get Post', response);
+                        return response.data;
+                    }, function(error) {
+                        console.log(error);
+                        return error;
+                    });
+            }
+        }
+    })
+    .service('WelfareService', function($http) {
+        return {
+            getallWelfare: function() {
+                // $http returns a promise, which has a then function, which also returns a promise.
+                return $http.get('listAllWelfare.do')
                     .then(function(response) {
                         // In the response, resp.data contains the result. Check the console to see all of the data returned.
                         console.log('Get Post', response);

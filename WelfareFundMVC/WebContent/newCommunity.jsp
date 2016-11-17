@@ -4,7 +4,7 @@
 <welfare:staffTemplate title="New Community">
 	<jsp:attribute name="newCommunity">active</jsp:attribute>
 	<jsp:attribute name="content">
-		<div class="panel panel-flat" ng-app="myApp" >
+		<div class="panel panel-flat" ng-app="myApp" ng-controller="newCommunityCtrl">
 					<div class="row">
                             <div class="col-lg-6 col-lg-offset-3">
                                 <div class="panel panel-flat">
@@ -23,16 +23,15 @@
 									<div class="form-group">
 										<label class="control-label col-lg-2">Community Name</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" name="welfarename" placeholder="Welfare Name">
+											<input type="text" class="form-control" ng-model="data.communityName" placeholder="Community Name">
 										</div>
-									</div>                                    
-                                    <div id="MoreCondition"></div>
+									</div>                         
                                     
                                     
 								</fieldset>
 
 								<div class="text-right">
-									<button type="submit" class="btn btn-primary">Submit <i class="icon-arrow-right14 position-right"></i></button>
+									<button type="submit" class="btn btn-primary" ng-click="saveCommunity()">Save <i class="icon-arrow-right14 position-right"></i></button>
 								</div>
 							</form>
                                     </div>

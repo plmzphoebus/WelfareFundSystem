@@ -4,7 +4,7 @@
 <welfare:staffTemplate title="All Welfares">
 	<jsp:attribute name="allWelfare">active</jsp:attribute>
 	<jsp:attribute name="content">
-		<div class="panel panel-flat" ng-app="myApp">						
+		<div class="panel panel-flat" ng-app="myApp" ng-controller="allWelfareCtrl">						
 
 						<div class="panel panel-flat">
 							<div class="panel-heading">
@@ -31,10 +31,10 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr>
-	                                    <td>100001</td>
-										<td>สวัสดิการเกิด</td>
-										<td>ให้มารดาและบุตร จำนวน 1,000 บาท หากมีลูกแฝดให้เพิ่มอีก 500 บาทต่อบุตร 1 คน</td>                                    
+									<tr ng-repeat="welfare in welfares">
+	                                    <td>{{welfare.welfareId}}</td>
+										<td>{{welfare.welfareName}}</td>
+										<td>{{welfare.description}}</td>                                    
 										<td class="text-center">
 											<ul class="icons-list">
 												<li class="dropdown">
@@ -49,49 +49,13 @@
 												</li>
 											</ul>
 										</td>
-									</tr>
-	                                <tr>
-	                                    <td>100002</td>
-										<td>สวัสดิการเจ็บ</td>
-										<td>นอนพักที่โรงพยาบาล ได้รับ 150 บาท แต่สูงสุดไม่เกิน 1,500 บาท ต่อคนต่อปี</td>                                    
-										<td class="text-center">
-											<ul class="icons-list">
-												<li class="dropdown">
-													<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-														<i class="icon-menu9"></i>
-													</a>
-	
-													<ul class="dropdown-menu dropdown-menu-right">
-														<li><a data-toggle="modal" data-target="#editWelfare">Edit</a></li>
-														<li><a href="#">Delete</a></li>													
-													</ul>
-												</li>
-											</ul>
-										</td>
-									</tr>
-	                                <tr>
-	                                    <td>100003</td>
-										<td>สวัสดิการตาย</td>
-										<td>เป็นสมาชิก 180 วัน - 1 ปี ได้รับเงินช่วยเหลือ 1,500 บาท</td>                                    
-										<td class="text-center">
-											<ul class="icons-list">
-												<li class="dropdown">
-													<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-														<i class="icon-menu9"></i>
-													</a>
-	
-													<ul class="dropdown-menu dropdown-menu-right">
-														<li><a data-toggle="modal" data-target="#editWelfare">Edit</a></li>
-														<li><a href="#">Delete</a></li>													
-													</ul>
-												</li>
-											</ul>
-										</td>
-									</tr>			
+									</tr>		
 								</tbody>
 							</table>
 						</div>
 						<!-- Modal content-->
+						<div id="editWelfare" class="modal fade" role="dialog">
+          <div class="modal-dialog">
             <div class="modal-content">
               <div class="modal-header bg-teal-600">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -139,7 +103,7 @@
 										class="control-label col-lg-1">Baht</label>
                                         <div class="col-lg-1">
 											<button type="button" class="btn btn-success btn-circle"
-											onclick="addCondition()">
+											ng-click="addCondition()">
 											<i class="icon  icon-plus3"></i>
 										</button>
 										</div>
@@ -168,5 +132,16 @@
           </div>
         </div>
 					</div>
+		 <script>
+            function addCondition(){
+                var id = Math.floor((Math.random() * 10000) + 1);
+                var str = "<div id=\"con"+id+"\" class=\"form-group\"><label class=\"control-label col-lg-2\">&nbsp;</label><div class=\"col-lg-3\"><input type=\"number\" class=\"form-control\" placeholder=\"Amount of Day\" min=\"180\"></div><div class=\"col-lg-2\"><select class=\"form-control\"><option selected>Days</option><option>Years</option></select></div><div class=\"col-lg-3\"><input type=\"number\" class=\"form-control\" placeholder=\"Amount of Money\"></div><label class=\"control-label col-lg-1\">Baht</label><div class=\"col-lg-1\"><button type=\"button\" class=\"btn btn-danger btn-circle\" onclick=\"deleteCondition("+id+")\"><i class=\"icon  icon-minus3\"></i></button></div></div>"
+                
+                $("#MoreCondition").append(str);
+            }
+            function deleteCondition(id){
+                $("#con"+id).remove();
+            }
+        </script>
 	</jsp:attribute>
 </welfare:staffTemplate>

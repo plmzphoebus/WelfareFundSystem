@@ -5,6 +5,8 @@
 <%@ attribute name="newMember" required="false" rtexprvalue="true"%>
 <%@ attribute name="newWelfare" required="false" rtexprvalue="true"%>
 <%@ attribute name="allWelfare" required="false" rtexprvalue="true"%>
+<%@ attribute name="allCommunity" required="false" rtexprvalue="true"%>
+<%@ attribute name="newCommunity" required="false" rtexprvalue="true"%>
 <%@ attribute name="content" fragment="true" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,6 +22,7 @@
         <link href="assets/css/core.css" rel="stylesheet" type="text/css">
         <link href="assets/css/components.css" rel="stylesheet" type="text/css">
         <link href="assets/css/colors.css" rel="stylesheet" type="text/css">
+        <link href="assets/style.css" rel="stylesheet" type="text/css">
         <!-- /global stylesheets -->
         <!-- Core JS files -->
         <script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
@@ -151,7 +154,7 @@
                                                 <a href="newWelfare.jsp" data-toggle="modal"><i class="icon-plus3"></i>New Welfare</a>    
                                             </li>
                                             <li class="${allWelfare }">
-                                                <a href="allWelfares.jsp"><i class="icon-images3"></i>View all Welfare</a>
+                                                <a href="allWelfare.jsp"><i class="icon-images3"></i>View all Welfare</a>
                                             </li>
                                         </ul>
                                     </li>

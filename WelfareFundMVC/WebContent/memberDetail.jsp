@@ -299,7 +299,7 @@
                                     <div class="form-group">
 										<label class="control-label col-lg-2">Entrance Date</label>
 										<div class="col-lg-10">
-											<input type="date" class="form-control" name="date">
+											<input type="date" class="form-control" ng-model="member.entranceDate">
 										</div>
 									</div>
                                     <div class="form-group">
@@ -317,19 +317,19 @@
 									<div class="form-group">
 										<label class="control-label col-lg-2">Firstname</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" name="firstname">
+											<input type="text" class="form-control" ng-model="member.firstName">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">Lastname</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" name="lastname">
+											<input type="text" class="form-control" ng-model="member.lastName">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">Age</label>
 										<div class="col-lg-10">
-											<input type="number" class="form-control" name="age">
+											<input type="number" class="form-control" ng-model="member.age">
 										</div>
 									</div>
 
@@ -337,33 +337,33 @@
 										<label class="control-label col-lg-2">Address</label>
 										<div class="col-lg-10">
 											<textarea rows="5" cols="5" class="form-control"
-												placeholder="Default textarea"></textarea>
+												placeholder="Default textarea" ng-model="member.address"></textarea>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="control-label col-md-2">Telephone Number</label>
 										<div class="col-md-10">
-											<input class="form-control" type="tel" name="tel">
+											<input class="form-control" type="tel" ng-model="member.telephoneNumber">
 										</div>
 									</div>
                                     
 									<div class="form-group">
 										<label class="control-label col-md-2">Telephone Number(Mobile)</label>
 										<div class="col-md-10">
-											<input class="form-control" type="tel" name="mobile">
+											<input class="form-control" type="tel" ng-model="member.mobileTel">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">Occupation</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" name="occupation">
+											<input type="text" class="form-control" ng-model="member.occupation">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">Revenue/Month</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" name="revenue">
+											<input type="text" class="form-control" ng-model="member.revenue">
 										</div>
 									</div>
                                     <h4>เงื่อนไขการเป็นสมาชิก</h4>
@@ -379,19 +379,19 @@
 									<div class="form-group">
 										<label class="control-label col-lg-2">Firstname</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" name="firstname">
+											<input type="text" class="form-control" ng-model="member.beneficiary.firstName">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">Lastname</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" name="lastname">
+											<input type="text" class="form-control" ng-model="member.beneficiary.lastName">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">Age</label>
 										<div class="col-lg-10">
-											<input type="number" class="form-control" name="age">
+											<input type="number" class="form-control" ng-model="member.beneficiary.age">
 										</div>
 									</div>
 
@@ -399,39 +399,39 @@
 										<label class="control-label col-lg-2">Address</label>
 										<div class="col-lg-10">
 											<textarea rows="5" cols="5" class="form-control"
-												placeholder="Default textarea"></textarea>
+												placeholder="Default textarea" ng-model="member.beneficiary.address"></textarea>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="control-label col-md-2">Telephone Number</label>
 										<div class="col-md-10">
-											<input class="form-control" type="tel" name="tel">
+											<input class="form-control" type="text" ng-model="member.beneficiary.telephoneNumber">
 										</div>
 									</div>
                                     
 									<div class="form-group">
 										<label class="control-label col-md-2">Telephone Number(Mobile)</label>
 										<div class="col-md-10">
-											<input class="form-control" type="tel" name="mobile">
+											<input class="form-control" type="tel" ng-model="member.beneficiary.mobileTel">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">Occupation</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" name="occupation">
+											<input type="text" class="form-control" ng-model="member.beneficiary.occupation">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">Revenue/Month</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" name="revenue">
+											<input type="text" class="form-control" ng-model="member.beneficiary.revenue">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">Relationship</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" name="relationship">
+											<input type="text" class="form-control" ng-model="member.beneficiary.relationship">
 										</div>
 									</div>
 								</fieldset>
