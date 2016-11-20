@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mfu.entity.Conditional;
 import com.mfu.entity.Welfare;
 import com.mfu.service.WelfareService;
 
@@ -41,6 +42,13 @@ public class WelfareController  {
 	//saveWelfare.do
 	@RequestMapping(value = "/saveWelfare", method = {RequestMethod.POST, RequestMethod.PUT })
 	public ResponseEntity<String> createWelfare(@RequestBody Welfare welfare){
+		List<Conditional> listcon = welfare.getConditionals();
+		for(Conditional con : listcon){
+			System.out.println("Date"+con.getAmountofDate());
+			con.setWelfare(welfare);
+		}
+		welfare.setConditionals(welfare.getConditionals());
+		
 		try {
 			if (welfare.getWelfareID() == 0){
 				welfareServ.save(welfare);

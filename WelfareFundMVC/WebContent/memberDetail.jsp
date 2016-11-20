@@ -234,17 +234,14 @@
                             <label class="control-label col-lg-2">Date</label>
                                 <div class="col-lg-10">
                                     <input type="date"
-										class="form-control" name="date">
+										class="form-control" ng-model="receive.date">
                                 </div>
                       </div>
                       <div class="form-group">
                             <label class="control-label col-lg-2">Welfare Type</label>
                                 <div class="col-lg-10">
-                                    <select class="form-control">
-                                        <option>Born</option>
-                                        <option>Injury</option>
-                                        <option>Die</option>
-                                        <option>Etc.</option>
+                                    <select class="form-control" ng-model="receive.welfare.welfareId" >
+                                        <option ng-repeat="welfare in welfares" value="{{welfare.welfareID}}">{{welfare.welfareName}}</option>
                                     </select>
                                 </div>
                       </div>
@@ -252,21 +249,23 @@
                             <label class="control-label col-lg-2">Amount</label>
                                 <div class="col-lg-10">
                                     <input type="number"
-										class="form-control" name="money">
+										class="form-control" ng-model="receive.amount">
                                 </div>
                       </div>
                       <div class="form-group">
                             <label class="control-label col-lg-2">Remark</label>
                                 <div class="col-lg-10">
                                     <input type="text"
-										class="form-control" name="money">
+										class="form-control" ng-model="receive.remark">
+										<input type="hidden"
+										class="form-control" ng-model="receive.member.memberId" ng-init="receive.member.memberId = memberId">
                                 </div>
                       </div>
                       <div class="form-group">
                             <label class="control-label col-lg-2">&nbsp;</label>
                                 <div class="col-lg-10">
-                                    <input type="button"
-										class="btn btn-success" value="Save">
+                                    <button type="button"
+										class="btn btn-success" ng-click="receiveWelfare()">Save</button> 
                                 </div>
                       </div>
                   </div>

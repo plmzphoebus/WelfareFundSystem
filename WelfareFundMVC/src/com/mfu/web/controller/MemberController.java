@@ -53,7 +53,7 @@ public class MemberController {
 		try{
 			long memberTypeId = member.getMemberType().getMemberTypeId();
 			long communityId = member.getCommunity().getCommunityId();
-			long preferPaymentId = member.getPaymentType().getPreferPaymentId();
+			long preferPaymentId = member.getPreferPayment().getPreferPaymentId();
 			if(member.getMemberId() == 0){
 				Account account = new Account();
 				account.setMember(member);

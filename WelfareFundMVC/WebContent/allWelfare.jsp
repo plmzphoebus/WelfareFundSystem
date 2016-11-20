@@ -32,7 +32,7 @@
 								</thead>
 								<tbody>
 									<tr ng-repeat="welfare in welfares">
-	                                    <td>{{welfare.welfareId}}</td>
+	                                    <td>{{welfare.welfareID}}</td>
 										<td>{{welfare.welfareName}}</td>
 										<td>{{welfare.description}}</td>                                    
 										<td class="text-center">

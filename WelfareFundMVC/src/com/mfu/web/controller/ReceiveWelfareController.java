@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mfu.entity.ReceiveWelfare;
+import com.mfu.service.MemberService;
 import com.mfu.service.ReceiveWelfareService;
+import com.mfu.service.WelfareService;
 
 
 
@@ -22,11 +24,15 @@ import com.mfu.service.ReceiveWelfareService;
 public class ReceiveWelfareController {
 	@EJB(mappedName = "ejb:/WelfareFundSystemEJB//ReceiveWelfareServiceBean!com.mfu.service.ReceiveWelfareService")
 	ReceiveWelfareService receiveWelfareServ;
+	@EJB(mappedName = "ejb:/WelfareFundSystemEJB//MemberServiceBean!com.mfu.service.MemberService")
+	MemberService memberServ;
+	@EJB(mappedName = "ejb:/WelfareFundSystemEJB//WelfareServiceBean!com.mfu.service.WelfareService")
+	WelfareService welfareServ;
 	
-	@RequestMapping(value = "listReceiveWelfare", method = RequestMethod.GET)
+	@RequestMapping(value = "listReceiveWelfare/{id}", method = RequestMethod.GET)
 	@ResponseBody
-	public ResponseEntity<List<ReceiveWelfare>> getAllReceiveWelfare(){
-		List<ReceiveWelfare> listReceivewelfare = receiveWelfareServ.getAllReceiveWelfare();
+	public ResponseEntity<List<ReceiveWelfare>> getAllReceiveWelfare(@PathVariable("id") long memberId){
+		List<ReceiveWelfare> listReceivewelfare = memberServ.getReceiveWelfareByMember(memberId);
 		return new ResponseEntity<List<ReceiveWelfare>>(listReceivewelfare, HttpStatus.OK);
 	}
 	
@@ -40,6 +46,8 @@ public class ReceiveWelfareController {
 	@RequestMapping(value = "/saveReceiveWelfare", method = {RequestMethod.POST, RequestMethod.PUT})	
 	public ResponseEntity<String> createReceiveWelfare(@RequestBody ReceiveWelfare receiveWelfare){
 		try{
+			receiveWelfare.setMember(memberServ.findMemberById(receiveWelfare.getMember().getMemberId()));
+			receiveWelfare.setWelfare(welfareServ.findWelfareById(receiveWelfare.getWelfare().getWelfareID()));
 			if(receiveWelfare.getReceiveWelfareId() == 0){
 				receiveWelfareServ.save(receiveWelfare);
 			}else{

@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -20,10 +21,11 @@ public class Welfare implements Serializable{
 	private String welfareName;
 	private String description;
 	
-	@OneToMany(mappedBy="welfare",cascade={CascadeType.ALL})
-	@JsonIgnore
+	@OneToMany(mappedBy="welfare",cascade={CascadeType.ALL}, fetch=FetchType.EAGER)
 	private List<Conditional> conditionals;
-	
+	@OneToMany(mappedBy="welfare", cascade={CascadeType.ALL}, fetch=FetchType.LAZY)
+	@JsonIgnore
+	private List<ReceiveWelfare> receiveWelfare ;
 	public long getWelfareID() {
 		return welfareID;
 	}
@@ -42,11 +44,17 @@ public class Welfare implements Serializable{
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public List<Conditional> getConditions() {
+	public List<Conditional> getConditionals() {
 		return conditionals;
 	}
-	public void setConditions(List<Conditional> conditionals) {
+	public void setConditionals(List<Conditional> conditionals) {
 		this.conditionals = conditionals;
+	}
+	public List<ReceiveWelfare> getReceiveWelfare() {
+		return receiveWelfare;
+	}
+	public void setReceiveWelfare(List<ReceiveWelfare> receiveWelfare) {
+		this.receiveWelfare = receiveWelfare;
 	}
 
 }

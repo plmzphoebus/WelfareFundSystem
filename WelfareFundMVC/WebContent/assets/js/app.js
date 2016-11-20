@@ -4,8 +4,9 @@ angular.module('myApp', [])
             $scope.members = response;
         });
     })
-    .controller('memberDetailCtrl', function($scope, MemberService,AccountService,$http) {
+    .controller('memberDetailCtrl', function($scope, MemberService,AccountService,$http,WelfareService) {
     $scope.saving = '';
+    $scope.receive = '';
         function findGetParameter(parameterName) {
             var result = null,
                 tmp = [];
@@ -18,6 +19,10 @@ angular.module('myApp', [])
                 });
             return result;
         }
+        
+        WelfareService.getallWelfare().then(function(response){
+    		$scope.welfares = response;
+    	});
 
         MemberService.getMemberById(findGetParameter("id")).then(function(response) {
             $scope.member = response;
@@ -25,7 +30,7 @@ angular.module('myApp', [])
         AccountService.getAccountDetail(findGetParameter("acid")).then(function(response){
         	$scope.transactions = response ;
         });
-        $scope.savingFund = function(){
+        $scope.savingFund = function(){      	
             $http.post('savingFund.do', $scope.saving).then(function(response) {
                 alert("success");
                 window.location.reload();
@@ -33,7 +38,17 @@ angular.module('myApp', [])
                 alert("error");
             });
         };
+        $scope.receiveWelfare = function(){
+        	console.log("receive",$scope.receive)
+        	$http.post("saveReceiveWelfare.do",$scope.receive).then(function(response){
+        		console.log("success",response);
+        		window.location.reload();
+        	},function(error){
+        		console.log("error",error);
+        	});
+        }
         $scope.accountId = findGetParameter("acid");
+        $scope.memberId = findGetParameter("id");
     })
     .controller('newMemberCtrl', function($scope, CommunityService, PreferPaymentService, $http, MemberTypeService) {
         $scope.data = '';
@@ -84,17 +99,34 @@ angular.module('myApp', [])
     		var amountofDate = $("input[name='amountofDate[]']").map(function(){return $(this).val();}).get();
     		var amountofMoney = $("input[name='welfareMoney[]']").map(function(){return $(this).val();}).get();
     		console.log("amountofDate",amountofDate);
-    		console.log("amountofDate",amountofMoney);
-    		$scope.data.conditional = [] ;
-    		for(var i = 0 ; i< amountofDate.length ; i++){
-    			console.log(i);
-    			$scope.data.conditional[i].amountofDate = amountofDate[i];
+    		console.log("amountofMoney",amountofMoney);
+    		$scope.data.conditionals = [];
+    		var condition = '[';
+    		for(var i = 0 ; i < amountofDate.length ; i++){
+    			
+    			if(i+1 == amountofDate.length){
+    				condition += "{\"amountofDate\":\""+amountofDate[i]+"\"," ;
+        			condition += "\"welfareMoney\":\""+amountofMoney[i]+"\"";
+        			condition += "}";
+    			}else{
+    				condition += "{\"amountofDate\":\""+amountofDate[i]+"\"," ;
+        			condition += "\"welfareMoney\":\""+amountofMoney[i]+"\"";
+        			condition += "},";
+    			}
     		}
-    		for(var i = 0 ; i< amountofMoney.length ; i++){
-    			console.log(i);
-    			$scope.data.conditional[i].welfareMoney = amountofMoney[i];
-    		}
-    		console.log("data",$scope.data)
+    		condition += ']';
+    		console.log("condition",condition);
+    		var obj = JSON.parse(condition)
+    		
+    		$scope.data.conditionals = obj ;
+    		console.log("condition",obj);
+    		console.log("data",$scope.data);
+    		$http.post("saveWelfare.do",$scope.data).then(function(response){
+    			console.log("success",response);
+    			window.location.href="allWelfare.jsp";
+    		},function(error){
+    			console.log("error",error);
+    		});
     	}
     })
     .controller('newCommunityCtrl', function($scope,CommunityService,$http){
@@ -227,3 +259,4 @@ angular.module('myApp', [])
         }
 
     })
+    

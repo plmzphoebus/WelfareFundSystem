@@ -52,13 +52,13 @@ public class WelfareServiceBean implements WelfareService {
 	@Override
 	public List<Conditional> getConditionByWelfare(long welfareId) {
 		// TODO Auto-generated method stub
-		return this.em.createQuery("SELECT ent FROM Conditional ent WHERE ent.welfareId=:welfareId").setParameter("welfareId", welfareId).getResultList();
+		return this.em.createQuery("SELECT ent FROM Conditional ent WHERE ent.welfare.welfareID=:welfareId").setParameter("welfareId", welfareId).getResultList();
 	}
 
 	@Override
 	public List<ReceiveWelfare> getReceiveWelfareByWelfare(long welfareId) {
 		// TODO Auto-generated method stub
-		return this.em.createQuery("SELECT ent FROM ReceiveWelfare ent WHERE ent.welfare.welfareId=:welfareId").setParameter("welfareId", welfareId).getResultList();
+		return this.em.createQuery("SELECT ent FROM ReceiveWelfare ent WHERE ent.welfare.welfareID=:welfareId").setParameter("welfareId", welfareId).getResultList();
 	}
 
 }
