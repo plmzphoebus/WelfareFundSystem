@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 @Entity
 public class Conditional implements Serializable{
 	@Id
@@ -17,7 +19,8 @@ public class Conditional implements Serializable{
 	private int amountofDate;
 	private int welfareMoney;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JsonIgnore
 	private Welfare welfare;
 	
 	public long getConditionID() {

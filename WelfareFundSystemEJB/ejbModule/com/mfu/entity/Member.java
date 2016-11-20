@@ -150,14 +150,6 @@ public class Member implements Serializable{
 		this.memberType = memberType;
 	}
 
-	public PreferPayment getPaymentType() {
-		return preferPayment;
-	}
-
-	public void setPaymentType(PreferPayment preferPayment) {
-		this.preferPayment = preferPayment;
-	}
-
 	public Community getCommunity() {
 		return community;
 	}
