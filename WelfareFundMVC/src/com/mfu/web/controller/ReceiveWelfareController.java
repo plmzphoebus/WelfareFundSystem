@@ -1,5 +1,6 @@
 package com.mfu.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -13,10 +14,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mfu.entity.Community;
+import com.mfu.entity.Member;
 import com.mfu.entity.ReceiveWelfare;
+import com.mfu.entity.Welfare;
 import com.mfu.service.MemberService;
 import com.mfu.service.ReceiveWelfareService;
 import com.mfu.service.WelfareService;
+import com.mfu.web.model.TotalMembersChart;
 
 
 
@@ -36,27 +41,28 @@ public class ReceiveWelfareController {
 		return new ResponseEntity<List<ReceiveWelfare>>(listReceivewelfare, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/getReceiveWelfare", method = RequestMethod.GET)
+	@RequestMapping(value = "/getReceiveWelfare/{id}", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<ReceiveWelfare> getReceiveWelfareById(@PathVariable("id") String id){
 		ReceiveWelfare receiveWelfare = receiveWelfareServ.findReceiveWelfareById(Long.parseLong(id));
 		return new ResponseEntity<ReceiveWelfare>(receiveWelfare, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "/saveReceiveWelfare", method = {RequestMethod.POST, RequestMethod.PUT})	
+	@RequestMapping(value = "/saveReceiveWelfare", method = {RequestMethod.POST, RequestMethod.PUT})
+	@ResponseBody
 	public ResponseEntity<String> createReceiveWelfare(@RequestBody ReceiveWelfare receiveWelfare){
-		try{
+
+			System.out.println("amount" + receiveWelfare.getAmount());
+			System.out.println("Date" + receiveWelfare.getDate());
+			System.out.println("member"+receiveWelfare.getMember().getMemberId());
+			System.out.println("welfare"+receiveWelfare.getWelfare().getWelfareID());
 			receiveWelfare.setMember(memberServ.findMemberById(receiveWelfare.getMember().getMemberId()));
 			receiveWelfare.setWelfare(welfareServ.findWelfareById(receiveWelfare.getWelfare().getWelfareID()));
-			if(receiveWelfare.getReceiveWelfareId() == 0){
+
 				receiveWelfareServ.save(receiveWelfare);
-			}else{
-				receiveWelfareServ.update(receiveWelfare);
-			}
+
 			return new ResponseEntity<String>("200", HttpStatus.OK);
-		}catch (Exception e) {
-			return new ResponseEntity<String>("400",HttpStatus.BAD_REQUEST);
-		}
+
 	}
 	
 	@RequestMapping(value = "/deleteReceiveWelfare/{id}", method = RequestMethod.DELETE)
@@ -69,4 +75,24 @@ public class ReceiveWelfareController {
 			return new ResponseEntity<String>("error", HttpStatus.BAD_REQUEST);
 		}
 	}
+	// getMoneyReceiveChart.do
+			@RequestMapping(value = "/getMoneyReceiveChart", method = RequestMethod.GET)
+			@ResponseBody
+			public ResponseEntity<List<TotalMembersChart>> getMoneyReceiveChart() {
+				List<Welfare> listwelfare = welfareServ.getAllWelfare();
+				List<TotalMembersChart> listchart = new ArrayList<TotalMembersChart>();
+				for(Welfare welfare : listwelfare){
+					TotalMembersChart chart = new TotalMembersChart();
+					int totalmoney = 0 ;
+					List<ReceiveWelfare> listreceivewelfare = welfareServ.getReceiveWelfareByWelfare(welfare.getWelfareID());
+					for(ReceiveWelfare receivewelfare : listreceivewelfare){
+						totalmoney += receivewelfare.getAmount();
+					}
+					chart.setLabel(welfare.getWelfareName());
+					chart.setY(totalmoney);
+					listchart.add(chart);
+				}
+				
+				return new ResponseEntity<List<TotalMembersChart>>(listchart, HttpStatus.OK);
+			}
 }

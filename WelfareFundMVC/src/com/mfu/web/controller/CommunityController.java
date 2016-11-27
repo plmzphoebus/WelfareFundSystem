@@ -1,5 +1,6 @@
 package com.mfu.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -14,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mfu.entity.Community;
+import com.mfu.entity.Member;
 import com.mfu.service.CommunityService;
+import com.mfu.web.model.TotalMembersChart;
 
 @Controller
 public class CommunityController {
@@ -28,6 +31,26 @@ public class CommunityController {
 		List<Community> listCommunity = communityserv.getAllCommunity();
 		return new ResponseEntity<List<Community>>(listCommunity, HttpStatus.OK);
 	}
+	
+	// getTotalMembersChart.do
+		@RequestMapping(value = "/getTotalMembersChart", method = RequestMethod.GET)
+		@ResponseBody
+		public ResponseEntity<List<TotalMembersChart>> getTotalMembersChart() {
+			List<Community> listCommunity = communityserv.getAllCommunity();
+			List<TotalMembersChart> listchart = new ArrayList<TotalMembersChart>();
+			for(Community community : listCommunity){
+				TotalMembersChart chart = new TotalMembersChart();
+				int total = 0 ;
+				List<Member> listmember = communityserv.getMemberByCommunity(community.getCommunityId());
+				for(Member member : listmember){
+					total++;
+				}
+				chart.setLabel(community.getCommunityName());
+				chart.setY(total);
+				listchart.add(chart);
+			}
+			return new ResponseEntity<List<TotalMembersChart>>(listchart, HttpStatus.OK);
+		}
 
 	// getCommunity/1.do
 	@RequestMapping(value = "/getCommunity/{id}", method = RequestMethod.GET)

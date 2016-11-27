@@ -4,7 +4,7 @@ angular.module('myApp', [])
             $scope.members = response;
         });
     })
-    .controller('memberDetailCtrl', function($scope, MemberService,AccountService,$http,WelfareService) {
+    .controller('memberDetailCtrl', function($scope, MemberService,AccountService,$http,WelfareService,ReceiveWelfareService) {
     $scope.saving = '';
     $scope.receive = '';
         function findGetParameter(parameterName) {
@@ -27,9 +27,13 @@ angular.module('myApp', [])
         MemberService.getMemberById(findGetParameter("id")).then(function(response) {
             $scope.member = response;
         });
+        ReceiveWelfareService.listReceiveWelfare(findGetParameter("id")).then(function(responsewelfare){
+            $scope.receivewelfares = responsewelfare; 
+         });
         AccountService.getAccountDetail(findGetParameter("acid")).then(function(response){
         	$scope.transactions = response ;
         });
+        
         $scope.savingFund = function(){      	
             $http.post('savingFund.do', $scope.saving).then(function(response) {
                 alert("success");
@@ -227,6 +231,19 @@ angular.module('myApp', [])
                         console.log(error);
                         return error;
                     });
+            }
+        }
+    })
+    .service('ReceiveWelfareService', function($http){
+        return {
+            listReceiveWelfare : function(memberId){
+                return $http.get('listReceiveWelfare/'+memberId+'.do').then(function(response){
+                    console.log('listReceiveWelfare',response.data);
+                    return response.data ;
+                },function(error){
+                    console.log('receiveWelfare Error',error);
+                    return error ;
+                });
             }
         }
     })

@@ -55,8 +55,8 @@
                                                 <td class="text-center">{{trans.amount}}</td>
                                                 <td class="text-center">{{totalBalance + (trans.amount*($index+1))}}</td>
                                                 <td class="text-center">รัตนา</td>
-                                                <td class="text-center"><button
-											class="btn btn-primary">Print Receipt</button></td>
+                                                <td class="text-center"><a
+											class="btn btn-primary" href="printReceipt.jsp?id={{memberId}}&transactionid={{trans.transactionId}}">Print Receipt</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -76,24 +76,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>15/10/2016</td>
-                                                <td>Born</td>
-                                                <td>200</td>                                    
-                                                <td>-</td>
+                                            <tr ng-repeat="receivewelfare in receivewelfares">
+                                                <td>{{receivewelfare.date | date:'dd/MM/yyyy'}}</td>
+                                                <td>{{receivewelfare.welfare.welfareName}}</td>
+                                                <td>{{receivewelfare.amount}}</td>                                    
+                                                <td>{{receivewelfare.remark}}</td>
                                             </tr>
-                                            <tr>
-                                                <td>15/10/2016</td>
-                                                <td>Born</td>
-                                                <td>200</td>                                    
-                                                <td>-</td>
-                                            </tr>
-                                            <tr>
-                                                <td>15/10/2016</td>
-                                                <td>Born</td>
-                                                <td>200</td>                                    
-                                                <td>-</td>
-                                            </tr>
+                                            
                                         </tbody>
                                     </table>
 				                </div>
@@ -240,7 +229,7 @@
                       <div class="form-group">
                             <label class="control-label col-lg-2">Welfare Type</label>
                                 <div class="col-lg-10">
-                                    <select class="form-control" ng-model="receive.welfare.welfareId" >
+                                    <select class="form-control" ng-model="receive.welfare.welfareID" >
                                         <option ng-repeat="welfare in welfares" value="{{welfare.welfareID}}">{{welfare.welfareName}}</option>
                                     </select>
                                 </div>

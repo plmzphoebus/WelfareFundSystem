@@ -52,6 +52,6 @@ public class MemberServiceBean implements MemberService {
 	@Override
 	public List<ReceiveWelfare> getReceiveWelfareByMember(long memberId) {
 		// TODO Auto-generated method stub
-		return this.em.createQuery("SELECT ent FROM ReceiveWelfare WHERE ent.member.memberId=:memberId").setParameter("memberId", memberId).getResultList();
+		return this.em.createQuery("SELECT ent FROM ReceiveWelfare ent WHERE ent.member.memberId=:memberId").setParameter("memberId", memberId).getResultList();
 	}
 }

@@ -30,6 +30,7 @@
         <script type="text/javascript" src="assets/js/core/libraries/bootstrap.min.js"></script>
         <script type="text/javascript" src="assets/js/plugins/loaders/blockui.min.js"></script>
         <script type="text/javascript" src="assets/js/angular.min.js"></script>
+        <script type="text/javascript" src="assets/js/canvasjs.min.js"></script>
         <script type="text/javascript" src="assets/js/app.js"></script>
         <!-- /core JS files -->
         <!-- Theme JS files -->
