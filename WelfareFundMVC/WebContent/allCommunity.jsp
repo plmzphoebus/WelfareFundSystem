@@ -43,57 +43,12 @@
 
                                                             <ul
 													class="dropdown-menu dropdown-menu-right">
-                                                                <li><a
-														data-toggle="modal" data-target="#editCommunity{{coomunity.communityId}}">Edit</a></li>
+                                                                <li><a href="editCommunity.jsp?communityId={{community.communityId}}">Edit</a></li>                                                                
                                                                 <li><center><i class="icon-trash" style="color:red;cursor:pointer;" ng-click="deleteCommunity(community.communityId)"></i></center></li>													
                                                             </ul>
                                                         </li>
                                                     </ul>
                                                 </td>
-                                                <!-- Modal content-->
-       <div id="editCommunity{{coomunity.communityId}}" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-					            <div class="modal-content">
-					              <div class="modal-header bg-teal-600">
-					                <button type="button" class="close"
-							data-dismiss="modal">&times;</button>
-					                <h4 class="modal-title">Edit Welfare's information</h4>
-					              </div>
-					              <div class="modal-body">
-					                  <div class="row">
-					                      <form class="form-horizontal" action="#">
-					                      	
-													<fieldset class="content-group">
-														<div class="form-group">
-															<label class="control-label col-lg-3">Community Name</label>
-															<div class="col-lg-9">
-															<input type="hidden" value="{{community.communityId}}" ng-init="community.communityId" ng-model="data.communityId">
-																<input type="text" class="form-control"
-												 ng-init="community.communityName" ng-model="data.communityName" placeholder="Community Name">
-															</div>
-														</div>
-					                                    
-					                                    <div class="form-group">
-                            <label class="control-label col-lg-3">&nbsp;</label>
-                                <div class="col-lg-9">
-                                    <input type="button"
-										class="btn btn-success" value="Save">
-                                </div>
-                      </div>
-													</fieldset>
-											
-												</form>
-												
-					                  </div>
-					                    
-					              </div>
-					              <div class="modal-footer">
-					                <button type="button" class="btn btn-default"
-							data-dismiss="modal">Close</button>
-					              </div>
-					            </div>
-					            </div>
-		</div>
                                             </tr>
                                         </tbody>
                                     </table>

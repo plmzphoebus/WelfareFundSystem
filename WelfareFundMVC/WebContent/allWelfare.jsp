@@ -43,8 +43,8 @@
 													</a>
 	
 													<ul class="dropdown-menu dropdown-menu-right">
-														<li><a data-toggle="modal" data-target="#editWelfare">Edit</a></li>
-														<li><a href="#">Delete</a></li>													
+														<li><a href="editWelfare.jsp?welfareId={{welfare.welfareID}}">Edit</a></li>
+														<li><center><i class="icon-trash" style="color:red;cursor:pointer;" ng-click="deleteWelfare(welfare.welfareID)"></i></center></li>																									
 													</ul>
 												</li>
 											</ul>
@@ -53,84 +53,7 @@
 								</tbody>
 							</table>
 						</div>
-						<!-- Modal content-->
-						<div id="editWelfare" class="modal fade" role="dialog">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header bg-teal-600">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Edit Welfare's information</h4>
-              </div>
-              <div class="modal-body">
-                  <div class="row">
-                      <form class="form-horizontal" action="#">
-								<fieldset class="content-group">
-									<legend class="text-bold">Edit Welfare Form : กองทุนสวัสดิการชุมชนตำบลธาตุเชิงชุม</legend>
-
-									<div class="form-group">
-										<label class="control-label col-lg-2">Welfare Name</label>
-										<div class="col-lg-10">
-											<input type="text" class="form-control" name="welfarename"
-											placeholder="Welfare Name">
-										</div>
-									</div>
-                                    <div class="form-group">
-										<label class="control-label col-lg-2">Description</label>
-										<div class="col-lg-10">
-											<textarea rows="5" cols="5" class="form-control"
-											placeholder="Welfare Description"></textarea>
-										</div>
-									</div>
-                                    <div class="form-group">
-										<label class="control-label col-lg-2">Condition</label>
-										<div class="col-lg-3">
-											<input type="number" class="form-control"
-											placeholder="Amount of Day" min="180" value="180">
-										</div>
-                                        <div class="col-lg-2">
-											<select class="form-control">
-                                            <option selected>Days</option>
-                                            <option>Years</option>
-                                            </select>
-										</div>
-											
-										
-                                        <div class="col-lg-3">
-											<input type="number" class="form-control"
-											placeholder="Amount of Money">
-										</div>
-                                         <label
-										class="control-label col-lg-1">Baht</label>
-                                        <div class="col-lg-1">
-											<button type="button" class="btn btn-success btn-circle"
-											ng-click="addCondition()">
-											<i class="icon  icon-plus3"></i>
-										</button>
-										</div>
-                                       
-									</div>
-                                    <div id="MoreCondition"></div>
-                                    
-                                    
-								</fieldset>
-
-								<div class="text-right">
-									<button type="submit" class="btn btn-primary">Update <i
-										class="icon-arrow-right14 position-right"></i>
-								</button>
-								</div>
-							</form>
-                  </div>
-                    
-              </div>
-              <div class="modal-footer">
-                <button type="button" class="btn btn-default"
-						data-dismiss="modal">Close</button>
-              </div>
-            </div>
-
-          </div>
-        </div>
+						
 					</div>
 		 <script>
             function addCondition(){

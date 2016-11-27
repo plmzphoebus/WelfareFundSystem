@@ -69,13 +69,14 @@
 							class="table datatable-basic table-hover table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Date</th>
-                                                <th>Welfare Type</th>
-                                                <th>Amount</th>                                    
+                                                <th class="text-center">Date</th>
+                                                <th class="text-center">Welfare Type</th>
+                                                <th class="text-center">Amount</th>                                    
                                                 <th class="text-center">Remark</th>
                                             </tr>
                                         </thead>
                                         <tbody>
+<<<<<<< HEAD
                                             <tr ng-repeat="receivewelfare in receivewelfares">
                                                 <td>{{receivewelfare.date | date:'dd/MM/yyyy'}}</td>
                                                 <td>{{receivewelfare.welfare.welfareName}}</td>
@@ -84,6 +85,14 @@
                                             </tr>
                                             
                                         </tbody>
+=======
+                                            <tr ng-repeat="receiveWelfare in receiveWelfares">
+                                                <td>{{receiveWelfare.date |date : 'dd/MM/yyyy' }}</td>
+                                                <td class="text-center">{{receiveWelfare.welfare.welfareName}}</td>
+                                                <td class="text-center">{{receiveWelfare.amount}}</td>                                    
+                                                <td class="text-center">{{receiveWelfare.remark}}</td>
+                                            </tr>                                            
+>>>>>>> refs/remotes/origin/Mingkhwan-branch4
                                     </table>
 				                </div>
                                 
@@ -215,7 +224,7 @@
             <div class="modal-content">
               <div class="modal-header bg-teal-600">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">New Saving</h4>
+                <h4 class="modal-title">Received Welfare</h4>
               </div>
               <div class="modal-body">
                   <div class="row">
@@ -287,7 +296,7 @@
                                     <div class="form-group">
 										<label class="control-label col-lg-2">Entrance Date</label>
 										<div class="col-lg-10">
-											<input type="date" class="form-control" ng-model="member.entranceDate">
+											<input type="date" class="form-control" ng-model="entranceDate">
 										</div>
 									</div>
                                     <div class="form-group">
@@ -295,10 +304,8 @@
                                         <label
 											class="control-label col-lg-2">Payment Type</label>
 										<div class="col-lg-10">
-											<select class="form-control">
-                                                <option selected>Month</option>
-                                                <option>Half Year</option>
-                                                <option>Year</option>
+											<select class="form-control" ng-model="member.preferPayment.preferPaymentId">
+                                                <option ng-repeat="preferpayment in preferPayments" ng-selected="{{preferpayment.preferPaymentId == member.preferPayment.preferPaymentId}}" value="{{preferpayment.preferPaymentId}}">{{preferpayment.preferPaymentName}}</option>
                                             </select>
 										</div>
 									</div>
@@ -425,7 +432,8 @@
 								</fieldset>
 
 								<div class="text-right">
-									<button type="submit" class="btn btn-primary">Update <i
+								<input type="hidden" ng-model="member.memberId">
+									<button type="button" class="btn btn-primary" ng-click="saveMember()">Update <i
 											class="icon-arrow-right14 position-right"></i>
 									</button>
 								</div>
