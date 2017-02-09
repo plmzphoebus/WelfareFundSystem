@@ -76,7 +76,7 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-<<<<<<< HEAD
+
                                             <tr ng-repeat="receivewelfare in receivewelfares">
                                                 <td>{{receivewelfare.date | date:'dd/MM/yyyy'}}</td>
                                                 <td>{{receivewelfare.welfare.welfareName}}</td>
@@ -85,14 +85,13 @@
                                             </tr>
                                             
                                         </tbody>
-=======
+
                                             <tr ng-repeat="receiveWelfare in receiveWelfares">
                                                 <td>{{receiveWelfare.date |date : 'dd/MM/yyyy' }}</td>
                                                 <td class="text-center">{{receiveWelfare.welfare.welfareName}}</td>
                                                 <td class="text-center">{{receiveWelfare.amount}}</td>                                    
                                                 <td class="text-center">{{receiveWelfare.remark}}</td>
                                             </tr>                                            
->>>>>>> refs/remotes/origin/Mingkhwan-branch4
                                     </table>
 				                </div>
                                 

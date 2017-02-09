@@ -3,6 +3,7 @@
 <%@ taglib prefix="welfare" tagdir="/WEB-INF/tags"%>
 <welfare:staffTemplate title="Print Receipt">
 	<jsp:attribute name="content">
+	<div ng-app="myApp" ng-controller="printCtrl">
 		<div class="row">
         <div class="col-md-10 col-md-offset-9">
             <div class="form-group">
@@ -22,13 +23,13 @@
             </div>
             <div class="form-group">
                     <label class="control-label col-lg-0 text-bold">ได้รับเงินจาก</label>
-                <label class="control-label">นายชินวัตร รุ่งตระกูลชัย (ชุมชนธาตุดุม)</label>
+                <label class="control-label">{{member.firstName}} {{member.lastName}} ({{member.community.communityName}})</label>
             </div>
             <div class="form-group">
                 <label class="control-label col-lg-0 text-bold">เลขที่สมาชิก</label>
-                <label class="control-label ">2356125412</label>
+                <label class="control-label ">{{member.memberId}}</label>
                 <label class="control-label col-lg-0 text-bold">วันที่</label>
-                <label class="control-label ">27 กันยายน 2559</label>            
+                <label class="control-label ">{{transaction.date | date:'dd/MM/yyyy'}}</label>            
             </div>
         </div>                                            
     </div>
@@ -44,8 +45,8 @@
         </thead>
         <tbody>
             <tr>              
-                <td>เงินสะสม ก.ย.59 - ส.ค. 60</td>
-                <td class="text-center">365</td>
+                <td>เงินสะสม  {{transaction.startDate | date:'MMMM yyyy'}} - {{transaction.endDate | date:'MMMM yyyy'}}</td>
+                <td class="text-center">{{transaction.amount}}</td>
                 <td class="text-center"></td>                
             </tr>
             <tr>              
@@ -60,12 +61,12 @@
             </tr>
             <tr>              
                 <td>ค่าธรรมเนียม รายใหม่</td>
-                <td class="text-center">20</td>
+                <td class="text-center"></td>
                 <td class="text-center"></td>      
             </tr>
             <tr>              
-                <td>(สามร้อยแปดสิบห้าบาท) <label class="control-label text-bold pull-right">รวมเงิน</label> </td>
-                <td class="text-center">385</td>
+                <td><label class="control-label text-bold pull-right">รวมเงิน</label> </td>
+                <td class="text-center">{{transaction.amount}}</td>
                 <td class="text-center"></td>      
             </tr>
         </tbody>
@@ -81,7 +82,7 @@
          </div>
     </div>
 
-
+</div>
 
 <script>
 function myFunction() {

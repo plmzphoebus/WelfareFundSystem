@@ -37,7 +37,6 @@ public class MemberController {
 	@ResponseBody
 	public ResponseEntity<List<Member>> getAllMember(){
 		List<Member> listMember = memberServ.getAllMember();
-		System.out.println("Length "+listMember.size());
 		return new ResponseEntity<List<Member>>(listMember, HttpStatus.OK);
 	}
 	
@@ -85,5 +84,16 @@ public class MemberController {
 		}catch (Exception e) {
 			return new ResponseEntity<String>("error", HttpStatus.BAD_REQUEST);
 		}
+	}
+	@RequestMapping(value = "/login/{citizenid}" , method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Member> login(@PathVariable("citizenid") String citizenid){
+		List<Member> listmember = memberServ.getAllMember();
+		for(Member member : listmember){
+			if(member.getCitizen().equals(citizenid)){
+				return new ResponseEntity<Member>(member,HttpStatus.OK);
+			}
+		}
+		return new ResponseEntity<Member>(new Member(),HttpStatus.BAD_REQUEST);
 	}
 }
