@@ -18,8 +18,6 @@ import com.mfu.entity.Account;
 import com.mfu.entity.Member;
 import com.mfu.service.CommunityService;
 import com.mfu.service.MemberService;
-import com.mfu.service.MemberTypeService;
-import com.mfu.service.PreferPaymentService;
 
 
 
@@ -27,12 +25,8 @@ import com.mfu.service.PreferPaymentService;
 public class MemberController {
 	@EJB(mappedName = "ejb:/WelfareFundSystemEJB//MemberServiceBean!com.mfu.service.MemberService")
 	MemberService memberServ;
-	@EJB(mappedName = "ejb:/WelfareFundSystemEJB//MemberTypeServiceBean!com.mfu.service.MemberTypeService")
-	MemberTypeService memberTypeServ;
 	@EJB(mappedName = "ejb:/WelfareFundSystemEJB//CommunityServiceBean!com.mfu.service.CommunityService")
 	CommunityService communityServ;
-	@EJB(mappedName = "ejb:/WelfareFundSystemEJB//PreferPaymentServiceBean!com.mfu.service.PreferPaymentService")
-	PreferPaymentService preferServ;
 	@RequestMapping(value = "/listMember", method = RequestMethod.GET)
 	@ResponseBody
 	public ResponseEntity<List<Member>> getAllMember(){
@@ -50,9 +44,7 @@ public class MemberController {
 	@RequestMapping(value = "/saveMember", method = {RequestMethod.POST, RequestMethod.PUT})	
 	public ResponseEntity<String> createMember(@RequestBody Member member){
 		try{
-			long memberTypeId = member.getMemberType().getMemberTypeId();
 			long communityId = member.getCommunity().getCommunityId();
-			long preferPaymentId = member.getPreferPayment().getPreferPaymentId();
 			if(member.getMemberId() == 0){
 				Account account = new Account();
 				account.setMember(member);
@@ -62,8 +54,6 @@ public class MemberController {
 				
 				//set community memberType preferPayment using service
 				member.setCommunity(communityServ.findCommunityById(communityId));
-				member.setMemberType(memberTypeServ.findMemberTypeById(memberTypeId));
-				member.setPreferPayment(preferServ.findPreferPaymentById(preferPaymentId));
 				
 				memberServ.save(member);
 			}else{

@@ -18,22 +18,22 @@
                                         
                                         <form class="form-horizontal" action="#">
 								<fieldset class="content-group">
-									<legend class="text-bold">New Welfare Form : กองทุนสวัสดิการชุมชนตำบลธาตุเชิงชุม</legend>
+									<legend class="text-bold">เพิ่มสวัสดิการใหม่ : กองทุนสวัสดิการชุมชนตำบลธาตุเชิงชุม</legend>
 
 									<div class="form-group">
-										<label class="control-label col-lg-2">Welfare Name</label>
+										<label class="control-label col-lg-2">ชื่อสวัสดิการ</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="data.welfareName" placeholder="Welfare Name">
+											<input type="text" class="form-control" ng-model="data.welfareName" placeholder="ชื่อสวัสดิการ">
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">Description</label>
+										<label class="control-label col-lg-2">รายละเอียด</label>
 										<div class="col-lg-10">
-											<textarea rows="5" cols="5" class="form-control" ng-model="data.description" placeholder="Welfare Description"></textarea>
+											<textarea rows="5" cols="5" class="form-control" ng-model="data.description" placeholder="รายละเอียด"></textarea>
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">Condition</label>
+										<label class="control-label col-lg-2">เงื่อนไข</label>
 										<div class="col-lg-3">
 											<input type="number" class="form-control" name="amountofDate[]" placeholder="Amount of Day" min="180" value="180">
 										</div>
@@ -60,7 +60,7 @@
 								</fieldset>
 
 								<div class="text-right">
-									<button type="button" class="btn btn-primary" ng-click="saveWelfare()">Submit <i class="icon-arrow-right14 position-right"></i></button>
+									<button type="button" class="btn btn-primary" ng-click="saveWelfare()">บันทึก <i class="icon-arrow-right14 position-right"></i></button>
 								</div>
 							</form>
                                     </div>

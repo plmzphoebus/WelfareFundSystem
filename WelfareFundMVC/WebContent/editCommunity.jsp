@@ -18,13 +18,13 @@
                                         
                                         <form class="form-horizontal">
 								<fieldset class="content-group">
-									<legend class="text-bold">Edit Community's information : กองทุนสวัสดิการชุมชนตำบลธาตุเชิงชุม</legend>
+									<legend class="text-bold">แก้ไขข้อมูลชุมชน : กองทุนสวัสดิการชุมชนตำบลธาตุเชิงชุม</legend>
 
 									<div class="form-group">
-										<label class="control-label col-lg-3">Community Name</label>
+										<label class="control-label col-lg-3">ชื่อชุมชน</label>
 										<div class="col-lg-8">
 										<input type="hidden" ng-model="community.communityId">
-											<input type="text" class="form-control" ng-model="community.communityName" >
+											<input type="text" class="form-control" ng-model="community.communityName" placeholder="ชื่อชุมชน">
 										</div>
 									</div>                         
                                     
@@ -32,7 +32,7 @@
 								</fieldset>
 
 								<div class="text-right">
-									<button type="button" class="btn btn-primary" ng-click="saveCommunity()">Save <i class="icon-arrow-right14 position-right"></i></button>
+									<button type="button" class="btn btn-primary" ng-click="saveCommunity()">บันทึก <i class="icon-arrow-right14 position-right"></i></button>
 								</div>
 							</form>
                                     </div>

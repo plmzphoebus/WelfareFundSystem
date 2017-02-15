@@ -13,7 +13,7 @@ import javax.persistence.ManyToOne;
 @Entity
 public class Transaction implements Serializable{
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long transactionId;
 	private Date date;
 	private Date startDate;

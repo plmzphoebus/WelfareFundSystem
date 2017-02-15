@@ -12,7 +12,7 @@
                     <div class="panel-body">    
 					   <div class="row">
 						  <div class="col-md-12">
-								<h4>All Community</h4>
+								<h4>จัดการชุมชน</h4>
                             </div>
                         </div>
                         <div class="tab-content">                               
@@ -21,14 +21,14 @@
 							class="table datatable-basic table-hover table-bordered">
                                         <thead>
                                             <tr>
-                                                <th>Community Id</th>
-                                                <th>Community Name</th>
+                                                <th>ลำดับที่</th>
+                                                <th>ชื่อชุมชน</th>
                                                 <th>Action</th>        
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr ng-repeat="community in communities">
-                                                <td>{{community.communityId}}</td>
+                                                <td>{{$index+1}}</td>
                                                 <td>{{community.communityName}}</td>                             
                                                 <td class="text-center">
                                                     <ul

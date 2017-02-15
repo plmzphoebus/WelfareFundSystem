@@ -20,7 +20,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class Member implements Serializable{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)		
+	@GeneratedValue(strategy = GenerationType.IDENTITY)		
 	private long memberId;
 	private String citizen;
 	private Date entranceDate;
@@ -32,12 +32,7 @@ public class Member implements Serializable{
 	private String mobileTel;
 	private String occupation;
 	private int revenue;
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	private MemberType memberType;
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	private PreferPayment preferPayment;
+	private String preferPayment;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Community community;
@@ -142,12 +137,12 @@ public class Member implements Serializable{
 		this.revenue = revenue;
 	}
 
-	public MemberType getMemberType() {
-		return memberType;
+	public String getPreferPayment() {
+		return preferPayment;
 	}
 
-	public void setMemberType(MemberType memberType) {
-		this.memberType = memberType;
+	public void setPreferPayment(String preferPayment) {
+		this.preferPayment = preferPayment;
 	}
 
 	public Community getCommunity() {
@@ -172,14 +167,6 @@ public class Member implements Serializable{
 
 	public void setReceiveWelfare(List<ReceiveWelfare> receiveWelfare) {
 		this.receiveWelfare = receiveWelfare;
-	}
-
-	public PreferPayment getPreferPayment() {
-		return preferPayment;
-	}
-
-	public void setPreferPayment(PreferPayment preferPayment) {
-		this.preferPayment = preferPayment;
 	}
 
 	public Account getAccount() {

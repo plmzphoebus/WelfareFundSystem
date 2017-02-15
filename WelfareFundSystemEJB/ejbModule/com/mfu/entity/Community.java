@@ -15,7 +15,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 public class Community implements Serializable{
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
 	private long communityId;
 	private String communityName;

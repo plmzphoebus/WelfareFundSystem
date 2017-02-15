@@ -18,23 +18,23 @@
                                         
                                         <form class="form-horizontal">
 								<fieldset class="content-group">
-									<legend class="text-bold">Edit Welfare's Information : กองทุนสวัสดิการชุมชนตำบลธาตุเชิงชุม</legend>
+									<legend class="text-bold">แก้ไขข้อมูลสวัสดิการ : กองทุนสวัสดิการชุมชนตำบลธาตุเชิงชุม</legend>
 
 									<div class="form-group">
-										<label class="control-label col-lg-2">Welfare Name</label>
+										<label class="control-label col-lg-2">ชื่อสวัสดิการ</label>
 										<div class="col-lg-10">
 										<input type="hidden" ng-model="welfare.welfareID">
-											<input type="text" class="form-control" ng-model="welfare.welfareName">
+											<input type="text" class="form-control" ng-model="welfare.welfareName" placeholder="ชื่อสวัสดิการ">
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">Description</label>
+										<label class="control-label col-lg-2">รายละเอียด</label>
 										<div class="col-lg-10">
-											<textarea rows="5" cols="5" class="form-control" ng-model="welfare.description"></textarea>
+											<textarea rows="5" cols="5" class="form-control" ng-model="welfare.description" placeholder="รายละเอียดสวัสดิการ"></textarea>
 										</div>
 									</div>
                                     <div class="form-group" ng-repeat="condition in welfare.conditionals">
-										<label class="control-label col-lg-2">Condition</label>
+										<label class="control-label col-lg-2">เงื่อนไข</label>
 
 										<div class="col-lg-3">
 											<input type="number" class="form-control" name="amountofDate[]" min="180" value="{{condition.amountofDate}}">
@@ -56,7 +56,7 @@
 								</fieldset>
 
 								<div class="text-right">
-									<button type="button" class="btn btn-primary" ng-click="saveWelfare()">Submit <i class="icon-arrow-right14 position-right"></i></button>
+									<button type="button" class="btn btn-primary" ng-click="saveWelfare()">บันทึก <i class="icon-arrow-right14 position-right"></i></button>
 								</div>
 							</form>
                                     </div>

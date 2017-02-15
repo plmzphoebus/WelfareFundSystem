@@ -16,7 +16,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 public class Welfare implements Serializable{
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long welfareID;
 	private String welfareName;
 	private String description;

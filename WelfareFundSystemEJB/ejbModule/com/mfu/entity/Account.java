@@ -16,7 +16,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 public class Account implements Serializable{
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private long accountId;
 	@OneToOne
 	@JsonIgnore

@@ -20,25 +20,23 @@
 						<table class="table datatable-basic table-hover table-bordered">
 							<thead>
 								<tr>
-                                    <th width="12.5%">Member Id</th>
-									<th width="12.5%">First Name</th>
-									<th width="12.5%">Last Name</th>
-                                    <th width="11%">Community</th>
-									<th width="12.5%">Phone No.</th>
-									<th width="14%">Entrance Date</th>
-                                    <th width="15%">Payment Type</th>
+                                    <th width="12.5%">ลำดับที่</th>
+									<th width="12.5%">ชื่อ - นามสกุล</th>
+                                    <th width="11%">ชุมชน</th>
+									<th width="12.5%">เบอร์โทรศัพท์</th>
+									<th width="14%">วันที่สมัคร</th>
+                                    <th width="15%">ประเภทการชำระเงิน</th>
 									<th width="10%" class="text-center">Actions</th>
 								</tr>
 							</thead>
 							<tbody ng-controller="allMemberCtrl">
 								<tr ng-repeat="member in members">
-                                    <td>{{member.memberId}}</td>
-									<td>{{member.firstName}}</td>
-									<td>{{member.lastName}}</td>
+                                    <td>{{$index+1}}</td>
+									<td><a href="memberDetail.jsp?id={{member.memberId}}&acid={{member.account.accountId}}">{{member.firstName}} {{member.lastName}}</a></td>
                                     <td>{{member.community.communityName}}</td>
 									<td>{{member.mobileTel}}</td>									
 									<td>{{member.entranceDate | date:"dd-MM-yyyy"}}</td>
-                                    <td>{{member.preferPayment.preferPaymentName}}</td>
+                                    <td>{{member.preferPayment}}</td>
 									<td class="text-center">
 										<ul class="icons-list">
 											<li class="dropdown">

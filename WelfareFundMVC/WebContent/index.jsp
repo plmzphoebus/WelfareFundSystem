@@ -16,7 +16,7 @@
                                                     <button class="btn bg-teal-300 btn-info btn-rounded btn-xs" type="button"> View All </button>
                                                 </div>
                                                 <h3 class="no-margin">532</h3>
-                                                All Members
+                                              	สมาชิกทั้งหมด
                                             </div>
                                             <div class="container-fluid">
                                                 <div id="members-online"></div>
@@ -32,7 +32,7 @@
                                                     <button class="btn bg-teal-300 btn-info btn-rounded btn-xs" type="button"> View All</button>
                                                 </div>
                                                 <h3 class="no-margin">1,220</h3>
-                                                All Committees
+                                            	    ชุมชนทั้งหมด
                                             </div>
                                             <div id="server-load"></div>
                                         </div>
@@ -48,7 +48,7 @@
 </button>
                                                 </div>
                                                 <h3 class="no-margin">18</h3>
-                                                All Welfare
+                                                สวัสดิการทั้งหมด
                                             </div>
                                             <div id="today-revenue"></div>
                                         </div>

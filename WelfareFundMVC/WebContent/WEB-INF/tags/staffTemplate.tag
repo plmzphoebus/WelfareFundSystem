@@ -42,7 +42,6 @@
         <script type="text/javascript" src="assets/js/plugins/ui/moment/moment.min.js"></script>
         <script type="text/javascript" src="assets/js/plugins/pickers/daterangepicker.js"></script>
         <script type="text/javascript" src="assets/js/core/app.js"></script>
-        <script type="text/javascript" src="assets/js/pages/dashboard.js"></script>
         <!-- /theme JS files -->
     </head>
     <body>
@@ -129,55 +128,44 @@
                                 <ul class="navigation navigation-main navigation-accordion">
                                     <!-- Main -->
                                     <li class="navigation-header">
-                                        <span>Main MENU</span> 
+                                        <span>เมนูหลัก</span> 
                                         <i class="icon-menu" title="Main Menu"></i>
                                     </li>
                                     <li class="${indexpage }">
-                                        <a href="index.jsp"><i class="icon-home4"></i> <span>Dashboard</span></a>
+                                        <a href="index.jsp"><i class="icon-home4"></i> <span>หน้าแรก</span></a>
                                     </li>
                                     <li>
-                                        <a href="#"><i class="icon-file-text"></i> <span> Member Management</span></a>
+                                        <a href="#"><i class="icon-file-text"></i> <span> จัดการสมาชิก</span></a>
                                         <ul>
                                             <li class="${newMember }">
-                                                <a href="newMember.jsp"><i class=" icon-file-plus"></i>New Member</a>
+                                                <a href="newMember.jsp"><i class=" icon-file-plus"></i>เพิ่มสมาชิกใหม่</a>
                                             </li>
                                             <li class="${allMember }">
-                                                <a href="allMember.jsp"><i class="icon-files-empty"></i>View all Members</a>
+                                                <a href="allMember.jsp"><i class="icon-files-empty"></i>ดูสมาชิกทั้งหมด</a>
                                             </li>
                                         </ul>
                                     </li>
                                     <!-- /main -->
                                     <!-- Forms -->
                                     <li>
-                                        <a href="#"><i class="icon-images2"></i> <span>Welfare Management</span></a>
+                                        <a href="#"><i class="icon-images2"></i> <span>จัดการสวัสดิการ</span></a>
                                         <ul>
                                             <li class="${newWelfare }">
-                                                <a href="newWelfare.jsp" data-toggle="modal"><i class="icon-plus3"></i>New Welfare</a>    
+                                                <a href="newWelfare.jsp"><i class="icon-plus3"></i>เพิ่มสวัสดิการใหม่</a>    
                                             </li>
                                             <li class="${allWelfare }">
-                                                <a href="allWelfare.jsp"><i class="icon-images3"></i>View all Welfare</a>
+                                                <a href="allWelfare.jsp"><i class="icon-images3"></i>ดูสวัสดิการทั้งหมด</a>
                                             </li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="#"><i class="icon-images2"></i> <span>Community Management</span></a>
+                                        <a href="#"><i class="icon-images2"></i> <span>จัดการชุมชน</span></a>
                                         <ul>
                                             <li class="${newCommunity }">
-                                                <a href="newCommunity.jsp" data-toggle="modal"><i class="icon-plus3"></i>New Community</a>    
+                                                <a href="newCommunity.jsp"><i class="icon-plus3"></i>เพิ่มชุมชนใหม่</a>    
                                             </li>
                                             <li class="${allCommunity }">
-                                                <a href="allCommunity.jsp"><i class="icon-images3"></i>View all Community</a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li>
-                                        <a href="#"><i class="icon-film2"></i> <span>Commitee Management</span></a>
-                                        <ul>
-                                            <li>
-                                                <a href="newCommittee.html"><i class="icon-plus3"></i>New Committee</a>
-                                            </li>
-                                            <li>
-                                                <a href="allCommittees.html"><i class="icon-video-camera"></i>View all Committees</a>
+                                                <a href="allCommunity.jsp"><i class="icon-images3"></i>ดูชุมชนทั้งหมด</a>
                                             </li>
                                         </ul>
                                     </li>

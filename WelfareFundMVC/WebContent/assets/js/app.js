@@ -3,7 +3,7 @@ angular.module('myApp', [])
         MemberService.getMember().then(function(response) {
             $scope.members = response;
         });
-    }).controller('memberDetailCtrl', function($scope, MemberService, AccountService, $http, WelfareService, ReceiveWelfareService, CommunityService, PreferPaymentService) {
+    }).controller('memberDetailCtrl', function($scope, MemberService, AccountService, $http, WelfareService, ReceiveWelfareService, CommunityService) {
         $scope.saving = '';
         $scope.receive = '';
         function findGetParameter(parameterName) {
@@ -47,13 +47,18 @@ angular.module('myApp', [])
         WelfareService.getallWelfare().then(function(response) {
             $scope.welfares = response;
         });
-        $scope.preferpayment = '';
         $scope.entranceDate = '';
+        $scope.paymentType = '' ;
+        $scope.peroidOfMembership = '';
         MemberService.getMemberById(findGetParameter("id")).then(function(response) {
             $scope.member = response;
-            $scope.preferpayment = $scope.member.preferPayment.preferPaymentId;
-            console.log("preferpayment", $scope.preferpayment);
+            $scope.paymentType = $scope.member.preferPayment;
             $scope.entranceDate = new Date($scope.member.entranceDate);
+            var currentDate = new Date();
+            var timeDiff = Math.abs(currentDate.getTime() - $scope.entranceDate.getTime());
+            $scope.peroidOfMembership = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            console.log("peroidOfMembership",$scope.peroidOfMembership);
+            console.log("scope",$scope);
         });
         AccountService.getAccountDetail(findGetParameter("acid")).then(function(response) {
             $scope.transactions = response;
@@ -90,12 +95,9 @@ angular.module('myApp', [])
         CommunityService.getallCommunity().then(function(response) {
             $scope.communities = response;
         });
-        PreferPaymentService.getallPreferPayment().then(function(response) {
-            $scope.preferPayments = response;
-        });
 
         
-    }).controller('newMemberCtrl', function($scope, CommunityService, PreferPaymentService, $http, MemberTypeService) {
+    }).controller('newMemberCtrl', function($scope, CommunityService, $http) {
         $scope.data = '';
         $scope.newMember = function() {
             console.log("data", JSON.stringify($scope.data));
@@ -106,15 +108,12 @@ angular.module('myApp', [])
                 alert("error");
             });
         }
+        $scope.data.firstCommunity= "";
         CommunityService.getallCommunity().then(function(response) {
             $scope.communities = response;
+            $scope.firstCommunity = $scope.communities[0].communityId;
+            console.log("firstCommunity",$scope.firstCommunity);
         });
-        PreferPaymentService.getallPreferPayment().then(function(response) {
-            $scope.preferPayments = response;
-        });
-        MemberTypeService.getallMemberType().then(function(response) {
-            $scope.memberTypes = response;
-        })
     }).controller('allCommunityCtrl', function($scope, CommunityService, $http) {
         $scope.data = '';
         CommunityService.getallCommunity().then(function(response) {
@@ -349,40 +348,7 @@ angular.module('myApp', [])
                 });
             }
         }
-    }).service('PreferPaymentService', function($http) {
-        return {
-            getallPreferPayment: function() {
-                // $http returns a promise, which has a then function, which also
-                // returns a promise.
-                return $http.get('listallPreferPayment.do').then(function(response) {
-                    // In the response, resp.data contains the result. Check the
-                    // console to see all of the data returned.
-                    console.log('Get Post', response);
-                    return response.data;
-                }, function(error) {
-                    console.log(error);
-                    return error;
-                });
-            }
-        }
-    }).service('MemberTypeService', function($http) {
-        return {
-            getallMemberType: function() {
-                // $http returns a promise, which has a then function, which also
-                // returns a promise.
-                return $http.get('listallMemberType.do').then(function(response) {
-                    // In the response, resp.data contains the result. Check the
-                    // console to see all of the data returned.
-                    console.log('memberType', response);
-                    return response.data;
-                }, function(error) {
-                    console.log(error);
-                    return error;
-                });
-            }
-        }
-    })
-    .service('ReceiveWelfareService', function($http) {
+    }).service('ReceiveWelfareService', function($http) {
         return {
             listReceiveWelfare: function(memberId) {
                 return $http.get('listReceiveWelfare/' + memberId + '.do').then(function(response) {

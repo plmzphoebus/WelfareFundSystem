@@ -7,16 +7,18 @@
 		<div class="panel panel-flat" ng-app="myApp"
 			ng-controller="memberDetailCtrl">
 						<div class="panel-heading">
-							<h5 class="panel-title"> <i class="icon-users2"></i> Member Detail</h5>
+							<h5 class="panel-title"> <i class="icon-users2"></i>รายละเอียดสมาชิก : {{member.firstName}} {{member.lastName}} ระยะเวลาที่เป็นสมาชิก {{peroidOfMembership}} วัน</h5>
 				<br>
                                 
 							<div class="heading-elements">
 				                <button class="btn btn-primary" data-toggle="modal"
-						data-target="#newSaving">New saving</button>
+						data-target="#newSaving">เพิ่มการออมใหม่</button>
                                 <button class="btn btn-success"
-						data-toggle="modal" data-target="#receiveWelfare">Receive Welfare</button>
+						data-toggle="modal" data-target="#receiveWelfare" ng-if="peroidOfMembership < 180" disabled>รับสวัสดิการ</button>
+						<button class="btn btn-success"
+						data-toggle="modal" data-target="#receiveWelfare" ng-if="peroidOfMembership >= 180">รับสวัสดิการ</button>
                                 <button class="btn btn-danger"
-						data-toggle="modal" data-target="#editinformation">Edit Member's information</button>
+						data-toggle="modal" data-target="#editinformation">แก้ไขข้อมูลสมาชิก</button>
 		                	</div>
 						</div>
                         
@@ -25,35 +27,33 @@
 					   <div class="row">
 						  <div class="col-md-12">
 								<ul class="nav nav-tabs bg-teal-400 nav-justified">								    
-								    <li class="active"><a href="#tab1" data-toggle="tab">Savings</a></li>
+								    <li class="active"><a href="#tab1" data-toggle="tab">การออม</a></li>
                                     <li><a href="#tab2"
-								data-toggle="tab">Welfares</a></li>
+								data-toggle="tab">การรับสวัสดิการ</a></li>
                                     <li><a href="#tab3"
-								data-toggle="tab">Member Detail</a></li>
+								data-toggle="tab">ข้อมูลสมาชิก</a></li>
 								</ul>
                             </div>
                         </div>
                         <div class="tab-content">
-                                <div class="tab-pane" id="tab1">
+                                <div class="tab-pane active" id="tab1">
                                     
                                     <table
 							class="table datatable-basic table-hover table-bordered">
                                         <thead>
                                             <tr>
-                                                <th class="text-center">Date</th>
-                                                <th class="text-center">Peroid</th>
-                                                <th class="text-center">Amount</th>                                    
-                                                <th class="text-center">Balance</th>
-                                                <th class="text-center">Recipient</th>
+                                                <th class="text-center">วันที่</th>
+                                                <th class="text-center">เดือน</th>
+                                                <th class="text-center">จำนวนเงิน</th>
+                                                <th class="text-center">ผู้รับเงิน</th>
                                                 <th class="text-center">Action</th>
                                             </tr>
                                         </thead>
-                                        <tbody ng-init="totalBalance = 0">
+                                        <tbody>
                                             <tr ng-repeat="trans in transactions" >
                                                 <td>{{trans.date | date:"dd-MM-yyyy"}}</td>
                                                 <td>{{trans.startDate | date:"MMMM"}} - {{trans.endDate | date:"MMMM"}}</td>
                                                 <td class="text-center">{{trans.amount}}</td>
-                                                <td class="text-center">{{totalBalance + (trans.amount*($index+1))}}</td>
                                                 <td class="text-center">รัตนา</td>
                                                 <td class="text-center"><a
 											class="btn btn-primary" href="printReceipt.jsp?id={{memberId}}&transactionid={{trans.transactionId}}">Print Receipt</a></td>
@@ -63,16 +63,14 @@
                                 </div>
 
 				                <div class="tab-pane" id="tab2">
-                                    <center>
-							<b>Born Balance:</b> 1500 Baht <b>Injury Balance:</b> 2000 Baht <b>Die Balance:</b> 3500 Baht</center>
 				                    <table
 							class="table datatable-basic table-hover table-bordered">
                                         <thead>
                                             <tr>
-                                                <th class="text-center">Date</th>
-                                                <th class="text-center">Welfare Type</th>
-                                                <th class="text-center">Amount</th>                                    
-                                                <th class="text-center">Remark</th>
+                                                <th class="text-center">วันที่</th>
+                                                <th class="text-center">ประเภทสวัสดิการ</th>
+                                                <th class="text-center">จำนวนเงิน</th>                                    
+                                                <th class="text-center">หมายเหตุ</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -95,23 +93,14 @@
                                     </table>
 				                </div>
                                 
-                                    <div class="tab-pane active"
+                                    <div class="tab-pane"
 						id="tab3">
                                         <div class="row">
                                             <div
 								class="col-md-6 col-md-offset-3">
                                                 <div class="form-group">
                                                     <label
-										class="control-label col-lg-4 text-bold">Member No.</label>
-                                                    <div
-										class="col-lg-8">
-                                                         <label
-											class="control-label">{{member.memberId}}</label>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label
-										class="control-label col-lg-4 text-bold">Member Name</label>
+										class="control-label col-lg-4 text-bold">ชื่อสมาชิก</label>
                                                     <div
 										class="col-lg-8">
                                                          <label
@@ -120,7 +109,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label
-										class="control-label col-lg-4 text-bold">Address</label>
+										class="control-label col-lg-4 text-bold">ที่อยู่</label>
                                                     <div
 										class="col-lg-8">
                                                          <label
@@ -129,7 +118,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label
-										class="control-label col-lg-4 text-bold">Telephone Number</label>
+										class="control-label col-lg-4 text-bold">เบอร์โทรศัพท์บ้าน</label>
                                                     <div
 										class="col-lg-8">
                                                          <label
@@ -138,7 +127,16 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label
-										class="control-label col-lg-4 text-bold">Entrance Date</label>
+										class="control-label col-lg-4 text-bold">เบอร์โทรศัพท์มือถือ</label>
+                                                    <div
+										class="col-lg-8">
+                                                         <label
+											class="control-label">{{member.mobileTel}}</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label
+										class="control-label col-lg-4 text-bold">วันที่เข้าเป็นสมาชิก</label>
                                                     <div
 										class="col-lg-8">
                                                          <label
@@ -147,11 +145,11 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <label
-										class="control-label col-lg-4 text-bold">Payment Type</label>
+										class="control-label col-lg-4 text-bold">ประเภทการชำระเงิน</label>
                                                     <div
 										class="col-lg-8">
                                                          <label
-											class="control-label">{{member.preferPayment.preferPaymentName}}</label>
+											class="control-label">{{member.preferPayment}}</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -169,7 +167,7 @@
             <div class="modal-content">
               <div class="modal-header bg-teal-600">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Saving Fund</h4>
+                <h4 class="modal-title">การออมเงิน</h4>
               </div>
               <div class="modal-body">
                   <div class="row">
@@ -223,7 +221,7 @@
             <div class="modal-content">
               <div class="modal-header bg-teal-600">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Received Welfare</h4>
+                <h4 class="modal-title">รับสวัสดิการ</h4>
               </div>
               <div class="modal-body">
                   <div class="row">
@@ -285,15 +283,15 @@
             <div class="modal-content">
               <div class="modal-header bg-teal-600">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Edit member's information</h4>
+                <h4 class="modal-title">แก้ไขข้อมูลสมาชิก</h4>
               </div>
               <div class="modal-body">
                   <div class="row">
                       <form class="form-horizontal" action="#">
 								<fieldset class="content-group">
-									<legend class="text-bold">Edit member : กองทุนสวัสดิการชุมชนตำบลธาตุเชิงชุม</legend>
+									<legend class="text-bold">แก้ไขข้อมูลสมาชิก : กองทุนสวัสดิการชุมชนตำบลธาตุเชิงชุม</legend>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">Entrance Date</label>
+										<label class="control-label col-lg-2">วันเข้าเป็นสมาชิก</label>
 										<div class="col-lg-10">
 											<input type="date" class="form-control" ng-model="entranceDate">
 										</div>
@@ -301,34 +299,36 @@
                                     <div class="form-group">
 										
                                         <label
-											class="control-label col-lg-2">Payment Type</label>
+											class="control-label col-lg-2">ประเภทการชำระเงิน</label>
 										<div class="col-lg-10">
-											<select class="form-control" ng-model="member.preferPayment.preferPaymentId">
-                                                <option ng-repeat="preferpayment in preferPayments" ng-selected="{{preferpayment.preferPaymentId == member.preferPayment.preferPaymentId}}" value="{{preferpayment.preferPaymentId}}">{{preferpayment.preferPaymentName}}</option>
+											<select class="form-control" ng-model="member.preferPayment">
+                                                <option value="รายเดือน" ng-selected="{{member.preferPayment == paymentType}}">รายเดือน</option>
+                                                <option value="รายครึ่งปี" ng-selected="{{member.preferPayment == paymentType}}">รายครึ่งปี</option>
+                                                <option value="รายปี" ng-selected="{{member.preferPayment == paymentType}}">รายปี</option>
                                             </select>
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="control-label col-lg-2">Firstname</label>
+										<label class="control-label col-lg-2">ชื่อ</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control" ng-model="member.firstName">
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">Lastname</label>
+										<label class="control-label col-lg-2">นามสกุล</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control" ng-model="member.lastName">
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">Age</label>
+										<label class="control-label col-lg-2">อายุ</label>
 										<div class="col-lg-10">
 											<input type="number" class="form-control" ng-model="member.age">
 										</div>
 									</div>
 
 									<div class="form-group">
-										<label class="control-label col-lg-2">Address</label>
+										<label class="control-label col-lg-2">ที่อยู่</label>
 										<div class="col-lg-10">
 											<textarea rows="5" cols="5" class="form-control"
 												placeholder="Default textarea" ng-model="member.address"></textarea>
@@ -336,26 +336,26 @@
 									</div>
 
 									<div class="form-group">
-										<label class="control-label col-md-2">Telephone Number</label>
+										<label class="control-label col-md-2">เบอร์โทรศัพท์บ้าน</label>
 										<div class="col-md-10">
 											<input class="form-control" type="tel" ng-model="member.telephoneNumber">
 										</div>
 									</div>
                                     
 									<div class="form-group">
-										<label class="control-label col-md-2">Telephone Number(Mobile)</label>
+										<label class="control-label col-md-2">เบอร์โทรศัพท์มือถือ</label>
 										<div class="col-md-10">
 											<input class="form-control" type="tel" ng-model="member.mobileTel">
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">Occupation</label>
+										<label class="control-label col-lg-2">อาชีพ</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control" ng-model="member.occupation">
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">Revenue/Month</label>
+										<label class="control-label col-lg-2">เงินเดือน</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control" ng-model="member.revenue">
 										</div>
@@ -371,26 +371,26 @@
 									<legend class="text-bold">ผู้รับผลประโยชน์</legend>
 
 									<div class="form-group">
-										<label class="control-label col-lg-2">Firstname</label>
+										<label class="control-label col-lg-2">ชื่อ</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control" ng-model="member.beneficiary.firstName">
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">Lastname</label>
+										<label class="control-label col-lg-2">นามสกุล</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control" ng-model="member.beneficiary.lastName">
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">Age</label>
+										<label class="control-label col-lg-2">อายุ</label>
 										<div class="col-lg-10">
 											<input type="number" class="form-control" ng-model="member.beneficiary.age">
 										</div>
 									</div>
 
 									<div class="form-group">
-										<label class="control-label col-lg-2">Address</label>
+										<label class="control-label col-lg-2">ที่อยู่</label>
 										<div class="col-lg-10">
 											<textarea rows="5" cols="5" class="form-control"
 												placeholder="Default textarea" ng-model="member.beneficiary.address"></textarea>
@@ -398,32 +398,32 @@
 									</div>
 
 									<div class="form-group">
-										<label class="control-label col-md-2">Telephone Number</label>
+										<label class="control-label col-md-2">เบอร์โทรศัพท์บ้าน</label>
 										<div class="col-md-10">
 											<input class="form-control" type="text" ng-model="member.beneficiary.telephoneNumber">
 										</div>
 									</div>
                                     
 									<div class="form-group">
-										<label class="control-label col-md-2">Telephone Number(Mobile)</label>
+										<label class="control-label col-md-2">เบอร์โทรศัพท์มือถือ</label>
 										<div class="col-md-10">
 											<input class="form-control" type="tel" ng-model="member.beneficiary.mobileTel">
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">Occupation</label>
+										<label class="control-label col-lg-2">อาชีพ</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control" ng-model="member.beneficiary.occupation">
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">Revenue/Month</label>
+										<label class="control-label col-lg-2">เงินเดือน</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control" ng-model="member.beneficiary.revenue">
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">Relationship</label>
+										<label class="control-label col-lg-2">ความสัมพันธ์</label>
 										<div class="col-lg-10">
 											<input type="text" class="form-control" ng-model="member.beneficiary.relationship">
 										</div>
@@ -432,7 +432,7 @@
 
 								<div class="text-right">
 								<input type="hidden" ng-model="member.memberId">
-									<button type="button" class="btn btn-primary" ng-click="saveMember()">Update <i
+									<button type="button" class="btn btn-primary" ng-click="saveMember()">บันทึก <i
 											class="icon-arrow-right14 position-right"></i>
 									</button>
 								</div>
@@ -442,7 +442,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default"
-							data-dismiss="modal">Close</button>
+							data-dismiss="modal">ปิด</button>
               </div>
             </div>
 
