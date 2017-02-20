@@ -26,28 +26,18 @@
 									<tr>
 	                                    <th width="12%">ลำดับที่</th>
 										<th width="15%">ชื่อสวัสดิการ</th>
-										<th width="65%">รายละเอียด</th>                                    
-										<th width="8%" class="text-center">Actions</th>
+										<th width="55%">รายละเอียด</th>                                    
+										<th class="text-center">Actions</th>
 									</tr>
 								</thead>
 								<tbody>
 									<tr ng-repeat="welfare in welfares">
 	                                    <td>{{$index+1}}</td>
-										<td>{{welfare.welfareName}}</td>
+										<td><a href="editWelfare.jsp?welfareId={{welfare.welfareID}}">{{welfare.welfareName}}</a></td>
 										<td>{{welfare.description}}</td>                                    
 										<td class="text-center">
-											<ul class="icons-list">
-												<li class="dropdown">
-													<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-														<i class="icon-menu9"></i>
-													</a>
-	
-													<ul class="dropdown-menu dropdown-menu-right">
-														<li><a href="editWelfare.jsp?welfareId={{welfare.welfareID}}">Edit</a></li>
-														<li><center><i class="icon-trash" style="color:red;cursor:pointer;" ng-click="deleteWelfare(welfare.welfareID)"></i></center></li>																									
-													</ul>
-												</li>
-											</ul>
+											<a href="editWelfare.jsp?welfareId={{welfare.welfareID}}">แก้ไข</a> 
+											<a href="#" ng-click="deleteWelfare(welfare.welfareID)" class="text-danger">ลบ</a>
 										</td>
 									</tr>		
 								</tbody>

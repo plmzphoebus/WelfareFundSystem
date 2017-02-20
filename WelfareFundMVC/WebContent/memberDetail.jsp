@@ -235,7 +235,7 @@
                       <div class="form-group">
                             <label class="control-label col-lg-2">Welfare Type</label>
                                 <div class="col-lg-10">
-                                    <select class="form-control" ng-model="receive.welfare.welfareID" >
+                                    <select class="form-control" ng-model="receive.welfare.welfareID" ng-change="selectedWelfare()">
                                         <option ng-repeat="welfare in welfares" value="{{welfare.welfareID}}">{{welfare.welfareName}}</option>
                                     </select>
                                 </div>
@@ -243,8 +243,9 @@
                       <div class="form-group">
                             <label class="control-label col-lg-2">Amount</label>
                                 <div class="col-lg-10">
-                                    <input type="number"
-										class="form-control" ng-model="receive.amount">
+                                    <select class="form-control" ng-model="receive.amount">
+                                    	<option ng-repeat="condition in listConditions" value="{{condition.welfareMoney}}">{{condition.conditionDetail}} {{condition.welfareMoney}} บาท</option>
+                                    </select>
                                 </div>
                       </div>
                       <div class="form-group">

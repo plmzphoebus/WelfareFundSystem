@@ -6,7 +6,7 @@
 	<jsp:attribute name="content">
 		<div class="panel panel-flat" ng-app="myApp" ng-controller="editWelfareCtrl">
 					<div class="row">
-                            <div class="col-lg-6 col-lg-offset-3">
+                            <div class="col-lg-8 col-lg-offset-2">
                                 <div class="panel panel-flat">
 						          <div class="panel-heading">
 							         <div class="heading-elements">
@@ -33,24 +33,26 @@
 											<textarea rows="5" cols="5" class="form-control" ng-model="welfare.description" placeholder="รายละเอียดสวัสดิการ"></textarea>
 										</div>
 									</div>
-                                    <div class="form-group" ng-repeat="condition in welfare.conditionals">
-										<label class="control-label col-lg-2">เงื่อนไข</label>
-
-										<div class="col-lg-3">
-											<input type="number" class="form-control" name="amountofDate[]" min="180" value="{{condition.amountofDate}}">
-										</div>
-                                        <div>
-											<label class="control-label col-lg-2">Day</label>
-										</div>
-                                        <div class="col-lg-3">
-											<input type="number" class="form-control" name="welfareMoney[]" value="{{condition.welfareMoney}}">
-										</div>
-                                         	<label class="control-label col-lg-1">Baht</label>
-                                        <div class="col-lg-1">
-											&nbsp;
-										</div>
+                                    <div class="form-group">
+										<label class="control-label col-lg-4"><b>เงื่อนไขการรับสวัสดิการ</b></label>
 									</div>
-                                    <div id="MoreCondition"></div>
+									<div class="form-group">
+										<table class="table">
+											<tr>
+												<th width="40%">รายละเอียดเงื่อนไข</th>
+												<th>จำนวนเงินที่ได้รับ (บาท)</th>
+												<th>จำนวนวันขั้นต่ำที่เป็นสมาชิก</th>
+												<th></th>
+											</tr>
+											<tbody id="moreCondition">
+											<tr ng-repeat="condition in welfare.conditionals">
+												<td>{{condition.conditionDetail}}</td>
+												<td>{{condition.welfareMoney}}</td>
+												<td>{{condition.amountofDate}}</td>
+											</tr>
+											</tbody>
+										</table>
+									</div>
                                     
                                     
 								</fieldset>

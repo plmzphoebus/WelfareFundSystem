@@ -5,7 +5,11 @@ angular.module('myApp', [])
         });
     }).controller('memberDetailCtrl', function($scope, MemberService, AccountService, $http, WelfareService, ReceiveWelfareService, CommunityService) {
         $scope.saving = '';
-        $scope.receive = '';
+        $scope.receive = [];
+        $scope.entranceDate = '';
+        $scope.paymentType = '' ;
+        $scope.peroidOfMembership = '';
+        $scope.receive.date = new Date();
         function findGetParameter(parameterName) {
             var result = null,
                 tmp = [];
@@ -47,9 +51,22 @@ angular.module('myApp', [])
         WelfareService.getallWelfare().then(function(response) {
             $scope.welfares = response;
         });
-        $scope.entranceDate = '';
-        $scope.paymentType = '' ;
-        $scope.peroidOfMembership = '';
+        $scope.listConditions = [];
+        $scope.selectedWelfare = function(){
+        	var welfareID = $scope.receive.welfare.welfareID;
+        	$scope.listConditions = [];
+        	for(var i = 0 ; i < $scope.welfares.length ; i++){
+        		if($scope.welfares[i].welfareID == welfareID){
+        			for(var innerloop = 0 ; innerloop < $scope.welfares[i].conditionals.length ; innerloop++){
+        				if($scope.peroidOfMembership >= $scope.welfares[i].conditionals[innerloop].amountofDate){
+        					$scope.listConditions.push($scope.welfares[i].conditionals[innerloop]);
+        				}
+        			}
+        			break;
+        		}
+        	}
+        }
+        
         MemberService.getMemberById(findGetParameter("id")).then(function(response) {
             $scope.member = response;
             $scope.paymentType = $scope.member.preferPayment;
@@ -71,15 +88,6 @@ angular.module('myApp', [])
                 alert("error");
             });
         };
-        $scope.receiveWelfare = function() {
-            console.log("receive", $scope.receive)
-            $http.post("saveReceiveWelfare.do", $scope.receive).then(function(response) {
-                console.log("success", response);
-                window.location.reload();
-            }, function(error) {
-                console.log("error", error);
-            });
-        }
         $scope.saveMember = function() {
             $scope.member.entranceDate = $scope.entranceDate;
             console.log("check", $scope.member);
@@ -161,24 +169,27 @@ angular.module('myApp', [])
             var amountofMoney = $("input[name='welfareMoney[]']").map(function() {
                 return $(this).val();
             }).get();
+            var conditionDetail = $("input[name='conditionDetail[]']").map(function() {
+                return $(this).val();
+            }).get();
             console.log("amountofDate", amountofDate);
             console.log("amountofMoney", amountofMoney);
+            console.log("amountofMoney", conditionDetail);
             $scope.data.conditionals = [];
             var condition = '[';
             for (var i = 0; i < amountofDate.length; i++) {
+            	condition += "{\"conditionDetail\":\"" + conditionDetail[i] + "\",";
+                condition += "\"amountofDate\":\"" + amountofDate[i] + "\",";
+                condition += "\"welfareMoney\":\"" + amountofMoney[i] + "\"";
                 if (i + 1 == amountofDate.length) {
-                    condition += "{\"amountofDate\":\"" + amountofDate[i] + "\",";
-                    condition += "\"welfareMoney\":\"" + amountofMoney[i] + "\"";
                     condition += "}";
                 } else {
-                    condition += "{\"amountofDate\":\"" + amountofDate[i] + "\",";
-                    condition += "\"welfareMoney\":\"" + amountofMoney[i] + "\"";
                     condition += "},";
                 }
             }
             condition += ']';
             console.log("condition", condition);
-            var obj = JSON.parse(condition)
+            var obj = JSON.parse(condition);
             $scope.data.conditionals = obj;
             console.log("condition", obj);
             console.log("data", $scope.data);

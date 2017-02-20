@@ -6,7 +6,7 @@
 	<jsp:attribute name="content">
 		<div class="panel panel-flat" ng-app="myApp" ng-controller="newWelfareCtrl">
 				<div class="row">
-                            <div class="col-lg-6 col-lg-offset-3">
+                            <div class="col-lg-8 col-lg-offset-2">
                                 <div class="panel panel-flat">
 						          <div class="panel-heading">
 							         <div class="heading-elements">
@@ -32,29 +32,30 @@
 											<textarea rows="5" cols="5" class="form-control" ng-model="data.description" placeholder="รายละเอียด"></textarea>
 										</div>
 									</div>
-                                    <div class="form-group">
-										<label class="control-label col-lg-2">เงื่อนไข</label>
-										<div class="col-lg-3">
-											<input type="number" class="form-control" name="amountofDate[]" placeholder="Amount of Day" min="180" value="180">
-										</div>
-                                        <div class="col-lg-2">
-											<select class="form-control">
-                                            <option selected>Days</option>
-                                            <option>Years</option>
-                                            </select>
-										</div>
-											
-										
-                                        <div class="col-lg-3">
-											<input type="number" class="form-control" name="welfareMoney[]" placeholder="Amount of Money">
-										</div>
-                                         <label class="control-label col-lg-1">Baht</label>
-                                        <div class="col-lg-1">
-											<button type="button" class="btn btn-success btn-circle" onclick="addCondition()"><i class="icon  icon-plus3"></i></button>
-										</div>
-                                       
+									<div class="form-group">
+										<label class="control-label col-lg-4"><b>เงื่อนไขการรับสวัสดิการ</b></label>
 									</div>
-                                    <div id="MoreCondition"></div>
+									<div class="form-group">
+										<table class="table">
+											<tr>
+												<th width="40%">รายละเอียดเงื่อนไข</th>
+												<th>จำนวนเงินที่ได้รับ (บาท)</th>
+												<th>จำนวนวันขั้นต่ำที่เป็นสมาชิก</th>
+												<th></th>
+											</tr>
+											<tbody id="moreCondition">
+											<tr>
+												<td><input type="text" name="conditionDetail[]" placeholder="รายละเอียดเงื่อนไข" class="form-control"></td>
+												<td><input type="number" name="welfareMoney[]" placeholder="จำนวนเงิน" class="form-control"></td>
+												<td><input type="number" name="amountofDate[]" placeholder="จำนวนวันขั้นต่ำ" class="form-control"></td>
+												<td>
+													<button type="button" class="btn btn-success btn-circle" onclick="addCondition()"><i class="icon  icon-plus3"></i></button>
+												</td>
+											</tr>
+											</tbody>
+										</table>
+									</div>
+                                   
                                     
                                     
 								</fieldset>
@@ -70,14 +71,22 @@
                         </div>		
 		</div>
 		 <script>
-            function addCondition(){
-                var id = Math.floor((Math.random() * 10000) + 1);
-                var str = "<div id=\"con"+id+"\" class=\"form-group\"><label class=\"control-label col-lg-2\">&nbsp;</label><div class=\"col-lg-3\"><input type=\"number\" class=\"form-control\" name=\"amountofDate[]\" placeholder=\"Amount of Day\" min=\"180\"></div><div class=\"col-lg-2\"><select class=\"form-control\"><option selected>Days</option><option>Years</option></select></div><div class=\"col-lg-3\"><input type=\"number\" class=\"form-control\" name=\"welfareMoney[]\" placeholder=\"Amount of Money\"></div><label class=\"control-label col-lg-1\">Baht</label><div class=\"col-lg-1\"><button type=\"button\" class=\"btn btn-danger btn-circle\" onclick=\"deleteCondition("+id+")\"><i class=\"icon  icon-minus3\"></i></button></div></div>"
-                
-                $("#MoreCondition").append(str);
-            }
+            
             function deleteCondition(id){
-                $("#con"+id).remove();
+                $("#condition"+id).remove();
+            }
+            function addCondition(){
+            	var id = Math.floor((Math.random() * 10000) + 1);
+            	var str = "";
+            	str += "<tr id=\"condition"+id+"\">";
+				str += "<td><input type=\"text\" name=\"conditionDetail[]\" placeholder=\"รายละเอียดเงื่อนไข\" class=\"form-control\"></td>";
+				str += "<td><input type=\"number\" name=\"welfareMoney[]\" placeholder=\"จำนวนเงิน\" class=\"form-control\"></td>";
+				str += "<td><input type=\"number\" name=\"amountofDate[]\" placeholder=\"จำนวนวันขั้นต่ำ\" class=\"form-control\"></td>";
+				str += "<td>";
+				str += "<button type=\"button\" class=\"btn btn-danger btn-circle\" onclick=\"deleteCondition("+id+")\"><i class=\"icon  icon-minus3\"></i></button>";
+				str += "</td>";
+				str += "</tr>";
+            	 $("#moreCondition").append(str);
             }
         </script>
 	</jsp:attribute>
