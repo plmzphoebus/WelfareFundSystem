@@ -9,5 +9,7 @@ public interface TransactionService {
 	public void update(Transaction transaction);
 	public Transaction findSavingFundById(long id);
 	public List<Transaction> getAllRSavingFund();
+	public List<Integer> getYearYearlyReport();
+	public List<Double> getTotalAmountYearlyReport();
 	public void delete(long id);
 }

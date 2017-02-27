@@ -1,6 +1,9 @@
 package com.mfu.web.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.ejb.EJB;
@@ -21,6 +24,7 @@ import com.mfu.entity.Welfare;
 import com.mfu.service.MemberService;
 import com.mfu.service.ReceiveWelfareService;
 import com.mfu.service.WelfareService;
+import com.mfu.web.model.LineChart;
 import com.mfu.web.model.TotalMembersChart;
 
 
@@ -94,5 +98,22 @@ public class ReceiveWelfareController {
 				}
 				
 				return new ResponseEntity<List<TotalMembersChart>>(listchart, HttpStatus.OK);
+			}
+			@RequestMapping(value="/getReceiveWelfareYearly", method = RequestMethod.GET)
+			@ResponseBody
+			public ResponseEntity<List<LineChart>> getReceiveWelfareYearly() throws ParseException{
+				List<LineChart> listLineChart = new ArrayList<LineChart>() ;
+				List<Integer> listYear = receiveWelfareServ.getYearYearlyReport();
+				List<Long> listTotalAmount = receiveWelfareServ.getTotalAmountYearlyReport();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				
+				for(int index = 0 ; index < listYear.size() ; index++){
+					LineChart lineChart = new LineChart();
+					Date c= sdf.parse(listYear.get(index)+"-06-15");
+					lineChart.setX(c);
+					lineChart.setY(listTotalAmount.get(index));
+					listLineChart.add(lineChart);
+				}
+				return new ResponseEntity<List<LineChart>>(listLineChart, HttpStatus.OK);
 			}
 }

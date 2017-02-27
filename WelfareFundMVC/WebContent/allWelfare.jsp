@@ -21,7 +21,7 @@
 							</div>
 	
 	
-							<table class="table datatable-basic table-hover table-bordered">
+							<table class="table datatable table-hover table-bordered">
 								<thead>
 									<tr>
 	                                    <th width="12%">ลำดับที่</th>
@@ -31,7 +31,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<tr ng-repeat="welfare in welfares">
+									<tr ng-repeat="welfare in welfares" on-finish-render="ngRepeatFinished">
 	                                    <td>{{$index+1}}</td>
 										<td><a href="editWelfare.jsp?welfareId={{welfare.welfareID}}">{{welfare.welfareName}}</a></td>
 										<td>{{welfare.description}}</td>                                    

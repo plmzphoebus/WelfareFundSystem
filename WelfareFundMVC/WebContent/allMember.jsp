@@ -17,7 +17,7 @@
 						</div>
 
 
-						<table class="table datatable-basic table-hover table-bordered">
+						<table class="table datatable table-hover table-bordered">
 							<thead>
 								<tr>
                                     <th width="12.5%">ลำดับที่</th>
@@ -30,7 +30,7 @@
 								</tr>
 							</thead>
 							<tbody ng-controller="allMemberCtrl">
-								<tr ng-repeat="member in members">
+								<tr ng-repeat="member in members" on-finish-render="ngRepeatFinished">
                                     <td>{{$index+1}}</td>
 									<td><a href="memberDetail.jsp?id={{member.memberId}}&acid={{member.account.accountId}}">{{member.firstName}} {{member.lastName}}</a></td>
                                     <td>{{member.community.communityName}}</td>

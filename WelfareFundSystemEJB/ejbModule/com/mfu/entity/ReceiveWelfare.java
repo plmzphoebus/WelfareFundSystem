@@ -73,4 +73,10 @@ public class ReceiveWelfare implements Serializable{
 		this.welfare = welfare;
 	}
 
+	@Override
+	public String toString() {
+		return "ReceiveWelfare [receiveWelfareId=" + receiveWelfareId + ", date=" + date + ", amount=" + amount
+				+ ", remark=" + remark + ", member=" + member + ", welfare=" + welfare + "]";
+	}
+
 }

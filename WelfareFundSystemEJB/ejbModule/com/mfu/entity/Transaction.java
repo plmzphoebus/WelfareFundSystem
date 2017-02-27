@@ -16,6 +16,7 @@ public class Transaction implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long transactionId;
 	private Date date;
+	private Date nextPayment;
 	private Date startDate;
 	private Date endDate;
 	private double amount;
@@ -32,6 +33,12 @@ public class Transaction implements Serializable{
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public Date getNextPayment() {
+		return nextPayment;
+	}
+	public void setNextPayment(Date nextPayment) {
+		this.nextPayment = nextPayment;
 	}
 	public Date getStartDate() {
 		return startDate;

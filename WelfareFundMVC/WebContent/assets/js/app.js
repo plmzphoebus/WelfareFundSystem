@@ -2,7 +2,21 @@ angular.module('myApp', [])
     .controller('allMemberCtrl', function($scope, MemberService) {
         MemberService.getMember().then(function(response) {
             $scope.members = response;
+            $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+            		$(".datatable").DataTable();
+            });
         });
+    }).directive('onFinishRender', function ($timeout) {
+        return {
+            restrict: 'A',
+            link: function (scope, element, attr) {
+                if (scope.$last === true) {
+                    $timeout(function () {
+                        scope.$emit(attr.onFinishRender);
+                    });
+                }
+            }
+        }
     }).controller('memberDetailCtrl', function($scope, MemberService, AccountService, $http, WelfareService, ReceiveWelfareService, CommunityService) {
         $scope.saving = '';
         $scope.receive = [];
@@ -137,11 +151,17 @@ angular.module('myApp', [])
                 console.log(error);
             })
         };
+        $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+    		$(".datatable").DataTable();
+        });
     }).controller('allWelfareCtrl', function($scope, WelfareService, $http) {
         $scope.data = '';
         WelfareService.getallWelfare().then(function(response) {
             $scope.welfares = response
-        })
+        });
+        $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+    		$(".datatable").DataTable();
+        });
         $scope.deleteWelfare = function(welfareId) {
             console.log(welfareId);
             $http.delete("deleteWelfare/" + welfareId + ".do").then(function(response) {
@@ -272,6 +292,23 @@ angular.module('myApp', [])
     	 AccountService.getTransactionDetail(findGetParameter("transactionid")).then(function(response){
     		$scope.transaction = response ;  
     	 });
+    })
+    .controller('printReceiveWelfareCtrl', function($scope,$http,MemberService,ReceiveWelfareService){
+    	 function findGetParameter(parameterName) {
+             var result = null,
+                 tmp = [];
+             location.search.substr(1).split("&").forEach(function(item) {
+                 tmp = item.split("=");
+                 if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+             });
+             return result;
+         }
+    	 MemberService.getMemberById(findGetParameter("id")).then(function(response){
+    		 $scope.member = response ;
+    	 });
+    	 ReceiveWelfareService.getReceiveWelfareById(findGetParameter("receiveWelfareId")).then(function(response){
+    		$scope.receiveWelfare = response;
+    	 });
     }).service('MemberService', function($http) {
         return {
             getMember: function() {
@@ -349,18 +386,6 @@ angular.module('myApp', [])
         }
     }).service('ReceiveWelfareService', function($http) {
         return {
-            listAllRecieveWelfare: function(memberID) {
-                return $http.get('listReceiveWelfare/' + memberID + '.do').then(function(response) {
-                    console.log('receiveWelfare', response);
-                    return response.data;
-                }, function(error) {
-                    console.log(error);
-                    return error;
-                });
-            }
-        }
-    }).service('ReceiveWelfareService', function($http) {
-        return {
             listReceiveWelfare: function(memberId) {
                 return $http.get('listReceiveWelfare/' + memberId + '.do').then(function(response) {
                     console.log('listReceiveWelfare', response.data);
@@ -369,6 +394,15 @@ angular.module('myApp', [])
                     console.log('receiveWelfare Error', error);
                     return error;
                 });
+            },
+            getReceiveWelfareById: function(receiveWelfareId){
+            	return $http.get('getReceiveWelfare/'+receiveWelfareId+'.do').then(function(response){
+            		console.log('getReceiveWelfareById',response.data);
+            		return response.data;
+            	},function(error){
+            		console.log('getReceiveWelfareById Error',error);
+            		return error;
+            	});
             }
         }
     }).service('AccountService', function($http) {

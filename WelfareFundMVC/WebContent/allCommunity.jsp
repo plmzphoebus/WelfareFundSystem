@@ -18,7 +18,7 @@
                         <div class="tab-content">                               
 				                
 				                    <table
-							class="table datatable-basic table-hover table-bordered">
+							class="table datatable table-hover table-bordered">
                                         <thead>
                                             <tr>
                                                 <th>ลำดับที่</th>
@@ -27,27 +27,13 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="community in communities">
+                                            <tr ng-repeat="community in communities" on-finish-render="ngRepeatFinished">
                                                 <td>{{$index+1}}</td>
                                                 <td>{{community.communityName}}</td>                             
                                                 <td class="text-center">
-                                                    <ul
-											class="icons-list">
-                                                        <li
-												class="dropdown">
-                                                            <a href="#"
-												class="dropdown-toggle" data-toggle="dropdown">
-                                                                <i
-													class="icon-menu9"></i>
-                                                            </a>
-
-                                                            <ul
-													class="dropdown-menu dropdown-menu-right">
-                                                                <li><a href="editCommunity.jsp?communityId={{community.communityId}}">Edit</a></li>                                                                
-                                                                <li><center><i class="icon-trash" style="color:red;cursor:pointer;" ng-click="deleteCommunity(community.communityId)"></i></center></li>													
-                                                            </ul>
-                                                        </li>
-                                                    </ul>
+                                                    <a href="editCommunity.jsp?communityId={{community.communityId}}">แก้ไข</a> 
+                                                    <a href="#" ng-click="deleteCommunity(community.communityId)" class="text-danger">ลบ</a>
+                                                    
                                                 </td>
                                             </tr>
                                         </tbody>

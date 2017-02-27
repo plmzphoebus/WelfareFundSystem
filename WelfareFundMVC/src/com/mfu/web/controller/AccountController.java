@@ -1,5 +1,8 @@
 package com.mfu.web.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mfu.entity.Transaction;
 import com.mfu.service.AccountService;
 import com.mfu.service.TransactionService;
+import com.mfu.web.model.LineChart;
 
 @Controller
 public class AccountController {
@@ -58,5 +62,22 @@ public class AccountController {
 		} catch (Exception e) {
 			return new ResponseEntity<String>("400",HttpStatus.BAD_REQUEST);
 		}
+	}
+	@RequestMapping(value="/getSavingYearly", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<List<LineChart>> getSavingYearly() throws ParseException{
+		List<LineChart> listLineChart = new ArrayList<LineChart>() ;
+		List<Integer> listYear = transServ.getYearYearlyReport();
+		List<Double> listTotalAmount = transServ.getTotalAmountYearlyReport();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		
+		for(int index = 0 ; index < listYear.size() ; index++){
+			LineChart lineChart = new LineChart();
+			Date c= sdf.parse(listYear.get(index)+"-06-15");
+			lineChart.setX(c);
+			lineChart.setY(Math.round(listTotalAmount.get(index)));
+			listLineChart.add(lineChart);
+		}
+		return new ResponseEntity<List<LineChart>>(listLineChart, HttpStatus.OK);
 	}
 }

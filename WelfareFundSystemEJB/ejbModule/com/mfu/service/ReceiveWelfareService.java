@@ -9,6 +9,8 @@ public interface ReceiveWelfareService {
 	public void update(ReceiveWelfare receiveWelfare);
 	public ReceiveWelfare findReceiveWelfareById(long id);
 	public List<ReceiveWelfare> getAllReceiveWelfare();
+	public List<Integer> getYearYearlyReport();
+	public List<Long> getTotalAmountYearlyReport();
 	public void delete(long id);
 	
 }

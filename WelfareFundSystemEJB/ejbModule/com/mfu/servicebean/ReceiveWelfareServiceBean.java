@@ -47,4 +47,19 @@ public class ReceiveWelfareServiceBean implements ReceiveWelfareService {
 		}
 	}
 
+	@Override
+	public List<Integer> getYearYearlyReport() {
+		// TODO Auto-generated method stub
+		List<Integer> model = this.em.createQuery("SELECT distinct year(ent.date) FROM ReceiveWelfare ent group by year(ent.date) order by year(ent.date) asc").getResultList();
+		return model;
+	}
+
+	@Override
+	public List<Long> getTotalAmountYearlyReport() {
+		// TODO Auto-generated method stub
+		List<Long> model = this.em.createQuery("SELECT sum(ent.amount) FROM ReceiveWelfare ent group by year(ent.date) order by year(ent.date) asc").getResultList();
+		return model;
+	}
+	
+
 }

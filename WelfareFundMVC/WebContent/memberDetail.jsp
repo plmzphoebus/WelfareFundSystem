@@ -71,6 +71,7 @@
                                                 <th class="text-center">ประเภทสวัสดิการ</th>
                                                 <th class="text-center">จำนวนเงิน</th>                                    
                                                 <th class="text-center">หมายเหตุ</th>
+                                                <th class="text-center">พิมพ์ใบเสร็จ</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -80,16 +81,11 @@
                                                 <td>{{receivewelfare.welfare.welfareName}}</td>
                                                 <td>{{receivewelfare.amount}}</td>                                    
                                                 <td>{{receivewelfare.remark}}</td>
+                                                <td><a
+											class="btn btn-primary" href="receiveWelfarePrint.jsp?id={{member.memberId}}&receiveWelfareId={{receivewelfare.receiveWelfareId}}">Print Receipt</a></td>
                                             </tr>
                                             
-                                        </tbody>
-
-                                            <tr ng-repeat="receiveWelfare in receiveWelfares">
-                                                <td>{{receiveWelfare.date |date : 'dd/MM/yyyy' }}</td>
-                                                <td class="text-center">{{receiveWelfare.welfare.welfareName}}</td>
-                                                <td class="text-center">{{receiveWelfare.amount}}</td>                                    
-                                                <td class="text-center">{{receiveWelfare.remark}}</td>
-                                            </tr>                                            
+                                        </tbody>                                          
                                     </table>
 				                </div>
                                 
@@ -226,31 +222,31 @@
               <div class="modal-body">
                   <div class="row">
                       <div class="form-group">
-                            <label class="control-label col-lg-2">Date</label>
-                                <div class="col-lg-10">
+                            <label class="control-label col-lg-3">วันที่</label>
+                                <div class="col-lg-9">
                                     <input type="date"
 										class="form-control" ng-model="receive.date">
                                 </div>
                       </div>
                       <div class="form-group">
-                            <label class="control-label col-lg-2">Welfare Type</label>
-                                <div class="col-lg-10">
+                            <label class="control-label col-lg-3">ประเภทสวัสดิการ</label>
+                                <div class="col-lg-9">
                                     <select class="form-control" ng-model="receive.welfare.welfareID" ng-change="selectedWelfare()">
                                         <option ng-repeat="welfare in welfares" value="{{welfare.welfareID}}">{{welfare.welfareName}}</option>
                                     </select>
                                 </div>
                       </div>
                       <div class="form-group">
-                            <label class="control-label col-lg-2">Amount</label>
-                                <div class="col-lg-10">
+                            <label class="control-label col-lg-3">จำนวนเงิน</label>
+                                <div class="col-lg-9">
                                     <select class="form-control" ng-model="receive.amount">
                                     	<option ng-repeat="condition in listConditions" value="{{condition.welfareMoney}}">{{condition.conditionDetail}} {{condition.welfareMoney}} บาท</option>
                                     </select>
                                 </div>
                       </div>
                       <div class="form-group">
-                            <label class="control-label col-lg-2">Remark</label>
-                                <div class="col-lg-10">
+                            <label class="control-label col-lg-3">หมายเหตุ</label>
+                                <div class="col-lg-9">
                                     <input type="text"
 										class="form-control" ng-model="receive.remark">
 										<input type="hidden"
@@ -258,10 +254,10 @@
                                 </div>
                       </div>
                       <div class="form-group">
-                            <label class="control-label col-lg-2">&nbsp;</label>
-                                <div class="col-lg-10">
+                            <label class="control-label col-lg-3">&nbsp;</label>
+                                <div class="col-lg-9">
                                     <button type="button"
-										class="btn btn-success" ng-click="receiveWelfare()">Save</button> 
+										class="btn btn-success" ng-click="receiveWelfare()">บันทึก</button> 
                                 </div>
                       </div>
                   </div>

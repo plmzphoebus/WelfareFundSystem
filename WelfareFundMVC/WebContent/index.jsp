@@ -68,6 +68,9 @@
                                         	<div class="col-md-6">
                                         		<div id="pieChart" style="height: 400px; width: 100%;"></div>
                                         	</div>
+                                        	<div class="col-md-6">
+                                        		<div id="YearlyReport" style="height: 400px; width: 100%;"></div>
+                                        	</div>
                                         </div>
                                     </div>
                                 </div>
@@ -81,17 +84,17 @@
 				  console.log("chart",data);
 				  var chart = new CanvasJS.Chart("chartContainer", {
 						title: {
-							text: "Total members of each community"
+							text: "สมาชิกทั้งหมดในแต่ละชุมชน"
 						},
-						exportFileName: "Total Members of each Community Chart",
+						exportFileName: "สมาชิกทั้งหมดในแต่ละชุมชน",
 						exportEnabled: true,
 						animationEnabled: true,
 						axisY:{
-						       title: "Persons",
+						       title: "จำนวนสมาชิก",
 						        titleFontSize: 20
 						      },
 						axisX:{
-							title: "Community Name",
+							title: "ชื่อชุมชน",
 					        titleFontSize: 20
 						},
 						data: [{
@@ -106,9 +109,9 @@
 						{
 							theme: "theme2",
 							title:{
-								text: "Amount of Resceiving Welfare"
+								text: "จำนวนเงินที่มอบในแต่ละสวัสดิการ"
 							},
-							exportFileName: "Amount of Resceiving Welfare Chart",
+							exportFileName: "จำนวนเงินที่มอบในแต่ละสวัสดิการ",
 							exportEnabled: true,
 					        animationEnabled: true,
 							data: [
@@ -116,7 +119,7 @@
 								type: "pie",
 								showInLegend: true,
 								toolTipContent: "{y} - #percent %",
-								yValueFormatString: "#,###.## Baht",
+								yValueFormatString: "#,###.## บาท",
 								legendText: "{label}",
 								dataPoints: data
 							}
@@ -124,7 +127,85 @@
 						});
 						chart.render();
 			});
-			
+			var savingFundReport = [];
+			var promise = $.get("getSavingYearly.do");
+			promise.done(function(response) {
+				savingFundReport = response;
+				$.get("getReceiveWelfareYearly.do", function(data){
+					
+					console.log(data);
+					for(var index = 0 ; index < data.length ; index++){
+						data[index].x = new Date(data[index].x);
+					}
+					for( var index = 0 ; index < savingFundReport.length; index++){
+						savingFundReport[index].x = new Date(savingFundReport[index].x);
+					}
+					var chart = new CanvasJS.Chart("YearlyReport",
+							{
+
+						title:{
+							text: "Site Traffic",
+							fontSize: 30
+						},
+			                        animationEnabled: true,
+						axisX:{
+
+							gridColor: "Silver",
+							tickColor: "silver",
+							valueFormatString: "YYYY"
+
+						},                        
+			                        toolTip:{
+			                          shared:true
+			                        },
+						theme: "theme2",
+						axisY: {
+							gridColor: "Silver",
+							tickColor: "silver"
+						},
+						legend:{
+							verticalAlign: "center",
+							horizontalAlign: "right"
+						},
+						data: [
+						{        
+							type: "line",
+							showInLegend: true,
+							lineThickness: 2,
+							name: "จำนวนเงินจ่ายสวัสดิการ",
+							yValueFormatString: "#,###.## บาท",
+							markerType: "square",
+							color: "#F08080",
+							dataPoints: data
+						},
+						{        
+							type: "line",
+							showInLegend: true,
+							lineThickness: 2,
+							name: "จำนวนเงินฝาก",
+							yValueFormatString: "#,###.## บาท",
+							markerType: "square",
+							color: "#20B2AA",
+							dataPoints: savingFundReport
+						}
+						],
+			          legend:{
+			            cursor:"pointer",
+			            itemclick:function(e){
+			              if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+			              	e.dataSeries.visible = false;
+			              }
+			              else{
+			                e.dataSeries.visible = true;
+			              }
+			              chart.render();
+			            }
+			          }
+					});
+
+			chart.render();		
+				});
+			});
 			
 		}
 	</script>
