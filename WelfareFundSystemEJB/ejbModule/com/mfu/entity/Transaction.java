@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Transaction implements Serializable{
@@ -20,6 +22,8 @@ public class Transaction implements Serializable{
 	private Date startDate;
 	private Date endDate;
 	private double amount;
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date timeStamp;
 	@ManyToOne(fetch=FetchType.EAGER)
 	private Account account;
 	public long getTransactionId() {
@@ -54,6 +58,12 @@ public class Transaction implements Serializable{
 	}
 	public double getAmount() {
 		return amount;
+	}
+	public Date getTimeStamp() {
+		return timeStamp;
+	}
+	public void setTimeStamp(Date timeStamp) {
+		this.timeStamp = timeStamp;
 	}
 	public void setAmount(double amount) {
 		this.amount = amount;
