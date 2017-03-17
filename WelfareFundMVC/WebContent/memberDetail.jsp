@@ -14,9 +14,10 @@
 				                <button class="btn btn-primary" data-toggle="modal"
 						data-target="#newSaving">เพิ่มการออมใหม่</button>
                                 <button class="btn btn-success"
-						data-toggle="modal" data-target="#receiveWelfare" ng-if="peroidOfMembership < 180" disabled>รับสวัสดิการ</button>
-						<button class="btn btn-success"
-						data-toggle="modal" data-target="#receiveWelfare" ng-if="peroidOfMembership >= 180">รับสวัสดิการ</button>
+						data-toggle="modal" data-target="#receiveWelfare"
+						ng-if="peroidOfMembership < 180" disabled>รับสวัสดิการ</button>
+						<button class="btn btn-success" data-toggle="modal"
+						data-target="#receiveWelfare" ng-if="peroidOfMembership >= 180">รับสวัสดิการ</button>
                                 <button class="btn btn-danger"
 						data-toggle="modal" data-target="#editinformation">แก้ไขข้อมูลสมาชิก</button>
 		                	</div>
@@ -50,13 +51,15 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr ng-repeat="trans in transactions" >
+                                            <tr
+									ng-repeat="trans in transactions">
                                                 <td>{{trans.date | date:"dd-MM-yyyy"}}</td>
                                                 <td>{{trans.startDate | date:"MMMM"}} - {{trans.endDate | date:"MMMM"}}</td>
                                                 <td class="text-center">{{trans.amount}}</td>
                                                 <td class="text-center">รัตนา</td>
                                                 <td class="text-center"><a
-											class="btn btn-primary" href="printReceipt.jsp?id={{memberId}}&transactionid={{trans.transactionId}}">Print Receipt</a></td>
+										class="btn btn-primary"
+										href="printReceipt.jsp?id={{memberId}}&transactionid={{trans.transactionId}}">Print Receipt</a></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -76,21 +79,22 @@
                                         </thead>
                                         <tbody>
 
-                                            <tr ng-repeat="receivewelfare in receivewelfares">
+                                            <tr
+									ng-repeat="receivewelfare in receivewelfares">
                                                 <td>{{receivewelfare.date | date:'dd/MM/yyyy'}}</td>
                                                 <td>{{receivewelfare.welfare.welfareName}}</td>
                                                 <td>{{receivewelfare.amount}}</td>                                    
                                                 <td>{{receivewelfare.remark}}</td>
                                                 <td><a
-											class="btn btn-primary" href="receiveWelfarePrint.jsp?id={{member.memberId}}&receiveWelfareId={{receivewelfare.receiveWelfareId}}">Print Receipt</a></td>
+										class="btn btn-primary"
+										href="receiveWelfarePrint.jsp?id={{member.memberId}}&receiveWelfareId={{receivewelfare.receiveWelfareId}}">Print Receipt</a></td>
                                             </tr>
                                             
                                         </tbody>                                          
                                     </table>
 				                </div>
                                 
-                                    <div class="tab-pane"
-						id="tab3">
+                                    <div class="tab-pane" id="tab3">
                                         <div class="row">
                                             <div
 								class="col-md-6 col-md-offset-3">
@@ -156,7 +160,7 @@
 				            </div>
                         </div>
                          <!-- Modal -->
-        <div id="newSaving" class="modal fade" role="dialog" >
+        <div id="newSaving" class="modal fade" role="dialog">
           <div class="modal-dialog">
 
             <!-- Modal content-->
@@ -166,42 +170,43 @@
                 <h4 class="modal-title">การออมเงิน</h4>
               </div>
               <div class="modal-body">
-                  <div class="row">
-                      <div class="form-group">
-                            <label class="control-label col-lg-2">Start Date</label>
-                                <div class="col-lg-10">
-                                    <input type="date"
-										class="form-control" ng-model="saving.startDate">
+                  <div class="row">                                    
+                                    <p>
+									<b>รายฝากเงิน{{member.preferPayment}}</b>
+								</p>
+                                     <div class="col-md-12">
+                                    <p class="text-center"
+										id="showMonthOfPeriod"
+										ng-if="member.preferPayment=='รายเดือน'">{{lastTransaction.nextPayment|date:"MMMM yyyy"}}</p>
+                                    <p class="text-center"
+										id="showMonthOfPeriod"
+										ng-if="member.preferPayment=='รายครึ่งปี' || member.preferPayment=='รายปี'">{{startDate|date:"MMMM yyyy"}} - {{endDate|date:"MMMM yyyy"}}</p>
+                                    
+                                    <p class="text-center"
+										ng-if="member.preferPayment=='รายเดือน'">จำนวนเงินที่ฝาก <span
+											id="amountOfSaving">{{getAllDateOfMonth(nextPaymentYear, nextPaymentMonth)}}</span> บาท</p>
+                                    <p class="text-center"
+										ng-if="member.preferPayment=='รายครึ่งปี'">จำนวนเงินที่ฝาก <span
+											id="amountOfSaving">{{getAmountOfPeriod(nextPaymentYear, nextPaymentMonth,6)}}</span> บาท</p>
+                                    <p class="text-center"
+										ng-if="member.preferPayment=='รายปี'">จำนวนเงินที่ฝาก <span
+											id="amountOfSaving">{{getAmountOfPeriod(nextPaymentYear, nextPaymentMonth,12)}}</span> บาท</p>
+                                    </div>
+                                   
+                                    <div class="col-md-12">
+                                        
+                                    <center>
+                                         <br>
+                                          <button type="button"
+											class="btn btn-success text-center" ng-click="savingFund()">บันทึกการออม</button>
+                                    </center>
+                                    </div>
                                 </div>
-                      </div>
-                      <div class="form-group">
-                            <label class="control-label col-lg-2">End Date</label>
-                                <div class="col-lg-10">
-                                    <input type="date"
-										class="form-control" ng-model="saving.endDate">
-                                </div>
-                      </div>
-                      <div class="form-group">
-                            <label class="control-label col-lg-2">Amount</label>
-                                <div class="col-lg-10">
-                                    <input type="number"
-										class="form-control" ng-model="saving.amount">
-									<input type="hidden"
-										class="form-control" ng-model="saving.account.accountId" ng-init="saving.account.accountId = accountId">
-                                </div>
-                      </div>
-                      <div class="form-group">
-                            <label class="control-label col-lg-2">&nbsp;</label>
-                                <div class="col-lg-10">
-                                    <button type="button" ng-click="savingFund()" class="btn btn-success" >Save</button>
-                                </div>
-                      </div>
-                  </div>
                     
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default"
-							data-dismiss="modal">Close</button>
+								data-dismiss="modal">Close</button>
               </div>
             </div>
 
@@ -225,22 +230,29 @@
                             <label class="control-label col-lg-3">วันที่</label>
                                 <div class="col-lg-9">
                                     <input type="date"
-										class="form-control" ng-model="receive.date">
+											class="form-control" ng-model="receive.date">
                                 </div>
                       </div>
                       <div class="form-group">
                             <label class="control-label col-lg-3">ประเภทสวัสดิการ</label>
                                 <div class="col-lg-9">
-                                    <select class="form-control" ng-model="receive.welfare.welfareID" ng-change="selectedWelfare()">
-                                        <option ng-repeat="welfare in welfares" value="{{welfare.welfareID}}">{{welfare.welfareName}}</option>
+                                    <select class="form-control"
+											ng-model="receive.welfare.welfareID"
+											ng-change="selectedWelfare()">
+                                        <option
+												ng-repeat="welfare in welfares"
+												value="{{welfare.welfareID}}">{{welfare.welfareName}}</option>
                                     </select>
                                 </div>
                       </div>
                       <div class="form-group">
                             <label class="control-label col-lg-3">จำนวนเงิน</label>
                                 <div class="col-lg-9">
-                                    <select class="form-control" ng-model="receive.amount">
-                                    	<option ng-repeat="condition in listConditions" value="{{condition.welfareMoney}}">{{condition.conditionDetail}} {{condition.welfareMoney}} บาท</option>
+                                    <select class="form-control"
+											ng-model="receive.amount">
+                                    	<option
+												ng-repeat="condition in listConditions"
+												value="{{condition.welfareMoney}}">{{condition.conditionDetail}} {{condition.welfareMoney}} บาท</option>
                                     </select>
                                 </div>
                       </div>
@@ -248,16 +260,17 @@
                             <label class="control-label col-lg-3">หมายเหตุ</label>
                                 <div class="col-lg-9">
                                     <input type="text"
-										class="form-control" ng-model="receive.remark">
-										<input type="hidden"
-										class="form-control" ng-model="receive.member.memberId" ng-init="receive.member.memberId = memberId">
+											class="form-control" ng-model="receive.remark">
+										<input type="hidden" class="form-control"
+											ng-model="receive.member.memberId"
+											ng-init="receive.member.memberId = memberId">
                                 </div>
                       </div>
                       <div class="form-group">
                             <label class="control-label col-lg-3">&nbsp;</label>
                                 <div class="col-lg-9">
                                     <button type="button"
-										class="btn btn-success" ng-click="receiveWelfare()">บันทึก</button> 
+											class="btn btn-success" ng-click="receiveWelfare()">บันทึก</button> 
                                 </div>
                       </div>
                   </div>
@@ -265,7 +278,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default"
-							data-dismiss="modal">Close</button>
+								data-dismiss="modal">Close</button>
               </div>
             </div>
 
@@ -290,37 +303,45 @@
                                     <div class="form-group">
 										<label class="control-label col-lg-2">วันเข้าเป็นสมาชิก</label>
 										<div class="col-lg-10">
-											<input type="date" class="form-control" ng-model="entranceDate">
+											<input type="date" class="form-control"
+													ng-model="entranceDate">
 										</div>
 									</div>
                                     <div class="form-group">
 										
                                         <label
-											class="control-label col-lg-2">ประเภทการชำระเงิน</label>
+												class="control-label col-lg-2">ประเภทการชำระเงิน</label>
 										<div class="col-lg-10">
 											<select class="form-control" ng-model="member.preferPayment">
-                                                <option value="รายเดือน" ng-selected="{{member.preferPayment == paymentType}}">รายเดือน</option>
-                                                <option value="รายครึ่งปี" ng-selected="{{member.preferPayment == paymentType}}">รายครึ่งปี</option>
-                                                <option value="รายปี" ng-selected="{{member.preferPayment == paymentType}}">รายปี</option>
+                                                <option value="รายเดือน"
+														ng-selected="{{member.preferPayment == paymentType}}">รายเดือน</option>
+                                                <option
+														value="รายครึ่งปี"
+														ng-selected="{{member.preferPayment == paymentType}}">รายครึ่งปี</option>
+                                                <option value="รายปี"
+														ng-selected="{{member.preferPayment == paymentType}}">รายปี</option>
                                             </select>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="control-label col-lg-2">ชื่อ</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="member.firstName">
+											<input type="text" class="form-control"
+													ng-model="member.firstName">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">นามสกุล</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="member.lastName">
+											<input type="text" class="form-control"
+													ng-model="member.lastName">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">อายุ</label>
 										<div class="col-lg-10">
-											<input type="number" class="form-control" ng-model="member.age">
+											<input type="number" class="form-control"
+													ng-model="member.age">
 										</div>
 									</div>
 
@@ -328,33 +349,37 @@
 										<label class="control-label col-lg-2">ที่อยู่</label>
 										<div class="col-lg-10">
 											<textarea rows="5" cols="5" class="form-control"
-												placeholder="Default textarea" ng-model="member.address"></textarea>
+													placeholder="Default textarea" ng-model="member.address"></textarea>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="control-label col-md-2">เบอร์โทรศัพท์บ้าน</label>
 										<div class="col-md-10">
-											<input class="form-control" type="tel" ng-model="member.telephoneNumber">
+											<input class="form-control" type="tel"
+													ng-model="member.telephoneNumber">
 										</div>
 									</div>
                                     
 									<div class="form-group">
 										<label class="control-label col-md-2">เบอร์โทรศัพท์มือถือ</label>
 										<div class="col-md-10">
-											<input class="form-control" type="tel" ng-model="member.mobileTel">
+											<input class="form-control" type="tel"
+													ng-model="member.mobileTel">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">อาชีพ</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="member.occupation">
+											<input type="text" class="form-control"
+													ng-model="member.occupation">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">เงินเดือน</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="member.revenue">
+											<input type="text" class="form-control"
+													ng-model="member.revenue">
 										</div>
 									</div>
                                     <h4>เงื่อนไขการเป็นสมาชิก</h4>
@@ -370,19 +395,22 @@
 									<div class="form-group">
 										<label class="control-label col-lg-2">ชื่อ</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="member.beneficiary.firstName">
+											<input type="text" class="form-control"
+													ng-model="member.beneficiary.firstName">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">นามสกุล</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="member.beneficiary.lastName">
+											<input type="text" class="form-control"
+													ng-model="member.beneficiary.lastName">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">อายุ</label>
 										<div class="col-lg-10">
-											<input type="number" class="form-control" ng-model="member.beneficiary.age">
+											<input type="number" class="form-control"
+													ng-model="member.beneficiary.age">
 										</div>
 									</div>
 
@@ -390,47 +418,54 @@
 										<label class="control-label col-lg-2">ที่อยู่</label>
 										<div class="col-lg-10">
 											<textarea rows="5" cols="5" class="form-control"
-												placeholder="Default textarea" ng-model="member.beneficiary.address"></textarea>
+													placeholder="Default textarea"
+													ng-model="member.beneficiary.address"></textarea>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="control-label col-md-2">เบอร์โทรศัพท์บ้าน</label>
 										<div class="col-md-10">
-											<input class="form-control" type="text" ng-model="member.beneficiary.telephoneNumber">
+											<input class="form-control" type="text"
+													ng-model="member.beneficiary.telephoneNumber">
 										</div>
 									</div>
                                     
 									<div class="form-group">
 										<label class="control-label col-md-2">เบอร์โทรศัพท์มือถือ</label>
 										<div class="col-md-10">
-											<input class="form-control" type="tel" ng-model="member.beneficiary.mobileTel">
+											<input class="form-control" type="tel"
+													ng-model="member.beneficiary.mobileTel">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">อาชีพ</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="member.beneficiary.occupation">
+											<input type="text" class="form-control"
+													ng-model="member.beneficiary.occupation">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">เงินเดือน</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="member.beneficiary.revenue">
+											<input type="text" class="form-control"
+													ng-model="member.beneficiary.revenue">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">ความสัมพันธ์</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="member.beneficiary.relationship">
+											<input type="text" class="form-control"
+													ng-model="member.beneficiary.relationship">
 										</div>
 									</div>
 								</fieldset>
 
 								<div class="text-right">
 								<input type="hidden" ng-model="member.memberId">
-									<button type="button" class="btn btn-primary" ng-click="saveMember()">บันทึก <i
-											class="icon-arrow-right14 position-right"></i>
+									<button type="button" class="btn btn-primary"
+											ng-click="saveMember()">บันทึก <i
+												class="icon-arrow-right14 position-right"></i>
 									</button>
 								</div>
 							</form>
@@ -439,7 +474,7 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default"
-							data-dismiss="modal">ปิด</button>
+								data-dismiss="modal">ปิด</button>
               </div>
             </div>
 

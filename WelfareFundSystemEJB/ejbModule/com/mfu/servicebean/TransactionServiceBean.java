@@ -76,5 +76,14 @@ public class TransactionServiceBean implements TransactionService {
 		List<Double> model = this.em.createQuery("SELECT SUM(ent.amount) FROM Transaction ent GROUP BY YEAR(ent.date), MONTH(ent.date) ORDER BY YEAR(ent.date), MONTH(ent.date)").getResultList();
 		return model;
 	}
+	@Override
+	public Transaction getLastRecordByAccountId(long accountId) {
+		// TODO Auto-generated method stub
+		try{
+		return (Transaction) this.em.createQuery("SELECT ent FROM Transaction ent WHERE ent.account.accountId=:accountId ORDER BY ent.transactionId DESC").setMaxResults(1).setParameter("accountId", accountId).getResultList().get(0);
+		}catch(IndexOutOfBoundsException e){
+			return null;
+		}
+	}
 
 }

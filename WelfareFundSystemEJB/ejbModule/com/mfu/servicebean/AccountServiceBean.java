@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.mfu.entity.Account;
+import com.mfu.entity.Member;
 import com.mfu.entity.Transaction;
 import com.mfu.service.AccountService;
 
@@ -55,6 +56,13 @@ public class AccountServiceBean implements AccountService {
 		// TODO Auto-generated method stub
 		return this.em.createQuery("SELECT ent FROM Transaction ent WHERE ent.account.accountId =:accountId")
 				.setParameter("accountId", accountId).getResultList();
+	}
+
+	@Override
+	public Member getMemberByAcountId(long accountId) {
+		Member member = (Member) this.em.createQuery("SELECT ent FROM Member ent WHERE ent.account.accountId =:accountId")
+				.setParameter("accountId", accountId).getResultList().get(0);
+		return member;
 	}
 
 }

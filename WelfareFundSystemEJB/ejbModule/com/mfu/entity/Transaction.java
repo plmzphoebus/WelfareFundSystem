@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 @Entity
 public class Transaction implements Serializable{
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long transactionId;
 	private Date date;
 	private Date nextPayment;

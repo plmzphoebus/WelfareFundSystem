@@ -18,12 +18,29 @@ angular.module('myApp', [])
             }
         }
     }).controller('memberDetailCtrl', function($scope, MemberService, AccountService, $http, WelfareService, ReceiveWelfareService, CommunityService) {
-        $scope.saving = '';
+        $scope.saving = {};
         $scope.receive = [];
         $scope.entranceDate = '';
         $scope.paymentType = '' ;
         $scope.peroidOfMembership = '';
+        $scope.member = {} ;
+        $scope.lastTransaction ={};
+        $scope.nextPaymentYear="";
+        $scope.nextPaymentMonth="";
+        $scope.nextPayment = 0;
+        $scope.startDate = 0;
+        $scope.endDate = 0;
         $scope.receive.date = new Date();
+        MemberService.getMemberById(findGetParameter("id")).then(function(response) {
+            $scope.member = response;
+            $scope.paymentType = $scope.member.preferPayment;
+            $scope.entranceDate = new Date($scope.member.entranceDate);
+            var currentDate = new Date();
+            var timeDiff = Math.abs(currentDate.getTime() - $scope.entranceDate.getTime());
+            $scope.peroidOfMembership = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            console.log("peroidOfMembership",$scope.peroidOfMembership);
+            console.log("scope",$scope);
+        });
         function findGetParameter(parameterName) {
             var result = null,
                 tmp = [];
@@ -41,8 +58,66 @@ angular.module('myApp', [])
         AccountService.getAccountDetail(findGetParameter("acid")).then(function(response) {
             $scope.transactions = response;
         });
-
+$http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(function (response){
+        	
+        	$scope.lastTransaction = response.data;
+        	$scope.nextPaymentYear = new Date($scope.lastTransaction.nextPayment).getFullYear();
+        	$scope.nextPaymentMonth = new Date($scope.lastTransaction.nextPayment).getMonth()+1;
+        	$scope.startDate = new Date($scope.lastTransaction.nextPayment).getTime();
+        	console.log("$scope.startDate",$scope.startDate);
+        	//ตรวจสอบการออมเงินแบบรายเดือน
+        	if($scope.member.preferPayment == "รายเดือน"){
+        		$scope.nextPayment = getNextMonth($scope.nextPaymentYear, $scope.nextPaymentMonth,1).getTime();
+        		$scope.endDate = new Date($scope.lastTransaction.nextPayment);        		
+        	// ตรวจสอบการออมเงินแบบรายครึ่งปี
+        	}else if($scope.member.preferPayment == "รายครึ่งปี"){
+        		$scope.nextPayment = getNextMonth($scope.nextPaymentYear,$scope.nextPaymentMonth,6).getTime();
+        		$scope.endDate = getNextMonth($scope.nextPaymentYear,$scope.nextPaymentMonth,5).getTime();
+        		console.log("$scope.endDate",$scope.endDate);
+        	//ตรวจสอบการออมเงินแบบรายปี
+        	}else{
+        		$scope.nextPayment = getNextMonth($scope.nextPaymentYear,$scope.nextPaymentMonth,12).getTime();
+        		$scope.endDate = getNextMonth($scope.nextPaymentYear,$scope.nextPaymentMonth,11).getTime();
+        		console.log("$scope.endDate",$scope.endDate);
+        	}
+        		
+        },function (error){
+        	console.log("error",error);
+        });
+		$scope.getAmountOfPeriod = function(year, month, period){
+			var totalAmount = 0 ;
+			for(var i = 0 ; i<period ;i++){
+				if(month>12){
+					month=1;
+					year++;
+				}
+				totalAmount += $scope.getAllDateOfMonth(year,month);
+				month++;
+			}
+			return totalAmount;
+		}
         $scope.savingFund = function() {
+        	console.log("$scope.lastTransaction",$scope.lastTransaction);
+        	$scope.saving.account = {};
+        	$scope.saving.date = new Date($scope.lastTransaction.nextPayment).getTime();
+        	$scope.saving.startDate = new Date($scope.lastTransaction.nextPayment).getTime();
+        	$scope.saving.nextPayment = $scope.nextPayment;
+        	$scope.saving.account.accountId = $scope.accountId;
+        	if($scope.member.preferPayment == "รายเดือน"){
+        		$scope.saving.endDate = new Date($scope.lastTransaction.nextPayment).getTime();
+        		$scope.saving.date = $scope.saving.endDate;
+            	$scope.saving.startDate = $scope.saving.endDate;
+        		
+        		$scope.saving.amount = $scope.getAllDateOfMonth($scope.nextPaymentYear, $scope.nextPaymentMonth);
+        	}else if($scope.member.preferPayment == "รายครึ่งปี"){
+        		$scope.saving.endDate = $scope.endDate;
+        		$scope.saving.amount = parseInt($("#amountOfSaving").html());
+        	}else{
+        		$scope.saving.endDate = $scope.endDate;
+        		$scope.saving.amount = $scope.getAmountOfPeriod($scope.nextPaymentYear, $scope.nextPaymentMonth,12);
+        	}
+        	console.log("$scope.saving",$scope.saving);
+        	
             $http.post('savingFund.do', $scope.saving).then(function(response) {
                 alert("success");
                 window.location.reload();
@@ -50,6 +125,10 @@ angular.module('myApp', [])
                 alert("error");
             });
         };
+        $scope.getAllDateOfMonth=function(year,month){
+        	var date = new Date(year,month,0);
+        	return date.getDate();
+        }
         $scope.receiveWelfare = function() {
             console.log("receive", $scope.receive)
             $http.post("saveReceiveWelfare.do", $scope.receive).then(function(response) {
@@ -59,6 +138,7 @@ angular.module('myApp', [])
                 console.log("error", error);
             });
         }
+        
         $scope.accountId = findGetParameter("acid");
         $scope.memberId = findGetParameter("id");
 
@@ -81,27 +161,20 @@ angular.module('myApp', [])
         	}
         }
         
-        MemberService.getMemberById(findGetParameter("id")).then(function(response) {
-            $scope.member = response;
-            $scope.paymentType = $scope.member.preferPayment;
-            $scope.entranceDate = new Date($scope.member.entranceDate);
-            var currentDate = new Date();
-            var timeDiff = Math.abs(currentDate.getTime() - $scope.entranceDate.getTime());
-            $scope.peroidOfMembership = Math.ceil(timeDiff / (1000 * 3600 * 24));
-            console.log("peroidOfMembership",$scope.peroidOfMembership);
-            console.log("scope",$scope);
-        });
+
         AccountService.getAccountDetail(findGetParameter("acid")).then(function(response) {
             $scope.transactions = response;
         });
-        $scope.savingFund = function() {
-            $http.post('savingFund.do', $scope.saving).then(function(response) {
-                alert("success");
-                window.location.reload();
-            }, function(error) {
-                alert("error");
-            });
-        };
+        function getNextMonth(year, month,next){
+        	for(var i = 0 ; i<next ;i++){
+        		if(month>12){
+        			month=1;
+        			year++;
+        		}
+        		month++;
+        	}
+        	return new Date(year,month,0);
+        }
         $scope.saveMember = function() {
             $scope.member.entranceDate = $scope.entranceDate;
             console.log("check", $scope.member);
