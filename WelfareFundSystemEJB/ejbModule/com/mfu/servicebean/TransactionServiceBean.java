@@ -59,4 +59,22 @@ public class TransactionServiceBean implements TransactionService {
 		return model;
 	}
 
+	@Override
+	public List<Integer> getYearMonthlyReport() {
+		List<Integer> model = this.em.createQuery("SELECT YEAR(ent.date) FROM Transaction ent GROUP BY YEAR(ent.date), MONTH(ent.date) ORDER BY YEAR(ent.date), MONTH(ent.date)").getResultList();
+		return model;
+	}
+
+	@Override
+	public List<Integer> getMonthMonthlyReport() {
+		List<Integer> model = this.em.createQuery("SELECT MONTH(ent.date) FROM Transaction ent GROUP BY YEAR(ent.date), MONTH(ent.date) ORDER BY YEAR(ent.date), MONTH(ent.date)").getResultList();
+		return model;
+	}
+
+	@Override
+	public List<Double> getTotalAmountMonthlyReport() {
+		List<Double> model = this.em.createQuery("SELECT SUM(ent.amount) FROM Transaction ent GROUP BY YEAR(ent.date), MONTH(ent.date) ORDER BY YEAR(ent.date), MONTH(ent.date)").getResultList();
+		return model;
+	}
+
 }

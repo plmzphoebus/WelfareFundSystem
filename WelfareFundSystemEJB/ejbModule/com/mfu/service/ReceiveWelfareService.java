@@ -11,6 +11,9 @@ public interface ReceiveWelfareService {
 	public List<ReceiveWelfare> getAllReceiveWelfare();
 	public List<Integer> getYearYearlyReport();
 	public List<Long> getTotalAmountYearlyReport();
+	public List<Integer> getYearMonthlyReport();
+	public List<Integer> getMonthMonthlyReport();
+	public List<Long> getTotalAmountMonthlyReport();
 	public void delete(long id);
 	
 }

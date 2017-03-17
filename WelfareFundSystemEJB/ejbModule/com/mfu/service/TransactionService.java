@@ -11,5 +11,8 @@ public interface TransactionService {
 	public List<Transaction> getAllRSavingFund();
 	public List<Integer> getYearYearlyReport();
 	public List<Double> getTotalAmountYearlyReport();
+	public List<Integer> getYearMonthlyReport();
+	public List<Integer> getMonthMonthlyReport();
+	public List<Double> getTotalAmountMonthlyReport();
 	public void delete(long id);
 }

@@ -80,4 +80,21 @@ public class AccountController {
 		}
 		return new ResponseEntity<List<LineChart>>(listLineChart, HttpStatus.OK);
 	}
+	@RequestMapping(value="/getSavingMonthly", method = RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<List<LineChart>> getSavingMonthly() throws ParseException{
+		List<LineChart> listLineChart = new ArrayList<LineChart>() ;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		List<Integer> listYear = transServ.getYearMonthlyReport();
+		List<Integer> listMonth = transServ.getMonthMonthlyReport();
+		List<Double> listTotalAmount = transServ.getTotalAmountMonthlyReport();
+		for(int index = 0 ; index < listYear.size() ; index++){
+			LineChart lineChart = new LineChart();
+			Date date= sdf.parse(listYear.get(index)+"-"+listMonth.get(index)+"-15");
+			lineChart.setX(date);
+			lineChart.setY(Math.round(listTotalAmount.get(index)));
+			listLineChart.add(lineChart);
+		}
+		return new ResponseEntity<List<LineChart>>(listLineChart, HttpStatus.OK);
+	}
 }

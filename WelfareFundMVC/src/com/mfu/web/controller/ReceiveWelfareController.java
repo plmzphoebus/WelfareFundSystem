@@ -116,4 +116,21 @@ public class ReceiveWelfareController {
 				}
 				return new ResponseEntity<List<LineChart>>(listLineChart, HttpStatus.OK);
 			}
+			@RequestMapping(value="/getReceiveWelfareMonthly", method = RequestMethod.GET)
+			@ResponseBody
+			public ResponseEntity<List<LineChart>> getReceiveWelfareMonthly() throws ParseException{
+				List<LineChart> listLineChart = new ArrayList<LineChart>() ;
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+				List<Integer> listYear = receiveWelfareServ.getYearMonthlyReport();
+				List<Integer> listMonth = receiveWelfareServ.getMonthMonthlyReport();
+				List<Long> listTotalAmount = receiveWelfareServ.getTotalAmountMonthlyReport();
+				for(int index = 0 ; index < listYear.size() ; index++){
+					LineChart lineChart = new LineChart();
+					Date date = sdf.parse(listYear.get(index)+"-"+listMonth.get(index)+"-15");
+					lineChart.setX(date);
+					lineChart.setY(listTotalAmount.get(index));
+					listLineChart.add(lineChart);
+				}
+				return new ResponseEntity<List<LineChart>>(listLineChart, HttpStatus.OK);
+			}
 }

@@ -71,6 +71,9 @@
                                         	<div class="col-md-6">
                                         		<div id="YearlyReport" style="height: 400px; width: 100%;"></div>
                                         	</div>
+                                        	<div class="col-md-6">
+                                        		<div id="MonthlyReport" style="height: 400px; width: 100%;"></div>
+                                        	</div>
                                         </div>
                                     </div>
                                 </div>
@@ -144,7 +147,7 @@
 							{
 
 						title:{
-							text: "Site Traffic",
+							text: "จำนวนเงินที่จ่ายและรับในแต่ละปี",
 							fontSize: 30
 						},
 			                        animationEnabled: true,
@@ -206,7 +209,87 @@
 			chart.render();		
 				});
 			});
-			
+			var savingMonthlyReport = [];
+			var savingPromise = $.get("getSavingMonthly.do");
+			savingPromise.done(function(response) {
+				$.get("getReceiveWelfareMonthly.do", function(data){
+					savingMonthlyReport = response;
+					for( var index = 0 ; index < savingMonthlyReport.length; index++){
+						savingMonthlyReport[index].x = new Date(savingMonthlyReport[index].x);
+					}
+					
+					for(var index = 0 ; index < data.length ; index++){
+						data[index].x = new Date(data[index].x);
+					}
+					
+					console.log("savingFundMonthlyReport",savingMonthlyReport);
+					var chart = new CanvasJS.Chart("MonthlyReport",
+							{
+
+						title:{
+							text: "จำนวนเงินที่จ่ายและรับในแต่ละเดือน",
+							fontSize: 30
+						},
+			                        animationEnabled: true,
+						axisX:{
+
+							gridColor: "Silver",
+							tickColor: "silver",
+							valueFormatString: "MMM YYYY"
+
+						},                        
+			                        toolTip:{
+			                          shared:true
+			                        },
+						theme: "theme2",
+						axisY: {
+							gridColor: "Silver",
+							tickColor: "silver"
+						},
+						legend:{
+							verticalAlign: "center",
+							horizontalAlign: "right"
+						},
+						data: [
+						{        
+							type: "line",
+							showInLegend: true,
+							lineThickness: 2,
+							name: "จำนวนเงินจ่ายสวัสดิการ",
+							yValueFormatString: "#,###.## บาท",
+							markerType: "square",
+							color: "#F08080",
+							dataPoints: data
+						},
+						{        
+							type: "line",
+							showInLegend: true,
+							lineThickness: 2,
+							name: "จำนวนเงินฝาก",
+							yValueFormatString: "#,###.## บาท",
+							markerType: "square",
+							color: "#20B2AA",
+							dataPoints: savingMonthlyReport
+						}
+						],
+			          legend:{
+			            cursor:"pointer",
+			            itemclick:function(e){
+			              if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
+			              	e.dataSeries.visible = false;
+			              }
+			              else{
+			                e.dataSeries.visible = true;
+			              }
+			              chart.render();
+			            }
+			          }
+					});
+
+			chart.render();	
+				});
+					
+			});
 		}
 	</script>
 	</jsp:attribute>
