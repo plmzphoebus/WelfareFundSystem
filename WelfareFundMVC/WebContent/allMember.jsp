@@ -8,11 +8,7 @@
 						<div class="panel-heading">
 							<h5 class="panel-title"> <i class="icon-users2"></i> All Members</h5>
 							<div class="heading-elements">
-								<ul class="icons-list">
-			                		
-			                		<li><a data-action="reload"></a></li>
-			                		
-			                	</ul>
+								<a class="btn btn-primary" href="getMemberExcelFile.do" target="blank">ส่งออกไฟล์ Excel </a>
 		                	</div>
 						</div>
 
