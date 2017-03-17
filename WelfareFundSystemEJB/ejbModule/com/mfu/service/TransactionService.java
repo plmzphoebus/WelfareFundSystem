@@ -12,4 +12,5 @@ public interface TransactionService {
 	public List<Integer> getYearYearlyReport();
 	public List<Double> getTotalAmountYearlyReport();
 	public void delete(long id);
+	public Transaction getLastRecordByAccountId(long accountId);
 }

@@ -20,7 +20,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class Member implements Serializable{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)		
+	@GeneratedValue(strategy = GenerationType.AUTO)		
 	private long memberId;
 	private String citizen;
 	private Date entranceDate;

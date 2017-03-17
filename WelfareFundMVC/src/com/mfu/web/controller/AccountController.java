@@ -53,9 +53,9 @@ public class AccountController {
 			System.out.println("Date "+date);
 			System.out.println(transaction.getStartDate());
 			System.out.println(transaction.getAccount().getAccountId());
-			transaction.setDate(date);
+			transaction.setTimeStamp(date);
 			transaction.setAccount(accountServ.findAccountById(transaction.getAccount().getAccountId()));
-			System.out.println("Date "+transaction.getDate());
+			System.out.println("Date "+transaction.getTimeStamp());
 			transServ.save(transaction);
 			
 			return new ResponseEntity<String>("200",HttpStatus.OK);
@@ -79,5 +79,12 @@ public class AccountController {
 			listLineChart.add(lineChart);
 		}
 		return new ResponseEntity<List<LineChart>>(listLineChart, HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/getLastTransactionByAccountId/{accountId}", method=RequestMethod.GET)
+	@ResponseBody
+	public ResponseEntity<Transaction> getLastRecordByAccountId(@PathVariable("accountId") long accountId){
+		Transaction transaction = transServ.getLastRecordByAccountId(accountId);
+		return new ResponseEntity<Transaction>(transaction, HttpStatus.OK);
 	}
 }

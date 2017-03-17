@@ -59,4 +59,11 @@ public class TransactionServiceBean implements TransactionService {
 		return model;
 	}
 
+	@Override
+	public Transaction getLastRecordByAccountId(long accountId) {
+		// TODO Auto-generated method stub
+		
+		return (Transaction) this.em.createQuery("SELECT ent FROM Transaction ent WHERE ent.account.accountId=:accountId ORDER BY ent.transactionId DESC").setMaxResults(1).setParameter("accountId", accountId).getResultList().get(0);
+	}
+
 }

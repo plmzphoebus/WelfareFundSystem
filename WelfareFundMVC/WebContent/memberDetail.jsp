@@ -167,36 +167,32 @@
               </div>
               <div class="modal-body">
                   <div class="row">
-                      <div class="form-group">
-                            <label class="control-label col-lg-2">Start Date</label>
-                                <div class="col-lg-10">
-                                    <input type="date"
-										class="form-control" ng-model="saving.startDate">
+                        <div class="col-md-10 col-md-offset-1">
+                            <form>
+                                <div class="row">                                    
+                                    <p><b>รายฝากเงิน{{member.preferPayment}}</b></p>
+                                     <div class="col-md-12">
+                                    <p class="text-center" id="showMonthOfPeriod" ng-if="member.preferPayment=='รายเดือน'">{{lastTransaction.nextPayment|date:"MMMM yyyy"}}</p>
+                                    <p class="text-center" id="showMonthOfPeriod" ng-if="member.preferPayment=='รายครึ่งปี' || member.preferPayment=='รายปี'">{{startDate|date:"MMMM yyyy"}} - {{endDate|date:"MMMM yyyy"}}</p>
+                                    
+                                    <p class="text-center" ng-if="member.preferPayment=='รายเดือน'">จำนวนเงินที่ฝาก <span id="amountOfSaving" >{{getAllDateOfMonth(nextPaymentYear, nextPaymentMonth)}}</span> บาท</p>
+                                    <p class="text-center"  ng-if="member.preferPayment=='รายครึ่งปี'">จำนวนเงินที่ฝาก <span id="amountOfSaving">{{getAmountOfPeriod(nextPaymentYear, nextPaymentMonth,6)}}</span> บาท</p>
+                                    <p class="text-center" ng-if="member.preferPayment=='รายปี'">จำนวนเงินที่ฝาก <span id="amountOfSaving" >{{getAmountOfPeriod(nextPaymentYear, nextPaymentMonth,12)}}</span> บาท</p>
+                                    </div>
+                                   
+                                    <div class="col-md-12">
+                                        
+                                    <center>
+                                         <br>
+                                          <button type="button" class="btn btn-success text-center" ng-click="savingFund()">บันทึกการออม</button>
+                                    </center>
+                                    </div>
                                 </div>
-                      </div>
-                      <div class="form-group">
-                            <label class="control-label col-lg-2">End Date</label>
-                                <div class="col-lg-10">
-                                    <input type="date"
-										class="form-control" ng-model="saving.endDate">
-                                </div>
-                      </div>
-                      <div class="form-group">
-                            <label class="control-label col-lg-2">Amount</label>
-                                <div class="col-lg-10">
-                                    <input type="number"
-										class="form-control" ng-model="saving.amount">
-									<input type="hidden"
-										class="form-control" ng-model="saving.account.accountId" ng-init="saving.account.accountId = accountId">
-                                </div>
-                      </div>
-                      <div class="form-group">
-                            <label class="control-label col-lg-2">&nbsp;</label>
-                                <div class="col-lg-10">
-                                    <button type="button" ng-click="savingFund()" class="btn btn-success" >Save</button>
-                                </div>
-                      </div>
-                  </div>
+                                <div class="ln_solid"></div>
+                                <br>
+                            </form>
+                        </div>
+                    </div>
                     
               </div>
               <div class="modal-footer">
@@ -446,7 +442,7 @@
           </div>
         </div>						
 					</div>
-					
+	
 	</jsp:attribute>
 
 </welfare:staffTemplate>

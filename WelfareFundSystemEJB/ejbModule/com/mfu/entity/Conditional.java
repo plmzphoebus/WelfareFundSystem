@@ -14,7 +14,7 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 @Entity
 public class Conditional implements Serializable{
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long conditionID;
 	private String conditionDetail;
 	private int amountofDate;
