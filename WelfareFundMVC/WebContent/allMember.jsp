@@ -28,7 +28,7 @@
 							<tbody ng-controller="allMemberCtrl">
 								<tr ng-repeat="member in members" on-finish-render="ngRepeatFinished">
                                     <td>{{$index+1}}</td>
-									<td><a href="memberDetail.jsp?id={{member.memberId}}&acid={{member.account.accountId}}">{{member.firstName}} {{member.lastName}}</a></td>
+									<td><a href="memberDetail.jsp?id={{member.memberId}}&acid={{member.account.accountId}}" id="viewMember{{member.memberId}}">{{member.firstName}} {{member.lastName}}</a></td>
                                     <td>{{member.community.communityName}}</td>
 									<td>{{member.mobileTel}}</td>									
 									<td>{{member.entranceDate | date:"dd-MM-yyyy"}}</td>

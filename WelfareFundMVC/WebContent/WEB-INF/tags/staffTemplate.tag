@@ -136,26 +136,26 @@
                                         <a href="index.jsp"><i class="icon-home4"></i> <span>หน้าแรก</span></a>
                                     </li>
                                     <li>
-                                        <a href="#"><i class="icon-file-text"></i> <span> จัดการสมาชิก</span></a>
+                                        <a href="#" id="menageMember"><i class="icon-file-text"></i> <span> จัดการสมาชิก</span></a>
                                         <ul>
                                             <li class="${newMember }">
-                                                <a href="newMember.jsp"><i class=" icon-file-plus"></i>เพิ่มสมาชิกใหม่</a>
+                                                <a href="newMember.jsp" id="addNewMember"><i class=" icon-file-plus"></i>เพิ่มสมาชิกใหม่</a>
                                             </li>
                                             <li class="${allMember }">
-                                                <a href="allMember.jsp"><i class="icon-files-empty"></i>ดูสมาชิกทั้งหมด</a>
+                                                <a href="allMember.jsp" id="allMember"><i class="icon-files-empty"></i>ดูสมาชิกทั้งหมด</a>
                                             </li>
                                         </ul>
                                     </li>
                                     <!-- /main -->
                                     <!-- Forms -->
                                     <li>
-                                        <a href="#"><i class="icon-images2"></i> <span>จัดการสวัสดิการ</span></a>
+                                        <a href="#" id="manageCommunity"><i class="icon-images2"></i> <span>จัดการสวัสดิการ</span></a>
                                         <ul>
                                             <li class="${newWelfare }">
-                                                <a href="newWelfare.jsp"><i class="icon-plus3"></i>เพิ่มสวัสดิการใหม่</a>    
+                                                <a href="newWelfare.jsp" id="addCommunity"><i class="icon-plus3"></i>เพิ่มสวัสดิการใหม่</a>    
                                             </li>
                                             <li class="${allWelfare }">
-                                                <a href="allWelfare.jsp"><i class="icon-images3"></i>ดูสวัสดิการทั้งหมด</a>
+                                                <a href="allWelfare.jsp" id="AllCommunity"><i class="icon-images3"></i>ดูสวัสดิการทั้งหมด</a>
                                             </li>
                                         </ul>
                                     </li>

@@ -19,7 +19,7 @@ angular.module('myApp', [])
         }
     }).controller('memberDetailCtrl', function($scope, MemberService, AccountService, $http, WelfareService, ReceiveWelfareService, CommunityService) {
         $scope.saving = {};
-        $scope.receive = [];
+        $scope.receive = {};
         $scope.entranceDate = '';
         $scope.paymentType = '' ;
         $scope.peroidOfMembership = '';
@@ -130,7 +130,7 @@ $http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(
         	return date.getDate();
         }
         $scope.receiveWelfare = function() {
-            console.log("receive", $scope.receive)
+            console.log("receive", $scope.receive);
             $http.post("saveReceiveWelfare.do", $scope.receive).then(function(response) {
                 console.log("success", response);
                 window.location.reload();

@@ -22,7 +22,7 @@
                                     <div class="form-group">
 										<label class="control-label col-lg-2">วันสมัคร</label>
 										<div class="col-lg-10">
-											<input type="date" class="form-control" ng-model="data.entranceDate">
+											<input type="date" id="entranceDate" class="form-control" ng-model="data.entranceDate">
 										</div>
 									</div>
 									<div class="form-group">
@@ -30,7 +30,7 @@
                                         <label
 									class="control-label col-lg-2">ชุมชน{{firstCommunity}}</label>
 										<div class="col-lg-10">
-											<select class="form-control" ng-model="data.community.communityId" ng-init="">
+											<select id="selectCommunity" class="form-control" ng-model="data.community.communityId" ng-init="">
                                                 <option ng-repeat="community in communities" ng-selected="{{data.community.communityId == data.firstCommunity}}" value="{{community.communityId}}">{{community.communityName}}</option>
                                             </select>
 										</div>
@@ -40,7 +40,7 @@
                                         <label
 									class="control-label col-lg-2">ประเภทการชำระเงิน</label>
 										<div class="col-lg-10">
-											<select class="form-control" ng-model="data.preferPayment" ng-init="data.preferPayment = 'รายเดือน'">
+											<select id="selectPreferPayment" class="form-control" ng-model="data.preferPayment" ng-init="data.preferPayment = 'รายเดือน'">
                                                 <option value="รายเดือน">รายเดือน</option>
                                                 <option value="รายครึ่งปี">รายครึ่งปี</option>
                                                 <option value="รายปี">รายปี</option>
@@ -50,31 +50,31 @@
 									<div class="form-group">
 										<label class="control-label col-lg-2">ชื่อ</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="data.firstName">
+											<input type="text" id="firstName" class="form-control" ng-model="data.firstName">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">นามสกุล</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="data.lastName">
+											<input type="text" id="lastName" class="form-control" ng-model="data.lastName">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">อายุ</label>
 										<div class="col-lg-10">
-											<input type="number" class="form-control" ng-model="data.age">
+											<input type="number" id="age" class="form-control" ng-model="data.age">
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="control-label col-lg-2">รหัสบัตรประชาชน</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="data.citizen">
+											<input type="text" id="citizenId" class="form-control" ng-model="data.citizen">
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="control-label col-lg-2">ที่อยู่</label>
 										<div class="col-lg-10">
-											<textarea rows="5" cols="5" class="form-control"
+											<textarea rows="5" cols="5" id="address" class="form-control"
 										placeholder="Default textarea" ng-model="data.address"></textarea>
 										</div>
 									</div>
@@ -82,26 +82,26 @@
 									<div class="form-group">
 										<label class="control-label col-md-2">เบอร์โทรศัพท์บ้าน</label>
 										<div class="col-md-10">
-											<input class="form-control" type="tel" ng-model="data.telephoneNumber">
+											<input id="telephoneNumber" class="form-control" type="tel" ng-model="data.telephoneNumber">
 										</div>
 									</div>
                                     
 									<div class="form-group">
 										<label class="control-label col-md-2">เบอร์โทรศัพท์มือถือ</label>
 										<div class="col-md-10">
-											<input class="form-control" type="tel" ng-model="data.mobileTel">
+											<input id="mobileTel" class="form-control" type="tel" ng-model="data.mobileTel">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">อาชีพ</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="data.occupation">
+											<input type="text" id="occupation" class="form-control" ng-model="data.occupation">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">รายได้ต่อเดือน</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="data.revenue">
+											<input type="text" id="revenue" class="form-control" ng-model="data.revenue">
 										</div>
 									</div>
                                     <h4>เงื่อนไขการเป็นสมาชิก</h4>
@@ -117,31 +117,31 @@
 									<div class="form-group">
 										<label class="control-label col-lg-2">ชื่อ</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="data.beneficiary.firstName">
+											<input type="text" id="firstnameOfBeneficiary" class="form-control" ng-model="data.beneficiary.firstName">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">นามสกุล</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="data.beneficiary.lastName">
+											<input type="text" id="lastnameOfBeneficiary" class="form-control" ng-model="data.beneficiary.lastName">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">อายุ</label>
 										<div class="col-lg-10">
-											<input type="number" class="form-control" ng-model="data.beneficiary.age">
+											<input type="number" id="ageOfBeneficiary" class="form-control" ng-model="data.beneficiary.age">
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="control-label col-lg-2">รหัสบัตรประชาชน</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="data.beneficiary.citizenId">
+											<input type="text" id="citizenIdOfBeneficiary" class="form-control" ng-model="data.beneficiary.citizenId">
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="control-label col-lg-2">ที่อยู่</label>
 										<div class="col-lg-10">
-											<textarea rows="5" cols="5" class="form-control"
+											<textarea rows="5" cols="5" id="addressOfBeneficiary" class="form-control"
 										placeholder="Default textarea" ng-model="data.beneficiary.address"></textarea>
 										</div>
 									</div>
@@ -149,38 +149,38 @@
 									<div class="form-group">
 										<label class="control-label col-md-2">เบอร์โทรศัพท์บ้าน</label>
 										<div class="col-md-10">
-											<input class="form-control" type="tel" ng-model="data.beneficiary.telephoneNumber">
+											<input id="telephoneNumberOfBeneficiary" class="form-control" type="tel" ng-model="data.beneficiary.telephoneNumber">
 										</div>
 									</div>
                                     
 									<div class="form-group">
 										<label class="control-label col-md-2">เบอร์โทรศัพท์มือถือ</label>
 										<div class="col-md-10">
-											<input class="form-control" type="tel" ng-model="data.beneficiary.mobileTel">
+											<input id="mobileTelOfBeneficiary" class="form-control" type="tel" ng-model="data.beneficiary.mobileTel">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">อาชีพ</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="data.beneficiary.occupation">
+											<input type="text" id="occupationOfBeneficiary" class="form-control" ng-model="data.beneficiary.occupation">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">รายได้ต่อเดือน</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="data.beneficiary.revenue">
+											<input type="text" id="revenueOfBeneficiary" class="form-control" ng-model="data.beneficiary.revenue">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">ความสัมพันธ์</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="data.beneficiary.relationship">
+											<input type="text" id="relationship" class="form-control" ng-model="data.beneficiary.relationship">
 										</div>
 									</div>
 								</fieldset>
 
 								<div class="text-right">
-									<button type="button" class="btn btn-primary" ng-click="newMember()">สมัครสมาชิก <i
+									<button type="button" id="saveMember" class="btn btn-primary" ng-click="newMember()">สมัครสมาชิก <i
 									class="icon-arrow-right14 position-right"></i>
 							</button>
 								</div>

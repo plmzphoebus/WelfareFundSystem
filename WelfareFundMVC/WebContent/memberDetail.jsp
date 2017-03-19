@@ -11,14 +11,14 @@
 				<br>
                                 
 							<div class="heading-elements">
-				                <button class="btn btn-primary" data-toggle="modal"
+				                <button id="addSavingFund" class="btn btn-primary" data-toggle="modal"
 						data-target="#newSaving">เพิ่มการออมใหม่</button>
-                                <button class="btn btn-success"
+                                <button id="receiveWelfare" class="btn btn-success"
 						data-toggle="modal" data-target="#receiveWelfare"
 						ng-if="peroidOfMembership < 180" disabled>รับสวัสดิการ</button>
-						<button class="btn btn-success" data-toggle="modal"
+								<button class="btn btn-success" data-toggle="modal"
 						data-target="#receiveWelfare" ng-if="peroidOfMembership >= 180">รับสวัสดิการ</button>
-                                <button class="btn btn-danger"
+                                <button id="editMemberDetail" class="btn btn-danger"
 						data-toggle="modal" data-target="#editinformation">แก้ไขข้อมูลสมาชิก</button>
 		                	</div>
 						</div>
@@ -28,10 +28,10 @@
 					   <div class="row">
 						  <div class="col-md-12">
 								<ul class="nav nav-tabs bg-teal-400 nav-justified">								    
-								    <li class="active"><a href="#tab1" data-toggle="tab">การออม</a></li>
-                                    <li><a href="#tab2"
+								    <li id="savingTab" class="active"><a href="#tab1" data-toggle="tab">การออม</a></li>
+                                    <li id="receivedWelfareTab"><a href="#tab2"
 								data-toggle="tab">การรับสวัสดิการ</a></li>
-                                    <li><a href="#tab3"
+                                    <li id="memberDetailTab"><a href="#tab3"
 								data-toggle="tab">ข้อมูลสมาชิก</a></li>
 								</ul>
                             </div>
@@ -197,7 +197,7 @@
                                         
                                     <center>
                                          <br>
-                                          <button type="button"
+                                          <button type="button" id="savingFund"
 											class="btn btn-success text-center" ng-click="savingFund()">บันทึกการออม</button>
                                     </center>
                                     </div>
@@ -227,14 +227,14 @@
               <div class="modal-body">
                   <div class="row">
                       <div class="form-group">
-                            <label class="control-label col-lg-3">วันที่</label>
+                            <label id="entranceDate" class="control-label col-lg-3">วันที่</label>
                                 <div class="col-lg-9">
                                     <input type="date"
 											class="form-control" ng-model="receive.date">
                                 </div>
                       </div>
                       <div class="form-group">
-                            <label class="control-label col-lg-3">ประเภทสวัสดิการ</label>
+                            <label id="welfareType" class="control-label col-lg-3">ประเภทสวัสดิการ</label>
                                 <div class="col-lg-9">
                                     <select class="form-control"
 											ng-model="receive.welfare.welfareID"
@@ -246,7 +246,7 @@
                                 </div>
                       </div>
                       <div class="form-group">
-                            <label class="control-label col-lg-3">จำนวนเงิน</label>
+                            <label id=amountOfMoney"" class="control-label col-lg-3">จำนวนเงิน</label>
                                 <div class="col-lg-9">
                                     <select class="form-control"
 											ng-model="receive.amount">
@@ -260,7 +260,7 @@
                             <label class="control-label col-lg-3">หมายเหตุ</label>
                                 <div class="col-lg-9">
                                     <input type="text"
-											class="form-control" ng-model="receive.remark">
+											id="remark" class="form-control" ng-model="receive.remark">
 										<input type="hidden" class="form-control"
 											ng-model="receive.member.memberId"
 											ng-init="receive.member.memberId = memberId">
@@ -269,7 +269,7 @@
                       <div class="form-group">
                             <label class="control-label col-lg-3">&nbsp;</label>
                                 <div class="col-lg-9">
-                                    <button type="button"
+                                    <button type="button" id="saveReceiveWelfare"
 											class="btn btn-success" ng-click="receiveWelfare()">บันทึก</button> 
                                 </div>
                       </div>
