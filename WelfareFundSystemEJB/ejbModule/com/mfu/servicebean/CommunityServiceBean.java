@@ -55,4 +55,16 @@ public class CommunityServiceBean implements CommunityService {
 		return this.em.createQuery("SELECT ent FROM Member ent WHERE ent.community.communityId =:communityid").setParameter("communityid", communityid).getResultList();
 	}
 
+	@Override
+	public Community findCommunityByName(String communityName) {
+		Community community = null;
+		try{
+			community = (Community) this.em.createQuery("SELECT ent FROM Community ent WHERE ent.communityName =:communityName").setParameter("communityName", communityName).getResultList().get(0);
+		}catch(Exception e){
+			
+		}
+		
+		return community;
+	}
+
 }

@@ -7,6 +7,8 @@
 <%@ attribute name="allWelfare" required="false" rtexprvalue="true"%>
 <%@ attribute name="allCommunity" required="false" rtexprvalue="true"%>
 <%@ attribute name="newCommunity" required="false" rtexprvalue="true"%>
+<%@ attribute name="allStaff" required="false" rtexprvalue="true"%>
+<%@ attribute name="newStaff" required="false" rtexprvalue="true"%>
 <%@ attribute name="content" fragment="true" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -133,7 +135,7 @@
                                         <i class="icon-menu" title="Main Menu"></i>
                                     </li>
                                     <li class="${indexpage }">
-                                        <a href="index.jsp"><i class="icon-home4"></i> <span>หน้าแรก</span></a>
+                                        <a href="index.jsp" id="index"><i class="icon-home4"></i> <span>หน้าแรก</span></a>
                                     </li>
                                     <li>
                                         <a href="#" id="menageMember"><i class="icon-file-text"></i> <span> จัดการสมาชิก</span></a>
@@ -149,24 +151,35 @@
                                     <!-- /main -->
                                     <!-- Forms -->
                                     <li>
-                                        <a href="#" id="manageCommunity"><i class="icon-images2"></i> <span>จัดการสวัสดิการ</span></a>
+                                        <a href="#" id="manageWelfare" ><i class="icon-images2"></i> <span>จัดการสวัสดิการ</span></a>
                                         <ul>
                                             <li class="${newWelfare }">
-                                                <a href="newWelfare.jsp" id="addCommunity"><i class="icon-plus3"></i>เพิ่มสวัสดิการใหม่</a>    
+                                                <a href="newWelfare.jsp" id="addnewWelfare"><i class="icon-plus3"></i>เพิ่มสวัสดิการใหม่</a>    
                                             </li>
                                             <li class="${allWelfare }">
-                                                <a href="allWelfare.jsp" id="AllCommunity"><i class="icon-images3"></i>ดูสวัสดิการทั้งหมด</a>
+                                                <a href="allWelfare.jsp" id="allWelfare"><i class="icon-images3"></i>ดูสวัสดิการทั้งหมด</a>
                                             </li>
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="#"><i class="icon-images2"></i> <span>จัดการชุมชน</span></a>
+                                        <a href="#" id="manageCommunity"><i class="icon-images2"></i> <span>จัดการชุมชน</span></a>
                                         <ul>
                                             <li class="${newCommunity }">
-                                                <a href="newCommunity.jsp"><i class="icon-plus3"></i>เพิ่มชุมชนใหม่</a>    
+                                                <a href="newCommunity.jsp" id="addCommunity"><i class="icon-plus3"></i>เพิ่มชุมชนใหม่</a>    
                                             </li>
                                             <li class="${allCommunity }">
-                                                <a href="allCommunity.jsp"><i class="icon-images3"></i>ดูชุมชนทั้งหมด</a>
+                                                <a href="allCommunity.jsp" id="AllCommunity"><i class="icon-images3"></i>ดูชุมชนทั้งหมด</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#" id="manageStaff"><i class="icon-images2"></i> <span>จัดการพนักงาน</span></a>
+                                        <ul>
+                                            <li class="${newStaff }">
+                                                <a href="newStaff.jsp" id="addStaff"><i class="icon-plus3"></i>เพิ่มพนักงานใหม่</a>    
+                                            </li>
+                                            <li class="${allStaff }">
+                                                <a href="allStaff.jsp" id="allStaff"><i class="icon-images3"></i>ดูพนักงานทั้งหมด</a>
                                             </li>
                                         </ul>
                                     </li>

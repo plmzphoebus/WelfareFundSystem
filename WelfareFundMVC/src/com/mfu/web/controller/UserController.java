@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mfu.config.EncodePassword;
 import com.mfu.entity.User;
 import com.mfu.service.UserService;
 
@@ -39,6 +40,7 @@ public class UserController {
 	@RequestMapping(value = "/saveUser", method = {RequestMethod.POST, RequestMethod.PUT})
 	public ResponseEntity<String> createUser(@RequestBody User user){
 		try{
+			user.setPassword(new EncodePassword().encodeString(user.getPassword()));
 			if(user.getUser() == 0){
 				userServ.save(user);
 			}else{
@@ -50,7 +52,7 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value = "/deleteUser", method = RequestMethod.DELETE)
+	@RequestMapping(value = "/deleteUser/{id}", method = RequestMethod.DELETE)
 	@ResponseBody
 	public ResponseEntity<String> deleteUser(@PathVariable("id") String id){
 		try{

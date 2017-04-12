@@ -1,11 +1,32 @@
 angular.module('myApp', [])
-    .controller('allMemberCtrl', function($scope, MemberService) {
+    .controller('allMemberCtrl', function($scope, MemberService,fileUpload) {
+    	$scope.showUploadFile = false;
+    	$scope.myFile = "";
         MemberService.getMember().then(function(response) {
             $scope.members = response;
             $scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
             		$(".datatable").DataTable();
             });
+            
         });
+        $scope.toggleShow = function(){
+        	if($scope.showUploadFile)
+        		$scope.showUploadFile = false;
+        	else
+        		$scope.showUploadFile = true;
+        }
+        $scope.uploadFile = function(){
+            var file = $scope.myFile;
+            if(file){
+            console.log('file is ' ,file.type);
+            console.dir(file);
+            
+            var uploadUrl = "uploadExcelFile.do";
+            fileUpload.uploadFileToUrl(file, uploadUrl);
+            }else{
+            	alert("กรุณาเลือกไฟล์");
+            }
+         };
     }).directive('onFinishRender', function ($timeout) {
         return {
             restrict: 'A',
@@ -17,7 +38,38 @@ angular.module('myApp', [])
                 }
             }
         }
-    }).controller('memberDetailCtrl', function($scope, MemberService, AccountService, $http, WelfareService, ReceiveWelfareService, CommunityService) {
+    }).directive('fileModel', ['$parse', function ($parse) {
+        return {
+            restrict: 'A',
+            link: function(scope, element, attrs) {
+               var model = $parse(attrs.fileModel);
+               var modelSetter = model.assign;
+               
+               element.bind('change', function(){
+                  scope.$apply(function(){
+                     modelSetter(scope, element[0].files[0]);
+                  });
+               });
+            }
+         };
+      }]).service('fileUpload', ['$http', function ($http) {
+          this.uploadFileToUrl = function(file, uploadUrl){
+              var fd = new FormData();
+              fd.append('file', file);
+           
+              $http.post(uploadUrl, fd, {
+                 transformRequest: angular.identity,
+                 headers: {'Content-Type': undefined}
+              })
+           
+              .success(function(response){
+            	  window.location.href = "readExcelFile.do";
+              })
+           
+              .error(function(error){
+              });
+           }
+        }]).controller('memberDetailCtrl', function($scope, MemberService, AccountService, $http, WelfareService, ReceiveWelfareService, CommunityService) {
         $scope.saving = {};
         $scope.receive = {};
         $scope.entranceDate = '';
@@ -317,7 +369,7 @@ $http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(
             $scope.welfare = response;
         });
     }).controller('newCommunityCtrl', function($scope, CommunityService, $http) {
-        $scope.data = '';
+        $scope.data = {};
         $scope.saveCommunity = function() {
             $http.post("saveCommunity.do", $scope.data).then(function(response) {
                 console.log(response);
@@ -326,6 +378,89 @@ $http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(
                 console.log(error);
             });
         }
+    }).controller('editStaffCtrl', function($scope, CommunityService, $http) {
+        $scope.data = {};
+        function findGetParameter(parameterName) {
+            var result = null,
+                tmp = [];
+            location.search.substr(1).split("&").forEach(function(item) {
+                tmp = item.split("=");
+                if (tmp[0] === parameterName) result = decodeURIComponent(tmp[1]);
+            });
+            return result;
+        }
+        $http.get("listRole.do").then(function(response){
+    		console.log("Role Data",response.data);
+    		$scope.roles = response.data;
+    	},function(error){
+    		console.log("Role error",error);
+    	});
+        $http.get("getUser/"+findGetParameter("staffId")+".do").then(function(response){
+        	console.log("Get Staff",response.data);
+        	$scope.data = response.data;
+        },function(error){
+        	console.log("Get Staff Error",error);
+        });
+        $scope.saveCommunity = function() {
+            $http.post("saveCommunity.do", $scope.data).then(function(response) {
+                console.log(response);
+                window.location.href = 'allCommunity.jsp';
+            }, function(error) {
+                console.log(error);
+            });
+        }
+        
+    }).controller('allStaffCtrl', function($scope, $http) {
+    	$scope.staffs = [];
+    	$http.get("listUser.do").then(function(response){
+    		console.log("Staff Data",response.data);
+    		$scope.staffs = response.data;
+    	},function(error){
+    		console.log("Staff error",error);
+    	});
+    	$scope.$on('ngRepeatFinished', function(ngRepeatFinishedEvent) {
+    		$(".datatable").DataTable();
+        });
+    	$scope.deleteStaff = function(staffId){
+    		var yes = confirm("คุณต้องการลบพนักงานคนนี้ใช่หรือไม่?");
+    		if(yes){
+    			$http.delete("deleteUser/"+staffId+".do").then(function(response){
+        			alert("ลบพนักงานสำเร็จแล้ว");
+        			window.location.reload();
+        		},function(error){
+        			console.log("error",error);
+        		});
+    		}
+    		
+    	}
+    }).controller('newStaffCtrl', function($scope, $http) {
+    	$scope.roles = [];
+    	$scope.data = {};
+    	$scope.confirmPassword = "";
+    	$http.get("listRole.do").then(function(response){
+    		console.log("Role Data",response.data);
+    		$scope.roles = response.data;
+    	},function(error){
+    		console.log("Role error",error);
+    	});
+    	
+    	$scope.saveStaff = function(){
+    		console.log("Staff Data",$scope.data);
+    		if($scope.data.role && $scope.data.firstName && $scope.data.lastName && $scope.data.telephoneNumber && $scope.data.email && $scope.data.userName && $scope.data.password && $scope.confirmPassword){
+    			if($scope.data.password == $scope.confirmPassword){
+    				$http.post("saveUser.do",$scope.data).then(function(response){
+    					console.log("Success Save User",response);
+    					window.location.href= "allStaff.jsp";
+    				},function(error){
+    					console.log("save User Error",error);
+    				});
+    			}else{
+    				alert("กรุณากรอกรหัสผ่านให้เหมือนกัน");
+    			}
+    		}else{
+    			alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+    		}
+    	}
     }).controller('editCommunityCtrl', function($scope, $http, CommunityService) {
         $scope.community = '';
 

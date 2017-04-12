@@ -13,10 +13,10 @@
 							<div class="heading-elements">
 				                <button id="addSavingFund" class="btn btn-primary" data-toggle="modal"
 						data-target="#newSaving">เพิ่มการออมใหม่</button>
-                                <button id="receiveWelfare" class="btn btn-success"
+                                <button id="receiveWelfarebtn" class="btn btn-success"
 						data-toggle="modal" data-target="#receiveWelfare"
 						ng-if="peroidOfMembership < 180" disabled>รับสวัสดิการ</button>
-								<button class="btn btn-success" data-toggle="modal"
+								<button id="receiveWelfarebtn" class="btn btn-success" data-toggle="modal"
 						data-target="#receiveWelfare" ng-if="peroidOfMembership >= 180">รับสวัสดิการ</button>
                                 <button id="editMemberDetail" class="btn btn-danger"
 						data-toggle="modal" data-target="#editinformation">แก้ไขข้อมูลสมาชิก</button>
@@ -57,7 +57,7 @@
                                                 <td>{{trans.startDate | date:"MMMM"}} - {{trans.endDate | date:"MMMM"}}</td>
                                                 <td class="text-center">{{trans.amount}}</td>
                                                 <td class="text-center">รัตนา</td>
-                                                <td class="text-center"><a
+                                                <td class="text-center"><a id="printTransaction{{tran.transactionId}}"
 										class="btn btn-primary"
 										href="printReceipt.jsp?id={{memberId}}&transactionid={{trans.transactionId}}">Print Receipt</a></td>
                                             </tr>
@@ -85,7 +85,7 @@
                                                 <td>{{receivewelfare.welfare.welfareName}}</td>
                                                 <td>{{receivewelfare.amount}}</td>                                    
                                                 <td>{{receivewelfare.remark}}</td>
-                                                <td><a
+                                                <td><a id="printReceive{{receiveWelfare.receiveWelfareId}}"
 										class="btn btn-primary"
 										href="receiveWelfarePrint.jsp?id={{member.memberId}}&receiveWelfareId={{receivewelfare.receiveWelfareId}}">Print Receipt</a></td>
                                             </tr>
@@ -227,16 +227,16 @@
               <div class="modal-body">
                   <div class="row">
                       <div class="form-group">
-                            <label id="entranceDate" class="control-label col-lg-3">วันที่</label>
+                            <label  class="control-label col-lg-3">วันที่</label>
                                 <div class="col-lg-9">
-                                    <input type="date"
+                                    <input type="date" id="receiveWelfareDate"
 											class="form-control" ng-model="receive.date">
                                 </div>
                       </div>
                       <div class="form-group">
-                            <label id="welfareType" class="control-label col-lg-3">ประเภทสวัสดิการ</label>
+                            <label class="control-label col-lg-3">ประเภทสวัสดิการ</label>
                                 <div class="col-lg-9">
-                                    <select class="form-control"
+                                    <select id="welfareType" class="form-control"  
 											ng-model="receive.welfare.welfareID"
 											ng-change="selectedWelfare()">
                                         <option
@@ -246,9 +246,9 @@
                                 </div>
                       </div>
                       <div class="form-group">
-                            <label id=amountOfMoney"" class="control-label col-lg-3">จำนวนเงิน</label>
+                            <label  class="control-label col-lg-3">จำนวนเงิน</label>
                                 <div class="col-lg-9">
-                                    <select class="form-control"
+                                    <select id="amountOfMoney" class="form-control"
 											ng-model="receive.amount">
                                     	<option
 												ng-repeat="condition in listConditions"
@@ -303,7 +303,7 @@
                                     <div class="form-group">
 										<label class="control-label col-lg-2">วันเข้าเป็นสมาชิก</label>
 										<div class="col-lg-10">
-											<input type="date" class="form-control"
+											<input type="date" id="editEntranceDate" class="form-control"
 													ng-model="entranceDate">
 										</div>
 									</div>
@@ -312,7 +312,7 @@
                                         <label
 												class="control-label col-lg-2">ประเภทการชำระเงิน</label>
 										<div class="col-lg-10">
-											<select class="form-control" ng-model="member.preferPayment">
+											<select id="editPreferPayment" class="form-control" ng-model="member.preferPayment">
                                                 <option value="รายเดือน"
 														ng-selected="{{member.preferPayment == paymentType}}">รายเดือน</option>
                                                 <option
@@ -326,21 +326,21 @@
 									<div class="form-group">
 										<label class="control-label col-lg-2">ชื่อ</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
+											<input type="text" id="editFirstname" class="form-control"
 													ng-model="member.firstName">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">นามสกุล</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
+											<input type="text" id="editLastname" class="form-control"
 													ng-model="member.lastName">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">อายุ</label>
 										<div class="col-lg-10">
-											<input type="number" class="form-control"
+											<input type="number" id="editAge" class="form-control"
 													ng-model="member.age">
 										</div>
 									</div>
@@ -348,7 +348,7 @@
 									<div class="form-group">
 										<label class="control-label col-lg-2">ที่อยู่</label>
 										<div class="col-lg-10">
-											<textarea rows="5" cols="5" class="form-control"
+											<textarea rows="5" cols="5" id="editAddress" class="form-control"
 													placeholder="Default textarea" ng-model="member.address"></textarea>
 										</div>
 									</div>
@@ -356,7 +356,7 @@
 									<div class="form-group">
 										<label class="control-label col-md-2">เบอร์โทรศัพท์บ้าน</label>
 										<div class="col-md-10">
-											<input class="form-control" type="tel"
+											<input id="editTelephoneNumber" class="form-control" type="tel"
 													ng-model="member.telephoneNumber">
 										</div>
 									</div>
@@ -364,21 +364,21 @@
 									<div class="form-group">
 										<label class="control-label col-md-2">เบอร์โทรศัพท์มือถือ</label>
 										<div class="col-md-10">
-											<input class="form-control" type="tel"
+											<input id="editMobileTel" class="form-control" type="tel"
 													ng-model="member.mobileTel">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">อาชีพ</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
+											<input type="text" id="editOccupation" class="form-control"
 													ng-model="member.occupation">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">เงินเดือน</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
+											<input type="text" id="editRevenue" class="form-control"
 													ng-model="member.revenue">
 										</div>
 									</div>
@@ -395,21 +395,21 @@
 									<div class="form-group">
 										<label class="control-label col-lg-2">ชื่อ</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
+											<input type="text" id="editFirstnameOfBeneficiary" class="form-control"
 													ng-model="member.beneficiary.firstName">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">นามสกุล</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
+											<input type="text" id="editLastnameOfBeneficiary" class="form-control"
 													ng-model="member.beneficiary.lastName">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">อายุ</label>
 										<div class="col-lg-10">
-											<input type="number" class="form-control"
+											<input type="number" id="editAgeOfBeneficiary"  class="form-control"
 													ng-model="member.beneficiary.age">
 										</div>
 									</div>
@@ -417,7 +417,7 @@
 									<div class="form-group">
 										<label class="control-label col-lg-2">ที่อยู่</label>
 										<div class="col-lg-10">
-											<textarea rows="5" cols="5" class="form-control"
+											<textarea rows="5" cols="5" id="editAddressOfBeneficiary" class="form-control"
 													placeholder="Default textarea"
 													ng-model="member.beneficiary.address"></textarea>
 										</div>
@@ -426,7 +426,7 @@
 									<div class="form-group">
 										<label class="control-label col-md-2">เบอร์โทรศัพท์บ้าน</label>
 										<div class="col-md-10">
-											<input class="form-control" type="text"
+											<input id="editTelephoneNumberOfBeneficiary" class="form-control" type="text"
 													ng-model="member.beneficiary.telephoneNumber">
 										</div>
 									</div>
@@ -434,28 +434,28 @@
 									<div class="form-group">
 										<label class="control-label col-md-2">เบอร์โทรศัพท์มือถือ</label>
 										<div class="col-md-10">
-											<input class="form-control" type="tel"
+											<input id="editMobileTelOfBeneficiary" class="form-control" type="tel"
 													ng-model="member.beneficiary.mobileTel">
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">อาชีพ</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
-													ng-model="member.beneficiary.occupation">
+											<input type="text" id="editOccupationOfBeneficiary" class="form-control"
+													ng-model="member.beneficiary.occupation" >
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">เงินเดือน</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
-													ng-model="member.beneficiary.revenue">
+											<input type="text" id="editRevenueOfBeneficiary" class="form-control"
+													ng-model="member.beneficiary.revenue" >
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">ความสัมพันธ์</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control"
+											<input type="text" id="EditRelationship" class="form-control"
 													ng-model="member.beneficiary.relationship">
 										</div>
 									</div>
@@ -463,7 +463,7 @@
 
 								<div class="text-right">
 								<input type="hidden" ng-model="member.memberId">
-									<button type="button" class="btn btn-primary"
+									<button type="button" class="btn btn-primary" id="updateMember"
 											ng-click="saveMember()">บันทึก <i
 												class="icon-arrow-right14 position-right"></i>
 									</button>

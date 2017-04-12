@@ -28,7 +28,7 @@
 									<div class="form-group">
 										
                                         <label
-									class="control-label col-lg-2">ชุมชน{{firstCommunity}}</label>
+									class="control-label col-lg-2">ชุมชน</label>
 										<div class="col-lg-10">
 											<select id="selectCommunity" class="form-control" ng-model="data.community.communityId" ng-init="">
                                                 <option ng-repeat="community in communities" ng-selected="{{data.community.communityId == data.firstCommunity}}" value="{{community.communityId}}">{{community.communityName}}</option>

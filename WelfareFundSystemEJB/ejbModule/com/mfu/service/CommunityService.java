@@ -11,5 +11,6 @@ public interface CommunityService {
 	public Community findCommunityById(long id);
 	public List<Community> getAllCommunity();
 	public List<Member> getMemberByCommunity(long communityid);
+	public Community findCommunityByName(String communityName);
 	public void delete(long id);
 }

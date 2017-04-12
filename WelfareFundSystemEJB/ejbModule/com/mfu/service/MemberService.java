@@ -11,5 +11,6 @@ public interface MemberService {
 	public Member findMemberById(long id);
 	public List<Member> getAllMember();
 	public List<ReceiveWelfare> getReceiveWelfareByMember(long memberId);
+	public Member findMemberByCitizenId(String citizenId);
 	public void delete (long id);
 } 

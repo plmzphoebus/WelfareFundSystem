@@ -54,4 +54,16 @@ public class MemberServiceBean implements MemberService {
 		// TODO Auto-generated method stub
 		return this.em.createQuery("SELECT ent FROM ReceiveWelfare ent WHERE ent.member.memberId=:memberId").setParameter("memberId", memberId).getResultList();
 	}
+
+	@Override
+	public Member findMemberByCitizenId(String citizenId) {
+		Member member = null;
+		try{
+			member = (Member) this.em.createQuery("SELECT ent FROM Member ent WHERE ent.citizen =:citizenId").setParameter("citizenId", citizenId).getResultList().get(0);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		return member;
+	}
 }
