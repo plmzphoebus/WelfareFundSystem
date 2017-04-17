@@ -380,6 +380,8 @@ $http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(
         }
     }).controller('editStaffCtrl', function($scope, CommunityService, $http) {
         $scope.data = {};
+        $scope.newPassword = "";
+        $scope.oldPassword = "";
         function findGetParameter(parameterName) {
             var result = null,
                 tmp = [];
@@ -401,10 +403,13 @@ $http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(
         },function(error){
         	console.log("Get Staff Error",error);
         });
-        $scope.saveCommunity = function() {
-            $http.post("saveCommunity.do", $scope.data).then(function(response) {
+        $scope.saveStaff = function() {
+        	if($("#choice").val() == "new")
+        		$scope.data.password = $scope.newPassword ;
+        	console.log("data",$scope.data);
+            $http.post("saveUser.do?choice="+$("#choice").val(), $scope.data).then(function(response) {
                 console.log(response);
-                window.location.href = 'allCommunity.jsp';
+                window.location.href = 'allStaff.jsp';
             }, function(error) {
                 console.log(error);
             });

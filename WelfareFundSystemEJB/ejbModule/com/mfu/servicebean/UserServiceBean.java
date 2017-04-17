@@ -47,4 +47,16 @@ public class UserServiceBean implements UserService {
 		}
 	}
 
+	@Override
+	public User loginUser(String username, String password) {
+		// TODO Auto-generated method stub
+		User user = null;
+		try{
+			user = (User) this.em.createQuery("SELECT ent FROM User ent WHERE ent.userName=:username AND ent.password=:password").setParameter("username", username).setParameter("password", password).getResultList().get(0);
+		}catch(Exception e){
+			
+		}
+		return user;
+	}
+
 }

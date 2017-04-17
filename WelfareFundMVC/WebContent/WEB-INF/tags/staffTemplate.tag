@@ -1,3 +1,4 @@
+<%@tag import="com.mfu.entity.User"%>
 <%@ tag language="java" pageEncoding="UTF-8"%>
 <%@ attribute name="title" required="true" rtexprvalue="true"%>
 <%@ attribute name="indexpage" required="false" rtexprvalue="true"%>
@@ -74,19 +75,12 @@
                     <li class="dropdown dropdown-user">
                         <a class="dropdown-toggle" data-toggle="dropdown">
                             <img src="assets/images/placeholder.jpg" alt="">
-                            <span>Staff</span>
+                            <span id="showName"></span>
                             <i class="caret"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li>
-                                <a href="#"><i class="icon-user-plus"></i> My profile</a>
-                            </li>
-                            <li class="divider"></li>
-                            <li>
-                                <a href="#"><i class="icon-cog5"></i> Account settings</a>
-                            </li>
-                            <li>
-                                <a href="login_simple.html"><i class="icon-switch2"></i> Logout</a>
+                                <a href="logout.do"><i class="icon-switch2"></i> Logout</a>
                             </li>
                         </ul>
                     </li>
@@ -109,10 +103,8 @@
                                         <img src="assets/images/placeholder.jpg" class="img-circle img-sm" alt="">
                                     </a>
                                     <div class="media-body">
-                                        <span class="media-heading text-semibold">Staff</span>
-                                        <div class="text-size-mini text-muted">
-                                            staff
-</div>
+                                        <span class="media-heading text-semibold" id="showName1"></span>
+                                        <div class="text-size-mini text-muted" id="showRole"></div>
                                     </div>
                                     <div class="media-right media-middle">
                                         <ul class="icons-list">
@@ -172,7 +164,17 @@
                                             </li>
                                         </ul>
                                     </li>
-                                    <li>
+                                    <%
+                                   
+                                	try{
+                                		User user = (User)session.getAttribute("user");
+                                		%>
+                                		<input type="hidden" id="displayName" value="<%=user.getFirstName()%> <%=user.getLastName()%>">
+                                		<input type="hidden" id="displayRole" value="<%=user.getRole().getRoleName()%>">
+                                		<%
+										if(user.getRole().getRoleName().equals("Administrator")){
+											%>
+											<li>
                                         <a href="#" id="manageStaff"><i class="icon-images2"></i> <span>จัดการพนักงาน</span></a>
                                         <ul>
                                             <li class="${newStaff }">
@@ -183,6 +185,14 @@
                                             </li>
                                         </ul>
                                     </li>
+											<%
+										}
+										}catch(Exception e){
+	                                		response.sendRedirect("login.jsp");
+	                                	}
+									
+										%>
+                                    
                                     <!-- /page kits -->
                                 </ul>
                             </div>
@@ -214,4 +224,13 @@
         <!-- /page container -->
         
     </body>
+    <script>
+        $(document).ready(function () {
+            var displayName = $("#displayName").val();
+            var displayRole = $("#displayRole").val();
+            $("#showName").html(displayName);
+            $("#showName1").html(displayName);
+            $("#showRole").html(displayRole);
+        });
+    </script>
 </html>
