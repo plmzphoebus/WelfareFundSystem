@@ -33,7 +33,7 @@
 								<tbody>
 									<tr ng-repeat="welfare in welfares" on-finish-render="ngRepeatFinished">
 	                                    <td>{{$index+1}}</td>
-										<td><a href="editWelfare.jsp?welfareId={{welfare.welfareID}}">{{welfare.welfareName}}</a></td>
+										<td><a href="welfareDetail.jsp?welfareId={{welfare.welfareID}}">{{welfare.welfareName}}</a></td>
 										<td>{{welfare.description}}</td>                                    
 										<td class="text-center">
 											<a href="editWelfare.jsp?welfareId={{welfare.welfareID}}">แก้ไข</a> 

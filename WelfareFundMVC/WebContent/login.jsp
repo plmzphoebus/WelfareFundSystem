@@ -12,6 +12,7 @@
         <script type="text/javascript" src="assets/js/angular.min.js"></script>
 <!-- Font Awesome -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <style>
 	.form-signin
 {
@@ -93,7 +94,7 @@
 						<input type="text" class="form-control" id="username" name="username" placeholder="ชื่อผู้ใช้งาน" autofocus><br>
 						<input type="password" class="form-control" id="password" name="password" placeholder="รหัสผ่าน"><br>
 						<div id="errorMessage" class="text-danger"></div>
-						<button class="btn btn-lg btn-primary btn-block" style="font-size:12pt;" type="button" onclick="login()">
+						<button class="btn btn-lg btn-primary btn-block" id="buttonLogin" style="font-size:12pt;" type="button" onclick="login()">
 							ลงชื่อเข้าใช้</button>
 				</div>
 			</div>
@@ -107,11 +108,14 @@
 				username : username,
 				password : password
 			};
+			$("#buttonLogin").html('<i class="fa fa-spinner fa-spin" style="font-size:24px"></i>');
 			$.post("loginStaff.do",data).then(function(response){
 				console.log(response);
 				window.location.href = "index.jsp";
 			},function(error){
-				alert(error);
+				
+				alert("ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณากรอกใหม่อีกครั้ง");
+				$("#buttonLogin").html('ลงชื่อเข้าใช้');
 			});
 		}
 	</script>

@@ -16,14 +16,15 @@
 						          </div>
                                     <div class="panel-body">
                                         
-                                        <form class="form-horizontal" action="#">
+                                        <form class="form-horizontal" action="#" name="myForm">
 								<fieldset class="content-group">
 									<legend class="text-bold">เพิ่มชุมชนใหม่ : กองทุนสวัสดิการชุมชนตำบลธาตุเชิงชุม</legend>
 
 									<div class="form-group">
 										<label  class="control-label col-lg-2">ชื่อชุมชน</label>
 										<div class="col-lg-10">
-											<input type="text" id="communityName" class="form-control" ng-model="data.communityName" placeholder="ชื่อชุมชน">
+											<input type="text" id="communityName" class="form-control" ng-model="data.communityName" placeholder="ชื่อชุมชน" required>
+											<span id="communitySameMsg" class="text-danger"></span>
 										</div>
 									</div>                         
                                     
@@ -31,7 +32,7 @@
 								</fieldset>
 
 								<div class="text-right">
-									<button type="submit" id="saveCommunity" class="btn btn-primary" ng-click="saveCommunity()">บันทึก <i class="icon-arrow-right14 position-right"></i></button>
+									<button type="button" ng-disabled="myForm.$invalid" id="saveCommunity" class="btn btn-primary" ng-click="saveCommunity()">บันทึก <i class="icon-arrow-right14 position-right"></i></button>
 								</div>
 							</form>
                                     </div>

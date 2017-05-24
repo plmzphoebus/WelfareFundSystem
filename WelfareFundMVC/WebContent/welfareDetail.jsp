@@ -24,13 +24,13 @@
 										<label class="control-label col-lg-2">ชื่อสวัสดิการ</label>
 										<div class="col-lg-10">
 										<input type="hidden" ng-model="welfare.welfareID">
-											<input type="text" class="form-control" ng-model="welfare.welfareName" placeholder="ชื่อสวัสดิการ">
+											{{welfare.welfareName}}
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">รายละเอียด</label>
 										<div class="col-lg-10">
-											<textarea rows="5" cols="5" class="form-control" ng-model="welfare.description" placeholder="รายละเอียดสวัสดิการ"></textarea>
+											{{welfare.description}}
 										</div>
 									</div>
                                     <div class="form-group">
@@ -46,9 +46,9 @@
 											</tr>
 											<tbody id="moreCondition">
 											<tr ng-repeat="condition in welfare.conditionals">
-												<td><a href="#" class="conditionDetail" data-type="text" data-pk="{{condition.conditionID}}" data-url="editConditionDetail.do" data-title="แก้ไขรายละเอียดเงื่อนไข">{{condition.conditionDetail}}</a></td>
-												<td><a href="#" class="welfareMoney" data-type="text" data-pk="{{condition.conditionID}}" data-url="editWelfareMoney.do" data-title="แก้ไขจำนวนเงิน">{{condition.welfareMoney}}</a></td>
-												<td><a href="#" class="amountofDate" data-type="text" data-pk="{{condition.conditionID}}" data-url="editAmountofDate.do" data-title="แก้ไขจำนวนวัน">{{condition.amountofDate}}</a></td>
+												<td>{{condition.conditionDetail}}</td>
+												<td>{{condition.welfareMoney}}</td>
+												<td>{{condition.amountofDate}}</td>
 											</tr>
 											</tbody>
 										</table>
@@ -56,10 +56,6 @@
                                     
                                     
 								</fieldset>
-
-								<div class="text-right">
-									<button type="button" class="btn btn-primary" ng-click="saveWelfare()">บันทึก <i class="icon-arrow-right14 position-right"></i></button>
-								</div>
 							</form>
                                     </div>
                                 </div>
@@ -67,17 +63,6 @@
                             
                         </div>				
 		</div>
-		 <script>
-		 	$(document).ready(function(){
-		 		 $('.conditionDetail').editable();
-		 		 $('.welfareMoney').editable();
-		 		 $('.amountofDate').editable();
-		 		setTimeout(function(){
-		 			$('.conditionDetail').editable();
-			 		 $('.welfareMoney').editable();
-			 		 $('.amountofDate').editable();
-		 			}, 2000);
-		 	});
-		 </script>
+		 
 	</jsp:attribute>
 </welfare:staffTemplate>

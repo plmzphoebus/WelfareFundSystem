@@ -88,19 +88,33 @@ public class UserController {
 		System.out.println("EncodedPassword "+password+" username"+username);
 		User user = userServ.loginUser(username, password);
 		if(user != null){
-			session.setAttribute("user", user);
+			session.setAttribute("userLogin", user);
 			System.out.println("User not null "+user);
-			System.out.println("User Session "+ (User) session.getAttribute("user"));
+			System.out.println("User Session "+ (User) session.getAttribute("userLogin"));
 			return new ResponseEntity<String>("200", HttpStatus.OK);
 		}else{
 			System.out.println("User null "+user);
 			return new ResponseEntity<String>("400", HttpStatus.BAD_REQUEST);
 		}
 	}
+	@RequestMapping(value="/checkOldPassword", method=RequestMethod.POST)
+	@ResponseBody
+	public ResponseEntity<String> checkOldPassword(@RequestParam("userId") long userId, @RequestParam("oldPassword") String oldPassword){
+		try{
+			User user = userServ.findUserById(userId);
+			if(user.getPassword().equals(oldPassword)){
+				return new ResponseEntity<String>("200",HttpStatus.OK);
+			}else{
+				throw new Exception();
+			}			
+		}catch(Exception e){
+			return new ResponseEntity<String>("400",HttpStatus.BAD_REQUEST);
+		}
+	}
 	
 	@RequestMapping(value = "/logout")
 	public String Logout(HttpSession session){
-		session.setAttribute("user", "");
+		session.setAttribute("userLogin", "");
 		return "redirect:login.jsp";
 	}
 }

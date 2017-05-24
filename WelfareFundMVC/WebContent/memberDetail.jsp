@@ -226,6 +226,7 @@
               </div>
               <div class="modal-body">
                   <div class="row">
+                  <form name="receiveWelfareForm">
                       <div class="form-group">
                             <label  class="control-label col-lg-3">วันที่</label>
                                 <div class="col-lg-9">
@@ -238,7 +239,7 @@
                                 <div class="col-lg-9">
                                     <select id="welfareType" class="form-control"  
 											ng-model="receive.welfare.welfareID"
-											ng-change="selectedWelfare()">
+											ng-change="selectedWelfare()" required>
                                         <option
 												ng-repeat="welfare in welfares"
 												value="{{welfare.welfareID}}">{{welfare.welfareName}}</option>
@@ -249,7 +250,7 @@
                             <label  class="control-label col-lg-3">จำนวนเงิน</label>
                                 <div class="col-lg-9">
                                     <select id="amountOfMoney" class="form-control"
-											ng-model="receive.amount">
+											ng-model="receive.amount" required>
                                     	<option
 												ng-repeat="condition in listConditions"
 												value="{{condition.welfareMoney}}">{{condition.conditionDetail}} {{condition.welfareMoney}} บาท</option>
@@ -260,19 +261,20 @@
                             <label class="control-label col-lg-3">หมายเหตุ</label>
                                 <div class="col-lg-9">
                                     <input type="text"
-											id="remark" class="form-control" ng-model="receive.remark">
+											id="remark" class="form-control" ng-model="receive.remark" required>
 										<input type="hidden" class="form-control"
 											ng-model="receive.member.memberId"
-											ng-init="receive.member.memberId = memberId">
+											ng-init="receive.member.memberId = memberId" required>
                                 </div>
                       </div>
                       <div class="form-group">
                             <label class="control-label col-lg-3">&nbsp;</label>
                                 <div class="col-lg-9">
-                                    <button type="button" id="saveReceiveWelfare"
+                                    <button type="button" id="saveReceiveWelfare" ng-disabled="receiveWelfareForm.$invalid"
 											class="btn btn-success" ng-click="receiveWelfare()">บันทึก</button> 
                                 </div>
                       </div>
+                      </form>
                   </div>
                     
               </div>

@@ -6,7 +6,7 @@
 	<jsp:attribute name="content">
 		<div class="panel panel-flat" ng-app="myApp" ng-controller="allMemberCtrl" >
 						<div class="panel-heading">
-							<h5 class="panel-title"> <i class="icon-users2"></i> All Members</h5>
+							<h5 class="panel-title"> <i class="icon-users2"></i> สมาชิกทั้งหมด</h5>
 							<div class="heading-elements">
 								<a class="btn btn-primary" href="getMemberExcelFile.do" target="blank">ส่งออกไฟล์ Excel </a>
 								<button class="btn btn-success" ng-click="toggleShow()">นำเข้าไฟล์ Excel </button>
@@ -63,7 +63,6 @@
 												<ul class="dropdown-menu dropdown-menu-right">
                                                     <li><a
 											href="memberDetail.jsp?id={{member.memberId}}&acid={{member.account.accountId}}">View</a></li>
-													<li><a href="#">Edit</a></li>
 													<li><a href="#">Delete</a></li>													
 												</ul>
 											</li>

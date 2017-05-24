@@ -338,12 +338,19 @@ $http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(
             $scope.data.conditionals = obj;
             console.log("condition", obj);
             console.log("data", $scope.data);
-            $http.post("saveWelfare.do", $scope.data).then(function(response) {
-                console.log("success", response);
-                window.location.href = "allWelfare.jsp";
-            }, function(error) {
-                console.log("error", error);
-            });
+            
+            if($("#welfareName").val() != "" && $("#welfareDescription") != ""){
+            	$http.post("saveWelfare.do", $scope.data).then(function(response) {
+                    console.log("success", response);
+                    window.location.href = "allWelfare.jsp";
+                }, function(error) {
+                    console.log("error", error);
+                });
+            }else{
+            	alert("กรุณากรอกข้อมูลให้ครบถ้วน");
+            }
+            
+            
         }
     }).controller('editWelfareCtrl', function($scope, $http, WelfareService) {
         $scope.welfare = '';
@@ -371,12 +378,18 @@ $http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(
     }).controller('newCommunityCtrl', function($scope, CommunityService, $http) {
         $scope.data = {};
         $scope.saveCommunity = function() {
+        	if($("#communityName").val() != ""){
             $http.post("saveCommunity.do", $scope.data).then(function(response) {
                 console.log(response);
                 window.location.href = 'allCommunity.jsp';
             }, function(error) {
-                console.log(error);
+                $("#communitySameMsg").html('ชื่อชุมชนนี้มีในระบบแล้ว');
+                $("#communitySameMsg").focus();
             });
+        	}else{
+        		$("#communitySameMsg").html('กรุณากรอกชื่อชุมชน');
+                $("#communitySameMsg").focus();
+        	}
         }
     }).controller('editStaffCtrl', function($scope, CommunityService, $http) {
         $scope.data = {};
@@ -403,18 +416,35 @@ $http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(
         },function(error){
         	console.log("Get Staff Error",error);
         });
-        $scope.saveStaff = function() {
-        	if($("#choice").val() == "new")
+        $scope.changePassword = function() {
+        	if($("#newPassword").val() == $("#confirmNewPassword").val()){
         		$scope.data.password = $scope.newPassword ;
+            	console.log("data",$scope.data);
+            	$http.post("checkOldPassword.do?userId="+$scope.data.user+"&oldPassword="+$scope.oldPassword).then(function(data){
+            		$http.post("saveUser.do?choice=new", $scope.data).then(function(response) {
+                        console.log(response);
+                        window.location.href = 'allStaff.jsp';
+                    }, function(error) {
+                        console.log(error);
+                    });
+            	},function(err){
+            		$("#showErrorMsg").html('รหัสผ่านเก่าไม่ถูกต้อง');
+            	})
+                
+        	}else{
+        		$("#showMsg").html('กรุณากรอกรหัสผ่านให้ตรงกัน');
+        	}
+        	
+        }
+        $scope.saveStaff = function() {
         	console.log("data",$scope.data);
-            $http.post("saveUser.do?choice="+$("#choice").val(), $scope.data).then(function(response) {
+            $http.post("saveUser.do", $scope.data).then(function(response) {
                 console.log(response);
                 window.location.href = 'allStaff.jsp';
             }, function(error) {
                 console.log(error);
             });
         }
-        
     }).controller('allStaffCtrl', function($scope, $http) {
     	$scope.staffs = [];
     	$http.get("listUser.do").then(function(response){
@@ -451,7 +481,6 @@ $http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(
     	
     	$scope.saveStaff = function(){
     		console.log("Staff Data",$scope.data);
-    		if($scope.data.role && $scope.data.firstName && $scope.data.lastName && $scope.data.telephoneNumber && $scope.data.email && $scope.data.userName && $scope.data.password && $scope.confirmPassword){
     			if($scope.data.password == $scope.confirmPassword){
     				$http.post("saveUser.do",$scope.data).then(function(response){
     					console.log("Success Save User",response);
@@ -460,11 +489,8 @@ $http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(
     					console.log("save User Error",error);
     				});
     			}else{
-    				alert("กรุณากรอกรหัสผ่านให้เหมือนกัน");
+    				$('#errorText').html('กรุณากรอกหรหัสผ่านให้ตรงกัน');
     			}
-    		}else{
-    			alert("กรุณากรอกข้อมูลให้ครบถ้วน");
-    		}
     	}
     }).controller('editCommunityCtrl', function($scope, $http, CommunityService) {
         $scope.community = '';

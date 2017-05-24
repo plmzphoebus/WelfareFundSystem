@@ -13,9 +13,9 @@
                                         <div class="panel bg-teal-400">
                                             <div class="panel-body text-left">
                                                 <div class="heading-elements">
-                                                    <button class="btn bg-teal-300 btn-info btn-rounded btn-xs" type="button"> View All </button>
+                                                    <a class="btn bg-teal-300 btn-info btn-rounded btn-xs" href="allMember.jsp"> View All </a>
                                                 </div>
-                                                <h3 class="no-margin">532</h3>
+                                                <h3 class="no-margin" id="allMembersCounter">0</h3>
                                               	สมาชิกทั้งหมด
                                             </div>
                                             <div class="container-fluid">
@@ -29,9 +29,9 @@
                                         <div class="panel bg-pink-400">
                                             <div class="panel-body">
                                                 <div class="heading-elements">
-                                                    <button class="btn bg-teal-300 btn-info btn-rounded btn-xs" type="button"> View All</button>
+                                                    <a class="btn bg-teal-300 btn-info btn-rounded btn-xs" href="allCommunity.jsp"> View All</a>
                                                 </div>
-                                                <h3 class="no-margin">1,220</h3>
+                                                <h3 class="no-margin" id="allCommunityCounter">0</h3>
                                             	    ชุมชนทั้งหมด
                                             </div>
                                             <div id="server-load"></div>
@@ -44,10 +44,10 @@
                                             <div class="panel-body">
                                                 <div class="heading-elements">
                                                     
-                                                    <button class="btn bg-teal-300 btn-info btn-rounded btn-xs" type="button"> View All
-</button>
+                                                    <a class="btn bg-teal-300 btn-info btn-rounded btn-xs" href="allWelfare.jsp"> View All
+</a>
                                                 </div>
-                                                <h3 class="no-margin">18</h3>
+                                                <h3 class="no-margin" id="allWelfareCounter">0</h3>
                                                 สวัสดิการทั้งหมด
                                             </div>
                                             <div id="today-revenue"></div>
@@ -289,6 +289,24 @@
 			chart.render();	
 				});
 					
+			});
+			$("#allMembersCounter").html('<i class="fa fa-spinner fa-spin"></i>');
+			$("#allCommunityCounter").html('<i class="fa fa-spinner fa-spin"></i>');
+			$("#allWelfareCounter").html('<i class="fa fa-spinner fa-spin"></i>');
+			$.get("listMember.do").then(function(memberData){
+				$("#allMembersCounter").html(memberData.length);
+			},function(){
+				$("#allMembersCounter").html('0');
+			});
+			$.get("listallCommunity.do").then(function(communityData){
+				$("#allCommunityCounter").html(communityData.length);
+			},function(){
+				$("#allCommunityCounter").html('0');
+			});
+			$.get("listAllWelfare.do").then(function(welfareData){
+				$("#allWelfareCounter").html(welfareData.length);
+			},function(){
+				$("#allWelfareCounter").html('0');
 			});
 		}
 	</script>

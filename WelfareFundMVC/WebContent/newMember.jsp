@@ -15,14 +15,14 @@
 						          </div>
                                     <div class="panel-body">
                                         
-                                        <form class="form-horizontal"
+                                        <form name="myForm" class="form-horizontal"
 						action="#">
 								<fieldset class="content-group">
 									<legend class="text-bold">ฟอร์มสมัครสมาชิก : กองทุนสวัสดิการชุมชนตำบลธาตุเชิงชุม</legend>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">วันสมัคร</label>
 										<div class="col-lg-10">
-											<input type="date" id="entranceDate" class="form-control" ng-model="data.entranceDate">
+											<input type="date" id="entranceDate" class="form-control" ng-model="data.entranceDate" required>
 										</div>
 									</div>
 									<div class="form-group">
@@ -30,7 +30,7 @@
                                         <label
 									class="control-label col-lg-2">ชุมชน</label>
 										<div class="col-lg-10">
-											<select id="selectCommunity" class="form-control" ng-model="data.community.communityId" ng-init="">
+											<select id="selectCommunity" class="form-control" ng-model="data.community.communityId" ng-init="" required>
                                                 <option ng-repeat="community in communities" ng-selected="{{data.community.communityId == data.firstCommunity}}" value="{{community.communityId}}">{{community.communityName}}</option>
                                             </select>
 										</div>
@@ -40,7 +40,7 @@
                                         <label
 									class="control-label col-lg-2">ประเภทการชำระเงิน</label>
 										<div class="col-lg-10">
-											<select id="selectPreferPayment" class="form-control" ng-model="data.preferPayment" ng-init="data.preferPayment = 'รายเดือน'">
+											<select id="selectPreferPayment" class="form-control" ng-model="data.preferPayment" ng-init="data.preferPayment = 'รายเดือน'" required>
                                                 <option value="รายเดือน">รายเดือน</option>
                                                 <option value="รายครึ่งปี">รายครึ่งปี</option>
                                                 <option value="รายปี">รายปี</option>
@@ -50,58 +50,59 @@
 									<div class="form-group">
 										<label class="control-label col-lg-2">ชื่อ</label>
 										<div class="col-lg-10">
-											<input type="text" id="firstName" class="form-control" ng-model="data.firstName">
+											<input type="text" id="firstName" class="form-control" ng-model="data.firstName" required>
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">นามสกุล</label>
 										<div class="col-lg-10">
-											<input type="text" id="lastName" class="form-control" ng-model="data.lastName">
+											<input type="text" id="lastName" class="form-control" ng-model="data.lastName" required>
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">อายุ</label>
 										<div class="col-lg-10">
-											<input type="number" id="age" class="form-control" ng-model="data.age">
+											<input type="text" id="age" class="form-control" ng-model="data.age" maxlength="3" onkeypress="return isNumberKey(event)" required>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="control-label col-lg-2">รหัสบัตรประชาชน</label>
 										<div class="col-lg-10">
-											<input type="text" id="citizenId" class="form-control" ng-model="data.citizen">
+											<input type="text" id="citizenId" class="form-control" ng-model="data.citizen" maxlength="13" onblur="checkCitizenId()" onkeypress="return isNumberKey(event)" required>
+											<span id="alertCitizenId" class="text-danger"></span>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="control-label col-lg-2">ที่อยู่</label>
 										<div class="col-lg-10">
 											<textarea rows="5" cols="5" id="address" class="form-control"
-										placeholder="Default textarea" ng-model="data.address"></textarea>
+										placeholder="ที่อยู่" ng-model="data.address" required></textarea>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="control-label col-md-2">เบอร์โทรศัพท์บ้าน</label>
 										<div class="col-md-10">
-											<input id="telephoneNumber" class="form-control" type="tel" ng-model="data.telephoneNumber">
+											<input id="telephoneNumber" class="form-control" type="tel" ng-model="data.telephoneNumber" maxlength="9" onkeypress="return isNumberKey(event)" required>
 										</div>
 									</div>
                                     
 									<div class="form-group">
 										<label class="control-label col-md-2">เบอร์โทรศัพท์มือถือ</label>
 										<div class="col-md-10">
-											<input id="mobileTel" class="form-control" type="tel" ng-model="data.mobileTel">
+											<input id="mobileTel" class="form-control" type="tel" ng-model="data.mobileTel" maxlength="10" onkeypress="return isNumberKey(event)" required>
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">อาชีพ</label>
 										<div class="col-lg-10">
-											<input type="text" id="occupation" class="form-control" ng-model="data.occupation">
+											<input type="text" id="occupation" class="form-control" ng-model="data.occupation" required>
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">รายได้ต่อเดือน</label>
 										<div class="col-lg-10">
-											<input type="text" id="revenue" class="form-control" ng-model="data.revenue">
+											<input type="text" id="revenue" class="form-control" ng-model="data.revenue" onkeypress="return isNumberKey(event)" required>
 										</div>
 									</div>
                                     <h4>เงื่อนไขการเป็นสมาชิก</h4>
@@ -117,70 +118,70 @@
 									<div class="form-group">
 										<label class="control-label col-lg-2">ชื่อ</label>
 										<div class="col-lg-10">
-											<input type="text" id="firstnameOfBeneficiary" class="form-control" ng-model="data.beneficiary.firstName">
+											<input type="text" id="firstnameOfBeneficiary" class="form-control" ng-model="data.beneficiary.firstName" required>
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">นามสกุล</label>
 										<div class="col-lg-10">
-											<input type="text" id="lastnameOfBeneficiary" class="form-control" ng-model="data.beneficiary.lastName">
+											<input type="text" id="lastnameOfBeneficiary" class="form-control" ng-model="data.beneficiary.lastName" required>
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">อายุ</label>
 										<div class="col-lg-10">
-											<input type="number" id="ageOfBeneficiary" class="form-control" ng-model="data.beneficiary.age">
+											<input type="text" id="ageOfBeneficiary" class="form-control" ng-model="data.beneficiary.age" maxlength="3" onkeypress="return isNumberKey(event)" required>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="control-label col-lg-2">รหัสบัตรประชาชน</label>
 										<div class="col-lg-10">
-											<input type="text" id="citizenIdOfBeneficiary" class="form-control" ng-model="data.beneficiary.citizenId">
+											<input type="text" id="citizenIdOfBeneficiary" class="form-control" ng-model="data.beneficiary.citizenId" maxlength="13" onkeypress="return isNumberKey(event)" required>
 										</div>
 									</div>
 									<div class="form-group">
 										<label class="control-label col-lg-2">ที่อยู่</label>
 										<div class="col-lg-10">
 											<textarea rows="5" cols="5" id="addressOfBeneficiary" class="form-control"
-										placeholder="Default textarea" ng-model="data.beneficiary.address"></textarea>
+										placeholder="ที่อยู่" ng-model="data.beneficiary.address" required></textarea>
 										</div>
 									</div>
 
 									<div class="form-group">
 										<label class="control-label col-md-2">เบอร์โทรศัพท์บ้าน</label>
 										<div class="col-md-10">
-											<input id="telephoneNumberOfBeneficiary" class="form-control" type="tel" ng-model="data.beneficiary.telephoneNumber">
+											<input id="telephoneNumberOfBeneficiary" class="form-control" type="tel" ng-model="data.beneficiary.telephoneNumber" maxlength="9" onkeypress="return isNumberKey(event)" required>
 										</div>
 									</div>
                                     
 									<div class="form-group">
-										<label class="control-label col-md-2">เบอร์โทรศัพท์มือถือ</label>
+										<label class="control-label col-md-2" required>เบอร์โทรศัพท์มือถือ</label>
 										<div class="col-md-10">
-											<input id="mobileTelOfBeneficiary" class="form-control" type="tel" ng-model="data.beneficiary.mobileTel">
+											<input id="mobileTelOfBeneficiary" class="form-control" type="tel" ng-model="data.beneficiary.mobileTel" maxlength="10" onkeypress="return isNumberKey(event)" required>
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">อาชีพ</label>
 										<div class="col-lg-10">
-											<input type="text" id="occupationOfBeneficiary" class="form-control" ng-model="data.beneficiary.occupation">
+											<input type="text" id="occupationOfBeneficiary" class="form-control" ng-model="data.beneficiary.occupation" required>
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">รายได้ต่อเดือน</label>
 										<div class="col-lg-10">
-											<input type="text" id="revenueOfBeneficiary" class="form-control" ng-model="data.beneficiary.revenue">
+											<input type="text" id="revenueOfBeneficiary" class="form-control" ng-model="data.beneficiary.revenue" onkeypress="return isNumberKey(event)" required>
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">ความสัมพันธ์</label>
 										<div class="col-lg-10">
-											<input type="text" id="relationship" class="form-control" ng-model="data.beneficiary.relationship">
+											<input type="text" id="relationship" class="form-control" ng-model="data.beneficiary.relationship" required>
 										</div>
 									</div>
 								</fieldset>
 
 								<div class="text-right">
-									<button type="button" id="saveMember" class="btn btn-primary" ng-click="newMember()">สมัครสมาชิก <i
+									<button type="button" id="saveMember" ng-disabled="myForm.$invalid" class="btn btn-primary" ng-click="newMember()">สมัครสมาชิก <i
 									class="icon-arrow-right14 position-right"></i>
 							</button>
 								</div>
@@ -188,6 +189,24 @@
                                     </div>
                                 </div>
                             </div>
+                            <script>
+                            	function checkCitizenId(){
+                            		var citizenId = $("#citizenId").val();
+                            		$.get("login/"+citizenId+".do").then(function(response){
+                            			$("#alertCitizenId").html("รหัสบัตรประชาชนนี้ถูกใช้ไปแล้ว กรุณากรอกใหม่อีกครั้ง");
+                            			 $("#citizenId").focus();
+                            			console.log(response.data);
+                            		},function(err){
+                            			$("#alertCitizenId").html("");
+                            		});
+                            	}
+                            	function isNumberKey(evt){
+                            	    var charCode = (evt.which) ? evt.which : event.keyCode
+                            	    if (charCode > 31 && (charCode < 48 || charCode > 57))
+                            	        return false;
+                            	    return true;
+                            	}
+                            </script>
 	</jsp:attribute>
 
 </welfare:staffTemplate>

@@ -154,9 +154,32 @@ public class MemberController {
 	    
 	    Sheet firstSheet = workbook.getSheetAt(0);
         Iterator<Row> iterator = firstSheet.iterator();
-        
         while (iterator.hasNext()) {
-            Row nextRow = iterator.next();
+    		Row nextRow = iterator.next();
+    		Iterator<Cell> cellIterator = nextRow.cellIterator();
+    	 if(nextRow.getRowNum() != 0){
+    		 while (cellIterator.hasNext()) {
+             	if(nextRow.getRowNum() != 0){
+                 Cell cell = cellIterator.next();
+                 int columnIndex = cell.getColumnIndex();
+                 switch (columnIndex) {
+                 case 1:
+                	 Community com = communityServ.findCommunityByName((String)getCellValue(cell));
+                 	if(com == null){
+                 		System.out.println("Community"+ com);
+                 		com = new Community();
+                 		com.setCommunityName((String)getCellValue(cell));
+                 		communityServ.save(com);
+                 	}
+                	break;
+                 }
+             	}
+    		 }
+         	}
+    }
+        Iterator<Row> iterator1 = firstSheet.iterator();
+        while (iterator1.hasNext()) {
+            Row nextRow = iterator1.next();
             Iterator<Cell> cellIterator = nextRow.cellIterator();
              System.out.println("Row Number: "+nextRow.getRowNum());
              
@@ -176,12 +199,6 @@ public class MemberController {
                         break;
                     case 1:
                     	Community com = communityServ.findCommunityByName((String)getCellValue(cell));
-                    	if(com == null){
-                    		System.out.println("Community"+ com);
-                    		com = new Community();
-                    		com.setCommunityName((String)getCellValue(cell));
-                    		communityServ.save(com);
-                    	}
                     		member.setCommunity(com);
                         break;
                     case 2:

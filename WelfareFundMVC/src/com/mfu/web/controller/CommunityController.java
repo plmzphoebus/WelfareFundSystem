@@ -72,11 +72,17 @@ public class CommunityController {
 	@RequestMapping(value = "/saveCommunity", method = { RequestMethod.POST, RequestMethod.PUT })
 	public ResponseEntity<String> createCommunity(@RequestBody Community community) {
 		try {
-			if (community.getCommunityId() == 0) {
-				communityserv.save(community);
-			} else {
-				communityserv.update(community);
+			Community communityfound = communityserv.findCommunityByName(community.getCommunityName());
+			if(communityfound == null){
+				if (community.getCommunityId() == 0) {
+					communityserv.save(community);
+				} else {
+					communityserv.update(community);
+				}
+			}else{
+				throw new Exception();
 			}
+			
 			return new ResponseEntity<String>("200", HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<String>("400", HttpStatus.BAD_REQUEST);

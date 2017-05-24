@@ -20,7 +20,7 @@ public class Conditional implements Serializable{
 	private int amountofDate;
 	private int welfareMoney;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JsonIgnore
 	private Welfare welfare;
 	
@@ -47,9 +47,6 @@ public class Conditional implements Serializable{
 	}
 	public void setWelfareMoney(int welfareMoney) {
 		this.welfareMoney = welfareMoney;
-	}
-	public Welfare getWelfare() {
-		return welfare;
 	}
 	public void setWelfare(Welfare welfare) {
 		this.welfare = welfare;

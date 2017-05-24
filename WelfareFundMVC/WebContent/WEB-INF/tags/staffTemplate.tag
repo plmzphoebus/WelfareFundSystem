@@ -21,11 +21,14 @@
         <!-- Global stylesheets -->
         <link href="https://fonts.googleapis.com/css?family=Roboto:400,300,100,500,700,900" rel="stylesheet" type="text/css">
         <link href="assets/css/icons/icomoon/styles.css" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="assets/css/bootstrap.css" rel="stylesheet" type="text/css">
         <link href="assets/css/core.css" rel="stylesheet" type="text/css">
         <link href="assets/css/components.css" rel="stylesheet" type="text/css">
         <link href="assets/css/colors.css" rel="stylesheet" type="text/css">
         <link href="assets/style.css" rel="stylesheet" type="text/css">
+        <link href="bootstrap3-editable/css/bootstrap-editable.css" rel="stylesheet">
+		
         <!-- /global stylesheets -->
         <!-- Core JS files -->
         <script type="text/javascript" src="assets/js/plugins/loaders/pace.min.js"></script>
@@ -46,13 +49,14 @@
         <script type="text/javascript" src="assets/js/plugins/pickers/daterangepicker.js"></script>
         <script type="text/javascript" src="assets/js/plugins/tables/datatables/datatables.min.js"></script>
         <script type="text/javascript" src="assets/js/core/app.js"></script>
+        <script src="bootstrap3-editable/js/bootstrap-editable.js"></script>
         <!-- /theme JS files -->
     </head>
     <body>
         <!-- Main navbar -->
         <div class="navbar navbar-default header-highlight">
             <div class="navbar-header">
-                <a class="navbar-brand" href="index.html" style="color:white;">
+                <a class="navbar-brand" href="index.jsp" style="color:white;">
                     ระบบกองทุนสวัสดิการตำบลธาตุเชิงชุม
                 </a>
                 <ul class="nav navbar-nav visible-xs-block">
@@ -167,7 +171,11 @@
                                     <%
                                    
                                 	try{
-                                		User user = (User)session.getAttribute("user");
+                                		User user = (User)session.getAttribute("userLogin");
+                                		if(user == null){
+                                			response.sendRedirect("login.jsp");
+                                			return;
+                                		}else{
                                 		%>
                                 		<input type="hidden" id="displayName" value="<%=user.getFirstName()%> <%=user.getLastName()%>">
                                 		<input type="hidden" id="displayRole" value="<%=user.getRole().getRoleName()%>">
@@ -187,8 +195,10 @@
                                     </li>
 											<%
 										}
+										}
 										}catch(Exception e){
 	                                		response.sendRedirect("login.jsp");
+	                                		return;
 	                                	}
 									
 										%>

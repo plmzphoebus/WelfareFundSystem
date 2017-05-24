@@ -16,20 +16,20 @@
 						          </div>
                                     <div class="panel-body">
                                         
-                                        <form class="form-horizontal" action="#">
+                                        <form class="form-horizontal" action="#" name="myForm">
 								<fieldset class="content-group">
 									<legend class="text-bold">เพิ่มสวัสดิการใหม่ : กองทุนสวัสดิการชุมชนตำบลธาตุเชิงชุม</legend>
 
 									<div class="form-group">
 										<label class="control-label col-lg-2">ชื่อสวัสดิการ</label>
 										<div class="col-lg-10">
-											<input type="text" class="form-control" ng-model="data.welfareName" placeholder="ชื่อสวัสดิการ">
+											<input type="text" class="form-control" id="welfareName" ng-model="data.welfareName" placeholder="ชื่อสวัสดิการ" required>
 										</div>
 									</div>
                                     <div class="form-group">
 										<label class="control-label col-lg-2">รายละเอียด</label>
 										<div class="col-lg-10">
-											<textarea rows="5" cols="5" class="form-control" ng-model="data.description" placeholder="รายละเอียด"></textarea>
+											<textarea rows="5" cols="5" class="form-control" id="welfareDescription" ng-model="data.description" placeholder="รายละเอียด" required></textarea>
 										</div>
 									</div>
 									<div class="form-group">
@@ -45,9 +45,9 @@
 											</tr>
 											<tbody id="moreCondition">
 											<tr>
-												<td><input type="text" name="conditionDetail[]" placeholder="รายละเอียดเงื่อนไข" class="form-control"></td>
-												<td><input type="number" name="welfareMoney[]" placeholder="จำนวนเงิน" class="form-control"></td>
-												<td><input type="number" name="amountofDate[]" placeholder="จำนวนวันขั้นต่ำ" class="form-control"></td>
+												<td><input type="text" name="conditionDetail[]" ng-model="conditionDetail0" placeholder="รายละเอียดเงื่อนไข" class="form-control" required></td>
+												<td><input type="number" name="welfareMoney[]" ng-model="welfareMoney0" placeholder="จำนวนเงิน" class="form-control" onkeypress="return isNumberKey(event)" required></td>
+												<td><input type="number" name="amountofDate[]" ng-model="amountofDate0" placeholder="จำนวนวันขั้นต่ำ" class="form-control" onkeypress="return isNumberKey(event)" required></td>
 												<td>
 													<button type="button" class="btn btn-success btn-circle" onclick="addCondition()"><i class="icon  icon-plus3"></i></button>
 												</td>
@@ -61,7 +61,7 @@
 								</fieldset>
 
 								<div class="text-right">
-									<button type="button" class="btn btn-primary" ng-click="saveWelfare()">บันทึก <i class="icon-arrow-right14 position-right"></i></button>
+									<button type="button" class="btn btn-primary" ng-disabled="myForm.$invalid" ng-click="saveWelfare()">บันทึก <i class="icon-arrow-right14 position-right"></i></button>
 								</div>
 							</form>
                                     </div>
@@ -79,15 +79,22 @@
             	var id = Math.floor((Math.random() * 10000) + 1);
             	var str = "";
             	str += "<tr id=\"condition"+id+"\">";
-				str += "<td><input type=\"text\" name=\"conditionDetail[]\" placeholder=\"รายละเอียดเงื่อนไข\" class=\"form-control\"></td>";
-				str += "<td><input type=\"number\" name=\"welfareMoney[]\" placeholder=\"จำนวนเงิน\" class=\"form-control\"></td>";
-				str += "<td><input type=\"number\" name=\"amountofDate[]\" placeholder=\"จำนวนวันขั้นต่ำ\" class=\"form-control\"></td>";
+				str += "<td><input type=\"text\" name=\"conditionDetail[]\" ng-model=\"conditionDetail"+id+"\" placeholder=\"รายละเอียดเงื่อนไข\" class=\"form-control\" required></td>";
+				str += "<td><input type=\"number\" name=\"welfareMoney[]\" ng-model=\"welfareMoney"+id+"\" placeholder=\"จำนวนเงิน\" class=\"form-control\"  onkeypress=\"return isNumberKey(event)\" required></td>";
+				str += "<td><input type=\"number\" name=\"amountofDate[]\" ng=model=\"amountofDate"+id+"\" placeholder=\"จำนวนวันขั้นต่ำ\" class=\"form-control\"  onkeypress=\"return isNumberKey(event)\" required></td>";
 				str += "<td>";
 				str += "<button type=\"button\" class=\"btn btn-danger btn-circle\" onclick=\"deleteCondition("+id+")\"><i class=\"icon  icon-minus3\"></i></button>";
 				str += "</td>";
 				str += "</tr>";
             	 $("#moreCondition").append(str);
             }
+
+        	function isNumberKey(evt){
+        	    var charCode = (evt.which) ? evt.which : event.keyCode
+        	    if (charCode > 31 && (charCode < 48 || charCode > 57))
+        	        return false;
+        	    return true;
+        	}
         </script>
 	</jsp:attribute>
 </welfare:staffTemplate>
