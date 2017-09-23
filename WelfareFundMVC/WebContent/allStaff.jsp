@@ -32,13 +32,13 @@
                                             <tr ng-repeat="staff in staffs" on-finish-render="ngRepeatFinished">
                                                 <td>{{$index+1}}</td>
                                                 <td>{{staff.email}}</td>
-                                                <td>{{staff.firstName}} {{staff.lastName}}</td>
+                                                <td>{{staff.firstName}} {{staff.lastName}} </td>
                                                 <td>{{staff.userName}}</td>                             
                                                 <td class="text-center">
                                                     <a href="editStaff.jsp?staffId={{staff.user}}">แก้ไข</a> 
                                                     <a href="#" ng-click="deleteStaff(staff.user)" class="text-danger">ลบ</a>
                                                     <br>
-                                                    <a href="changePasswordStaff.jsp?staffId={{staff.user}}">เปลี่ยนรหัสผ่าน</a> 
+                                                    <a ng-if="staff.user == ${sessionScope.userLogin.user }" href="changePasswordStaff.jsp?staffId={{staff.user}}">เปลี่ยนรหัสผ่าน</a> 
                                                 </td>
                                             </tr>
                                         </tbody>

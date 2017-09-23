@@ -73,9 +73,11 @@ angular.module('myApp', [])
         $scope.saving = {};
         $scope.receive = {};
         $scope.entranceDate = '';
+        $scope.birthDate = '' ;
         $scope.paymentType = '' ;
         $scope.peroidOfMembership = '';
         $scope.member = {} ;
+        $scope.beneficiaries = [];
         $scope.lastTransaction ={};
         $scope.nextPaymentYear="";
         $scope.nextPaymentMonth="";
@@ -83,16 +85,29 @@ angular.module('myApp', [])
         $scope.startDate = 0;
         $scope.endDate = 0;
         $scope.receive.date = new Date();
-        MemberService.getMemberById(findGetParameter("id")).then(function(response) {
-            $scope.member = response;
-            $scope.paymentType = $scope.member.preferPayment;
-            $scope.entranceDate = new Date($scope.member.entranceDate);
-            var currentDate = new Date();
-            var timeDiff = Math.abs(currentDate.getTime() - $scope.entranceDate.getTime());
-            $scope.peroidOfMembership = Math.ceil(timeDiff / (1000 * 3600 * 24));
-            console.log("peroidOfMembership",$scope.peroidOfMembership);
-            console.log("scope",$scope);
-        });
+        $scope.age = 0 ;
+        $scope.beneficiary = {};
+        $scope.editbeneficiary = {};
+        $scope.loadMemberDetail = function(){
+        	MemberService.getMemberById(findGetParameter("id")).then(function(response) {
+                $scope.member = response;
+                $scope.paymentType = $scope.member.preferPayment;
+                $scope.entranceDate = new Date($scope.member.entranceDate);
+                $scope.birthDate = new Date($scope.member.birthDate);
+                var currentDate = new Date();
+                $scope.age = currentDate.getFullYear() - $scope.birthDate.getFullYear();
+                console.log("age", $scope.age);
+                var timeDiff = Math.abs(currentDate.getTime() - $scope.entranceDate.getTime());
+                $scope.peroidOfMembership = Math.ceil(timeDiff / (1000 * 3600 * 24));
+                console.log("peroidOfMembership",$scope.peroidOfMembership);
+                console.log("scope",$scope);
+            });
+        }
+        
+        //Cal Age
+        $scope.calAge = function(date){
+        	return new Date().getFullYear() - new Date(date).getFullYear();
+        }
         function findGetParameter(parameterName) {
             var result = null,
                 tmp = [];
@@ -103,39 +118,51 @@ angular.module('myApp', [])
             return result;
         }
 
-
-        ReceiveWelfareService.listReceiveWelfare(findGetParameter("id")).then(function(responsewelfare) {
-            $scope.receivewelfares = responsewelfare;
-        });
-        AccountService.getAccountDetail(findGetParameter("acid")).then(function(response) {
-            $scope.transactions = response;
-        });
-$http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(function (response){
-        	
-        	$scope.lastTransaction = response.data;
-        	$scope.nextPaymentYear = new Date($scope.lastTransaction.nextPayment).getFullYear();
-        	$scope.nextPaymentMonth = new Date($scope.lastTransaction.nextPayment).getMonth()+1;
-        	$scope.startDate = new Date($scope.lastTransaction.nextPayment).getTime();
-        	console.log("$scope.startDate",$scope.startDate);
-        	//ตรวจสอบการออมเงินแบบรายเดือน
-        	if($scope.member.preferPayment == "รายเดือน"){
-        		$scope.nextPayment = getNextMonth($scope.nextPaymentYear, $scope.nextPaymentMonth,1).getTime();
-        		$scope.endDate = new Date($scope.lastTransaction.nextPayment);        		
-        	// ตรวจสอบการออมเงินแบบรายครึ่งปี
-        	}else if($scope.member.preferPayment == "รายครึ่งปี"){
-        		$scope.nextPayment = getNextMonth($scope.nextPaymentYear,$scope.nextPaymentMonth,6).getTime();
-        		$scope.endDate = getNextMonth($scope.nextPaymentYear,$scope.nextPaymentMonth,5).getTime();
-        		console.log("$scope.endDate",$scope.endDate);
-        	//ตรวจสอบการออมเงินแบบรายปี
-        	}else{
-        		$scope.nextPayment = getNextMonth($scope.nextPaymentYear,$scope.nextPaymentMonth,12).getTime();
-        		$scope.endDate = getNextMonth($scope.nextPaymentYear,$scope.nextPaymentMonth,11).getTime();
-        		console.log("$scope.endDate",$scope.endDate);
-        	}
-        		
-        },function (error){
-        	console.log("error",error);
-        });
+        $scope.loadListReceiveWelfare = function(){
+        	ReceiveWelfareService.listReceiveWelfare(findGetParameter("id")).then(function(responsewelfare) {
+                $scope.receivewelfares = responsewelfare;
+            });
+        }
+        $scope.loadListTransaction = function(){
+        	AccountService.getAccountDetail(findGetParameter("acid")).then(function(response) {
+                $scope.transactions = response;
+            });
+        }
+        //getLastTransaction
+        $scope.loadLastTransaction = function(){
+        	$http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(function (response){
+            	
+            	$scope.lastTransaction = response.data;
+            	$scope.nextPaymentYear = new Date($scope.lastTransaction.nextPayment).getFullYear();
+            	$scope.nextPaymentMonth = new Date($scope.lastTransaction.nextPayment).getMonth()+1;
+            	$scope.startDate = new Date($scope.lastTransaction.nextPayment).getTime();
+            	console.log("$scope.startDate",$scope.startDate);
+            	//ตรวจสอบการออมเงินแบบรายเดือน
+            	if($scope.member.preferPayment == "รายเดือน"){
+            		$scope.nextPayment = getNextMonth($scope.nextPaymentYear, $scope.nextPaymentMonth,1).getTime();
+            		console.log("nextPayment Monthly",$scope.nextPayment);
+            		console.log("nextPaymentYear Monthly",$scope.nextPaymentYear);
+            		$scope.endDate = new Date($scope.lastTransaction.nextPayment);        		
+            	// ตรวจสอบการออมเงินแบบรายครึ่งปี
+            	}else if($scope.member.preferPayment == "รายครึ่งปี"){
+            		$scope.nextPayment = getNextMonth($scope.nextPaymentYear,$scope.nextPaymentMonth,6).getTime();
+            		console.log("nextPayment Half Yearly",$scope.nextPayment);
+            		console.log("nextPaymentYear Half Yearly",$scope.nextPaymentYear);
+            		$scope.endDate = getNextMonth($scope.nextPaymentYear,$scope.nextPaymentMonth,5).getTime();
+            		console.log("endDate Half Yearly",$scope.endDate);
+            		console.log("$scope.endDate",$scope.endDate);
+            	//ตรวจสอบการออมเงินแบบรายปี
+            	}else{
+            		$scope.nextPayment = getNextMonth($scope.nextPaymentYear,$scope.nextPaymentMonth,12).getTime();
+            		$scope.endDate = getNextMonth($scope.nextPaymentYear,$scope.nextPaymentMonth,11).getTime();
+            		console.log("$scope.endDate",$scope.endDate);
+            	}
+            		
+            },function (error){
+            	console.log("error",error);
+            });
+        }
+        
 		$scope.getAmountOfPeriod = function(year, month, period){
 			var totalAmount = 0 ;
 			for(var i = 0 ; i<period ;i++){
@@ -148,6 +175,7 @@ $http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(
 			}
 			return totalAmount;
 		}
+		//saving Fund
         $scope.savingFund = function() {
         	console.log("$scope.lastTransaction",$scope.lastTransaction);
         	$scope.saving.account = {};
@@ -156,15 +184,21 @@ $http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(
         	$scope.saving.nextPayment = $scope.nextPayment;
         	$scope.saving.account.accountId = $scope.accountId;
         	if($scope.member.preferPayment == "รายเดือน"){
+        		$scope.saving.nextPayment = getNextMonth($scope.nextPaymentYear, $scope.nextPaymentMonth,1).getTime();
         		$scope.saving.endDate = new Date($scope.lastTransaction.nextPayment).getTime();
         		$scope.saving.date = $scope.saving.endDate;
             	$scope.saving.startDate = $scope.saving.endDate;
-        		
+        		console.log("saving Fund Monthly",$scope.saving.nextPayment);
+        		console.log("saving Fund Monthly",$scope.nextPayment);
         		$scope.saving.amount = $scope.getAllDateOfMonth($scope.nextPaymentYear, $scope.nextPaymentMonth);
         	}else if($scope.member.preferPayment == "รายครึ่งปี"){
+        		$scope.saving.nextPayment = getNextMonth($scope.nextPaymentYear,$scope.nextPaymentMonth,6).getTime();
+        		console.log("saving Fund Half Yearly",$scope.saving.nextPayment);
+        		console.log("saving Fund Half Yearly",$scope.nextPayment);
         		$scope.saving.endDate = $scope.endDate;
         		$scope.saving.amount = parseInt($("#amountOfSaving").html());
         	}else{
+        		$scope.saving.nextPayment = getNextMonth($scope.nextPaymentYear,$scope.nextPaymentMonth,12).getTime();
         		$scope.saving.endDate = $scope.endDate;
         		$scope.saving.amount = $scope.getAmountOfPeriod($scope.nextPaymentYear, $scope.nextPaymentMonth,12);
         	}
@@ -172,20 +206,26 @@ $http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(
         	
             $http.post('savingFund.do', $scope.saving).then(function(response) {
                 alert("success");
-                window.location.reload();
+                $("#newSaving").modal('hide');
+                $scope.loadListTransaction();
+            	$scope.loadLastTransaction();
+                //window.location.reload();
             }, function(error) {
                 alert("error");
             });
         };
+        
         $scope.getAllDateOfMonth=function(year,month){
         	var date = new Date(year,month,0);
         	return date.getDate();
         }
+        
         $scope.receiveWelfare = function() {
             console.log("receive", $scope.receive);
             $http.post("saveReceiveWelfare.do", $scope.receive).then(function(response) {
                 console.log("success", response);
-                window.location.reload();
+                $("#receiveWelfare").modal("hide");
+                $scope.loadListReceiveWelfare();
             }, function(error) {
                 console.log("error", error);
             });
@@ -197,6 +237,7 @@ $http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(
         WelfareService.getallWelfare().then(function(response) {
             $scope.welfares = response;
         });
+        //get Selected Condition
         $scope.listConditions = [];
         $scope.selectedWelfare = function(){
         	var welfareID = $scope.receive.welfare.welfareID;
@@ -213,10 +254,8 @@ $http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(
         	}
         }
         
-
-        AccountService.getAccountDetail(findGetParameter("acid")).then(function(response) {
-            $scope.transactions = response;
-        });
+        
+        
         function getNextMonth(year, month,next){
         	for(var i = 0 ; i<next ;i++){
         		if(month>12){
@@ -227,23 +266,93 @@ $http.get('getLastTransactionByAccountId/'+findGetParameter("acid")+'.do').then(
         	}
         	return new Date(year,month,0);
         }
+        //editMember
         $scope.saveMember = function() {
-            $scope.member.entranceDate = $scope.entranceDate;
+            $scope.member.entranceDate = $scope.entranceDate.getTime();
+            $scope.member.birthDate = $scope.birthDate.getTime();
             console.log("check", $scope.member);
             $http.put("saveMember.do", $scope.member).then(function(response) {
                 alert("Success");
-                window.location.href = "memberDetail.jsp?id=" + $scope.memberId + "&acid=" + $scope.accountId;
+                $("#editinformation").modal('hide');
+                $scope.loadData();
+                //window.location.reload();
             }, function(error) {
                 alert(error);
             });
         }
+        
         $scope.accountId = findGetParameter("acid");
         $scope.memberId = findGetParameter("id");
+        
         CommunityService.getallCommunity().then(function(response) {
             $scope.communities = response;
         });
 
-        
+        $scope.loadData = function(){
+        	$scope.loadListReceiveWelfare();
+        	$scope.loadListTransaction();
+        	$scope.loadLastTransaction();
+        	$scope.loadMemberDetail();
+        	$scope.loadLastTransaction();
+        	$scope.loadBeneficiary();
+        }
+        $scope.loadBeneficiary = function(){
+        	$http.get("getBeneficiaryByMember/"+$scope.memberId+".do").then(function(response){
+        		console.log("Get Beneficiary ",response.data);
+        		$scope.beneficiaries = response.data;
+        	},function(error){
+        		console.log("Get Beneficiary Error",error);
+        	})
+        }
+        //save Beneficiary
+        $scope.saveBeneficiary = function(){
+        	console.log("Beneficiary", $scope.beneficiary);
+        	console.log("MemberId", $scope.memberId);
+        	$scope.beneficiary.birthDate = $scope.beneficiary.birthDate.getTime();
+        	$http.post("saveBeneficiary/"+$scope.memberId+".do",$scope.beneficiary).then(function(response){
+        		console.log("Save Success", response.data);
+        		$("#addNewBeneficiary").modal("hide");
+        		$scope.loadBeneficiary();
+        	},function(error){
+        		console.log("Save Error",error);
+        	});
+        }
+        //edit Beneficiary
+        $scope.deleteBeneficiary = function(beneficiaryId){
+        	var confirmDelete = confirm('คุณต้องการลบผู้รับผลประโยชน์คนนี้หรือไม่?');
+        	if(confirmDelete){
+        		$http.delete("deleteBeneficiary/"+beneficiaryId+".do").then(function(response){
+        			console.log('Beneficiary deleted', response.data);
+        			$scope.loadBeneficiary();
+        		},function(error){
+        			console.log('deleting Beneficiary Error Occur', error);
+        		});
+        	}
+        }
+        //call Beneficiary Data
+        $scope.editBeneficiaryBirthDate = "";
+        $scope.editBeneficiary = function(beneficiaryId){
+        	$http.get("getBeneficiary/"+beneficiaryId+".do").then(function(response){
+        		console.log("Get Beneficiary Success");
+        		$scope.editbeneficiary = response.data;
+        		$scope.editBeneficiaryBirthDate = new Date($scope.editbeneficiary.birthDate);
+        		$("#editNewBeneficiaryModal").modal();
+        	},function(error){
+        		console.log("Getting Beneficiary Data Error",error.data);
+        	});
+        }
+        //update Beneficiary
+        $scope.updateBeneficiary = function(){
+        	$scope.editbeneficiary.birthDate = $scope.editBeneficiaryBirthDate.getTime();
+        	$http.put("saveBeneficiary/"+$scope.memberId+".do",$scope.editbeneficiary).then(function(response){
+        		console.log("update beneficiary complete.", response.data);
+        		$("#editNewBeneficiaryModal").modal('hide');
+        		$scope.edibeneficiary = {};
+        		$scope.loadBeneficiary();
+        	},function(error){
+        		console.log("Update Beneficiary Error",error.data);
+        	})
+        }
     }).controller('newMemberCtrl', function($scope, CommunityService, $http) {
         $scope.data = '';
         $scope.newMember = function() {

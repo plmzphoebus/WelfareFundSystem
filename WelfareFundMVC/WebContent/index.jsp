@@ -13,7 +13,7 @@
                                         <div class="panel bg-teal-400">
                                             <div class="panel-body text-left">
                                                 <div class="heading-elements">
-                                                    <a class="btn bg-teal-300 btn-info btn-rounded btn-xs" href="allMember.jsp"> View All </a>
+                                                    <a class="btn bg-teal-300 btn-info btn-rounded btn-xs" href="allMember.jsp"> ดูทั้งหมด </a>
                                                 </div>
                                                 <h3 class="no-margin" id="allMembersCounter">0</h3>
                                               	สมาชิกทั้งหมด
@@ -29,7 +29,7 @@
                                         <div class="panel bg-pink-400">
                                             <div class="panel-body">
                                                 <div class="heading-elements">
-                                                    <a class="btn bg-teal-300 btn-info btn-rounded btn-xs" href="allCommunity.jsp"> View All</a>
+                                                    <a class="btn bg-teal-300 btn-info btn-rounded btn-xs" href="allCommunity.jsp"> ดูทั้งหมด </a>
                                                 </div>
                                                 <h3 class="no-margin" id="allCommunityCounter">0</h3>
                                             	    ชุมชนทั้งหมด
@@ -44,8 +44,7 @@
                                             <div class="panel-body">
                                                 <div class="heading-elements">
                                                     
-                                                    <a class="btn bg-teal-300 btn-info btn-rounded btn-xs" href="allWelfare.jsp"> View All
-</a>
+                                                    <a class="btn bg-teal-300 btn-info btn-rounded btn-xs" href="allWelfare.jsp"> ดูทั้งหมด </a>
                                                 </div>
                                                 <h3 class="no-margin" id="allWelfareCounter">0</h3>
                                                 สวัสดิการทั้งหมด

@@ -26,7 +26,7 @@ public class Member implements Serializable{
 	private Date entranceDate;
 	private String firstName;
 	private String lastName;
-	private int age;
+	private Date birthDate;
 	private String address;
 	private String telephoneNumber;
 	private String mobileTel;
@@ -37,8 +37,9 @@ public class Member implements Serializable{
 	@ManyToOne(fetch = FetchType.EAGER)
 	private Community community;
 	
-	@OneToOne(cascade={CascadeType.ALL} , fetch = FetchType.EAGER)
-	private Beneficiary beneficiary; 
+	@OneToMany(mappedBy = "member",cascade={CascadeType.ALL})
+	@JsonIgnore
+	private List<Beneficiary> beneficiary; 
 	
 	@OneToMany(mappedBy = "member", cascade = { CascadeType.ALL })
 	@JsonIgnore
@@ -89,12 +90,12 @@ public class Member implements Serializable{
 		this.lastName = lastName;
 	}
 
-	public int getAge() {
-		return age;
+	public Date getBirthDate() {
+		return birthDate;
 	}
 
-	public void setAge(int age) {
-		this.age = age;
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
 
 	public String getAddress() {
@@ -153,11 +154,11 @@ public class Member implements Serializable{
 		this.community = community;
 	}
 
-	public Beneficiary getBeneficiary() {
+	public List<Beneficiary> getBeneficiary() {
 		return beneficiary;
 	}
 
-	public void setBeneficiary(Beneficiary beneficiary) {
+	public void setBeneficiary(List<Beneficiary> beneficiary) {
 		this.beneficiary = beneficiary;
 	}
 

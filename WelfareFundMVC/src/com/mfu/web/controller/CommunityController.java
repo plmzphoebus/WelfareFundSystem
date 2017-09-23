@@ -113,7 +113,7 @@ public class CommunityController {
 		row.createCell(4).setCellValue("ประเภทการชำระเงิน");
 		row.createCell(5).setCellValue("ชุมชน");
 		row.createCell(6).setCellValue("ที่อยู่");
-		row.createCell(7).setCellValue("ผู้รับผลประโยชน์");
+//		row.createCell(7).setCellValue("ผู้รับผลประโยชน์");
 		
 		//set Date Format
 		DataFormat format = workbook.createDataFormat();
@@ -135,7 +135,7 @@ public class CommunityController {
 				row.createCell(4).setCellValue(member.getPreferPayment());
 				row.createCell(5).setCellValue(community.getCommunityName());
 				row.createCell(6).setCellValue(member.getAddress());
-				row.createCell(7).setCellValue(member.getBeneficiary().getFirstName()+" "+member.getBeneficiary().getLastName());
+//				row.createCell(7).setCellValue(member.getBeneficiary().getFirstName()+" "+member.getBeneficiary().getLastName());
 				rows++;
 			}
 		}
@@ -145,7 +145,7 @@ public class CommunityController {
 		sheet.autoSizeColumn(4);
 		sheet.autoSizeColumn(5);
 		sheet.autoSizeColumn(6);
-		sheet.autoSizeColumn(7);
+//		sheet.autoSizeColumn(7);
 		
 		response.setContentType("application/vnd.ms-excel");
 		response.setHeader("Content-Disposition", "attachment; filename=MemberExcelFile.xls");

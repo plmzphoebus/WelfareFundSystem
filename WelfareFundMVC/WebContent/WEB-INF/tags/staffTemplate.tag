@@ -10,7 +10,11 @@
 <%@ attribute name="newCommunity" required="false" rtexprvalue="true"%>
 <%@ attribute name="allStaff" required="false" rtexprvalue="true"%>
 <%@ attribute name="newStaff" required="false" rtexprvalue="true"%>
+<%@ attribute name="memberReport" required="false" rtexprvalue="true"%>
+<%@ attribute name="balanceReport" required="false" rtexprvalue="true"%>
 <%@ attribute name="content" fragment="true" %>
+
+
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -79,10 +83,16 @@
                     <li class="dropdown dropdown-user">
                         <a class="dropdown-toggle" data-toggle="dropdown">
                             <img src="assets/images/placeholder.jpg" alt="">
-                            <span id="showName"></span>
+                            <span id="showName"> ${sessionScope.userLogin.firstName }  ${sessionScope.userLogin.lastName }</span>
                             <i class="caret"></i>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-right">
+                            <li>
+                                <a id="userProfile" href="editStaff.jsp?staffId=${sessionScope.userLogin.user }"><i class="icon-user"></i> ข้อมูลส่วนตัว </a>
+                            </li>
+                            <li>
+                                <a id="changePassword" href="changePasswordStaff.jsp?staffId=${sessionScope.userLogin.user }"><i class="icon-pencil"></i> เปลี่ยนรหัสผ่าน</a>
+                            </li>
                             <li>
                                 <a href="logout.do"><i class="icon-switch2"></i> Logout</a>
                             </li>
@@ -168,6 +178,17 @@
                                             </li>
                                         </ul>
                                     </li>
+                                    <li>
+                                        <a href="#" id="report"><i class="icon-images2"></i> <span>รายงาน</span></a>
+                                        <ul>
+                                            <li class="${memberReport }">
+                                                <a href="memberReport.jsp" id="memberReport"><i class="icon-plus3"></i>รายงานสมาชิก</a>    
+                                            </li>
+                                            <li class="${balanceReport }">
+                                                <a href="balanceReport.jsp" id="balanceReport"><i class="icon-images3"></i>รายงานงบดุล</a>
+                                            </li>
+                                        </ul>
+                                    </li>
                                     <%
                                    
                                 	try{
@@ -176,11 +197,8 @@
                                 			response.sendRedirect("login.jsp");
                                 			return;
                                 		}else{
-                                		%>
-                                		<input type="hidden" id="displayName" value="<%=user.getFirstName()%> <%=user.getLastName()%>">
-                                		<input type="hidden" id="displayRole" value="<%=user.getRole().getRoleName()%>">
-                                		<%
-										if(user.getRole().getRoleName().equals("Administrator")){
+                                			
+											if(user.getRole().getRoleName().equals("Administrator")){
 											%>
 											<li>
                                         <a href="#" id="manageStaff"><i class="icon-images2"></i> <span>จัดการพนักงาน</span></a>
@@ -219,7 +237,7 @@
                         <jsp:invoke fragment="content"></jsp:invoke>
                         <!-- Footer -->
                         <div class="footer text-muted">
-                            &copy; 2016. 
+                            &copy; 2017. 
                             <a href="#">ระบบกองทุนสวัสดิการ</a> by 
                             <a href="#" target="_blank">Popza Studio</a>
                         </div>
@@ -234,13 +252,4 @@
         <!-- /page container -->
         
     </body>
-    <script>
-        $(document).ready(function () {
-            var displayName = $("#displayName").val();
-            var displayRole = $("#displayRole").val();
-            $("#showName").html(displayName);
-            $("#showName1").html(displayName);
-            $("#showRole").html(displayRole);
-        });
-    </script>
 </html>

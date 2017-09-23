@@ -1,15 +1,14 @@
 package com.mfu.entity;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Beneficiary implements Serializable {
@@ -18,7 +17,7 @@ public class Beneficiary implements Serializable {
 	private long beneficiaryId;
 	private String firstName;
 	private String lastName;
-	private int age;
+	private Date birthDate;
 	private String address;
 	private String telephoneNumber;
 	private String mobileTel;
@@ -27,8 +26,7 @@ public class Beneficiary implements Serializable {
 	private String citizenId;
 	private double revenue ;
 	
-	@OneToOne
-	@JsonIgnore
+	@ManyToOne(fetch = FetchType.EAGER)
 	private Member member;
 	
 	
@@ -50,11 +48,11 @@ public class Beneficiary implements Serializable {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public int getAge() {
-		return age;
+	public Date getBirthDate() {
+		return birthDate;
 	}
-	public void setAge(int age) {
-		this.age = age;
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
 	}
 	public String getAddress() {
 		return address;

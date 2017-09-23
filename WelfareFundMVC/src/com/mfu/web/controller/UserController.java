@@ -1,5 +1,7 @@
 package com.mfu.web.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
@@ -45,8 +47,9 @@ public class UserController {
 	@RequestMapping(value = "/saveUser", method = {RequestMethod.POST, RequestMethod.PUT})
 	public ResponseEntity<String> createUser(@RequestBody User user, HttpServletRequest request){
 		try{
-			
-			//user.setPassword(new EncodePassword().encodeString(user.getPassword()));
+			EncodePassword encode = new EncodePassword();
+			String encodePassword = encode.encrypt(user.getPassword());
+			user.setPassword(encodePassword);
 			if(user.getUser() == 0){
 				userServ.save(user);
 			}else{
@@ -78,15 +81,20 @@ public class UserController {
 	@RequestMapping(value= "/loginStaff" , method = RequestMethod.POST)
 	@ResponseBody
 	public ResponseEntity<String> loginUser(@RequestParam("username") String username, @RequestParam("password") String password, HttpSession session){
-//		String encodedPassword = password;
-//			try {
-//				encodedPassword = new EncodePassword().encodeString(password);
-//			} catch (NoSuchAlgorithmException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-		System.out.println("EncodedPassword "+password+" username"+username);
-		User user = userServ.loginUser(username, password);
+		String encodedPassword = password;
+		EncodePassword encode = new EncodePassword();
+		try {
+			encodedPassword = encode.encrypt(password);
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (GeneralSecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+			
+		System.out.println("EncodedPassword "+encodedPassword+" username"+username);
+		User user = userServ.loginUser(username, encodedPassword);
 		if(user != null){
 			session.setAttribute("userLogin", user);
 			System.out.println("User not null "+user);

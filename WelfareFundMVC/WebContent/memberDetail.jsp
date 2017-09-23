@@ -5,7 +5,7 @@
 	<jsp:attribute name="allMember">active</jsp:attribute>
 	<jsp:attribute name="content">
 		<div class="panel panel-flat" ng-app="myApp"
-			ng-controller="memberDetailCtrl">
+			ng-controller="memberDetailCtrl" ng-init="loadData()">
 						<div class="panel-heading">
 							<h5 class="panel-title"> <i class="icon-users2"></i>รายละเอียดสมาชิก : {{member.firstName}} {{member.lastName}} ระยะเวลาที่เป็นสมาชิก {{peroidOfMembership}} วัน</h5>
 				<br>
@@ -31,7 +31,9 @@
 								    <li id="savingTab" class="active"><a href="#tab1" data-toggle="tab">การออม</a></li>
                                     <li id="receivedWelfareTab"><a href="#tab2"
 								data-toggle="tab">การรับสวัสดิการ</a></li>
-                                    <li id="memberDetailTab"><a href="#tab3"
+									<li id="beneficiariesTab"><a href="#tab3"
+								data-toggle="tab">ผู้รับผลประโยชน์</a></li>
+                                    <li id="memberDetailTab"><a href="#tab4"
 								data-toggle="tab">ข้อมูลสมาชิก</a></li>
 								</ul>
                             </div>
@@ -93,8 +95,33 @@
                                         </tbody>                                          
                                     </table>
 				                </div>
-                                
-                                    <div class="tab-pane" id="tab3">
+                                	<div class="tab-pane" id="tab3">
+                                    <button class="btn btn-primary pull-right" style="margin-bottom:5px;" data-toggle="modal" data-target="#addNewBeneficiary">เพิ่มผู้รับผลประโยชน์</button>
+                                    <table
+							class="table datatable-basic table-hover table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="text-center">ลำดับที่</th>
+                                                <th class="text-center">ชื่อ - นามสกุล</th>
+                                                <th class="text-center">อายุ</th>
+                                                <th class="text-center">ความสัมพันธ์</th>
+                                                <th class="text-center">เบอร์โทรศัพท์</th>
+                                                <th class="text-center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="beneficiary in beneficiaries">
+                                                <td class="text-center">{{$index+1}}</td>
+                                                <td class="text-center">{{beneficiary.firstName}} {{beneficiary.lastName}}</td>
+                                                <td class="text-center">{{calAge(beneficiary.birthDate)}}</td>
+                                                <td class="text-center">{{beneficiary.relationship}}</td>
+                                                <td class="text-center">{{beneficiary.telephoneNumber}}<br>{{beneficiary.mobileTel}}</td>
+                                                <td class="text-center"><a href="#" ng-click="editBeneficiary(beneficiary.beneficiaryId)">แก้ไข</a> <a href="#" ng-click="deleteBeneficiary(beneficiary.beneficiaryId)" class="text-danger">ลบ</a></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                    <div class="tab-pane" id="tab4">
                                         <div class="row">
                                             <div
 								class="col-md-6 col-md-offset-3">
@@ -105,6 +132,15 @@
 										class="col-lg-8">
                                                          <label
 											class="control-label">{{member.firstName}} {{member.lastName}}</label>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label
+										class="control-label col-lg-4 text-bold">อายุ</label>
+                                                    <div
+										class="col-lg-8">
+                                                         <label
+											class="control-label">{{age}} ปี</label>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -303,8 +339,8 @@
 								<fieldset class="content-group">
 									<legend class="text-bold">แก้ไขข้อมูลสมาชิก : กองทุนสวัสดิการชุมชนตำบลธาตุเชิงชุม</legend>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">วันเข้าเป็นสมาชิก</label>
-										<div class="col-lg-10">
+										<label class="control-label col-lg-3">วันเข้าเป็นสมาชิก</label>
+										<div class="col-lg-9">
 											<input type="date" id="editEntranceDate" class="form-control"
 													ng-model="entranceDate">
 										</div>
@@ -312,8 +348,8 @@
                                     <div class="form-group">
 										
                                         <label
-												class="control-label col-lg-2">ประเภทการชำระเงิน</label>
-										<div class="col-lg-10">
+												class="control-label col-lg-3">ประเภทการชำระเงิน</label>
+										<div class="col-lg-9">
 											<select id="editPreferPayment" class="form-control" ng-model="member.preferPayment">
                                                 <option value="รายเดือน"
 														ng-selected="{{member.preferPayment == paymentType}}">รายเดือน</option>
@@ -326,139 +362,62 @@
 										</div>
 									</div>
 									<div class="form-group">
-										<label class="control-label col-lg-2">ชื่อ</label>
-										<div class="col-lg-10">
+										<label class="control-label col-lg-3">ชื่อ</label>
+										<div class="col-lg-9">
 											<input type="text" id="editFirstname" class="form-control"
 													ng-model="member.firstName">
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">นามสกุล</label>
-										<div class="col-lg-10">
+										<label class="control-label col-lg-3">นามสกุล</label>
+										<div class="col-lg-9">
 											<input type="text" id="editLastname" class="form-control"
 													ng-model="member.lastName">
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">อายุ</label>
-										<div class="col-lg-10">
-											<input type="number" id="editAge" class="form-control"
-													ng-model="member.age">
+										<label class="control-label col-lg-3">วัน/เดือน/ปี เกิด</label>
+										<div class="col-lg-9">
+											<input type="date" id="editbirthDate" class="form-control"
+													ng-model="birthDate">
 										</div>
 									</div>
 
 									<div class="form-group">
-										<label class="control-label col-lg-2">ที่อยู่</label>
-										<div class="col-lg-10">
+										<label class="control-label col-lg-3">ที่อยู่</label>
+										<div class="col-lg-9">
 											<textarea rows="5" cols="5" id="editAddress" class="form-control"
 													placeholder="Default textarea" ng-model="member.address"></textarea>
 										</div>
 									</div>
 
 									<div class="form-group">
-										<label class="control-label col-md-2">เบอร์โทรศัพท์บ้าน</label>
-										<div class="col-md-10">
+										<label class="control-label col-md-3">เบอร์โทรศัพท์บ้าน</label>
+										<div class="col-md-9">
 											<input id="editTelephoneNumber" class="form-control" type="tel"
 													ng-model="member.telephoneNumber">
 										</div>
 									</div>
                                     
 									<div class="form-group">
-										<label class="control-label col-md-2">เบอร์โทรศัพท์มือถือ</label>
-										<div class="col-md-10">
+										<label class="control-label col-md-3">เบอร์โทรศัพท์มือถือ</label>
+										<div class="col-md-9">
 											<input id="editMobileTel" class="form-control" type="tel"
 													ng-model="member.mobileTel">
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">อาชีพ</label>
-										<div class="col-lg-10">
+										<label class="control-label col-lg-3">อาชีพ</label>
+										<div class="col-lg-9">
 											<input type="text" id="editOccupation" class="form-control"
 													ng-model="member.occupation">
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">เงินเดือน</label>
-										<div class="col-lg-10">
+										<label class="control-label col-lg-3">เงินเดือน</label>
+										<div class="col-lg-9">
 											<input type="text" id="editRevenue" class="form-control"
 													ng-model="member.revenue">
-										</div>
-									</div>
-                                    <h4>เงื่อนไขการเป็นสมาชิก</h4>
-                                    <p class="content-group-lg">
-                                        ข้อ 1 ข้าพเจ้าสมัครใจทำสัญญาด้วยตนเอง กับคณะกรรมการกองทุนสวัสดิการชุมชนตำบลธาตุเชิงชุม เพื่อร่วมทำสวัสดิการชุน และจะประพฤติตามข้อบังคับของกองทุนฯ ทุกประการ <br>
-                                    
-                                        ข้อ 2 ข้าพเจ้ามีคุณสมบัติครบถ้วนตามข้อบังคับของกองทุนฯ กำหนดทุกประการ<br>
-                                    
-                                        ข้อ 2 เมื่่อข้าพเจ้าถึงแก่กรรม ข้าพเจ้ามีความประสงค์ให้กองทุนฯ พิจารณาจ่ายเงินในส่วนที่เป็นประโยชน์ของข้าพเจ้าให้แก่ผู้มีรายชื่อดังนี้<br>
-                                    </p>
-									<legend class="text-bold">ผู้รับผลประโยชน์</legend>
-
-									<div class="form-group">
-										<label class="control-label col-lg-2">ชื่อ</label>
-										<div class="col-lg-10">
-											<input type="text" id="editFirstnameOfBeneficiary" class="form-control"
-													ng-model="member.beneficiary.firstName">
-										</div>
-									</div>
-                                    <div class="form-group">
-										<label class="control-label col-lg-2">นามสกุล</label>
-										<div class="col-lg-10">
-											<input type="text" id="editLastnameOfBeneficiary" class="form-control"
-													ng-model="member.beneficiary.lastName">
-										</div>
-									</div>
-                                    <div class="form-group">
-										<label class="control-label col-lg-2">อายุ</label>
-										<div class="col-lg-10">
-											<input type="number" id="editAgeOfBeneficiary"  class="form-control"
-													ng-model="member.beneficiary.age">
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label class="control-label col-lg-2">ที่อยู่</label>
-										<div class="col-lg-10">
-											<textarea rows="5" cols="5" id="editAddressOfBeneficiary" class="form-control"
-													placeholder="Default textarea"
-													ng-model="member.beneficiary.address"></textarea>
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label class="control-label col-md-2">เบอร์โทรศัพท์บ้าน</label>
-										<div class="col-md-10">
-											<input id="editTelephoneNumberOfBeneficiary" class="form-control" type="text"
-													ng-model="member.beneficiary.telephoneNumber">
-										</div>
-									</div>
-                                    
-									<div class="form-group">
-										<label class="control-label col-md-2">เบอร์โทรศัพท์มือถือ</label>
-										<div class="col-md-10">
-											<input id="editMobileTelOfBeneficiary" class="form-control" type="tel"
-													ng-model="member.beneficiary.mobileTel">
-										</div>
-									</div>
-                                    <div class="form-group">
-										<label class="control-label col-lg-2">อาชีพ</label>
-										<div class="col-lg-10">
-											<input type="text" id="editOccupationOfBeneficiary" class="form-control"
-													ng-model="member.beneficiary.occupation" >
-										</div>
-									</div>
-                                    <div class="form-group">
-										<label class="control-label col-lg-2">เงินเดือน</label>
-										<div class="col-lg-10">
-											<input type="text" id="editRevenueOfBeneficiary" class="form-control"
-													ng-model="member.beneficiary.revenue" >
-										</div>
-									</div>
-                                    <div class="form-group">
-										<label class="control-label col-lg-2">ความสัมพันธ์</label>
-										<div class="col-lg-10">
-											<input type="text" id="EditRelationship" class="form-control"
-													ng-model="member.beneficiary.relationship">
 										</div>
 									</div>
 								</fieldset>
@@ -481,9 +440,240 @@
             </div>
 
           </div>
-        </div>						
+        </div>
+        
+        <!-- Add new Beneficiary -->				
+        <!-- Modal -->
+        <div id="addNewBeneficiary" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header bg-teal-600">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">เพิ่มผู้รับผลประโยชน์</h4>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+                      <form name="addBeneficiaryForm" class="form-horizontal" action="#">
+								<fieldset class="content-group">
+                                    <legend class="text-bold">ผู้รับผลประโยชน์</legend>
+
+									<div class="form-group">
+										<label class="control-label col-lg-3">ชื่อ</label>
+										<div class="col-lg-9">
+											<input type="text" id="FirstnameOfBeneficiary" class="form-control"
+													ng-model="beneficiary.firstName" required>
+										</div>
+									</div>
+                                    <div class="form-group">
+										<label class="control-label col-lg-3">นามสกุล</label>
+										<div class="col-lg-9">
+											<input type="text" id="LastnameOfBeneficiary" class="form-control"
+													ng-model="beneficiary.lastName" required>
+										</div>
+									</div>
+                                    <div class="form-group">
+										<label class="control-label col-lg-3">วัน/เดือน/ปี เกิด</label>
+										<div class="col-lg-9">
+											<input type="date" id="BirthDateOfBeneficiary"  class="form-control"
+													ng-model="beneficiary.birthDate" required>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-3">รหัสบัตรประชาชน</label>
+										<div class="col-lg-9">
+											<input type="text" id="citizenIdOfBeneficiary" class="form-control" ng-model="beneficiary.citizenId" maxlength="13" onkeypress="return isNumberKey(event)" required>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-lg-3">ที่อยู่</label>
+										<div class="col-lg-9">
+											<textarea rows="5" cols="5" id="AddressOfBeneficiary" class="form-control"
+													placeholder="Default textarea"
+													ng-model="beneficiary.address"></textarea>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3">เบอร์โทรศัพท์บ้าน</label>
+										<div class="col-md-9">
+											<input id="TelephoneNumberOfBeneficiary" class="form-control" type="text"
+													ng-model="beneficiary.telephoneNumber" maxlength="9" onkeypress="return isNumberKey(event)" required>
+										</div>
+									</div>
+                                    
+									<div class="form-group">
+										<label class="control-label col-md-3">เบอร์โทรศัพท์มือถือ</label>
+										<div class="col-md-9">
+											<input id="MobileTelOfBeneficiary" class="form-control" type="tel"
+													ng-model="beneficiary.mobileTel" maxlength="10" onkeypress="return isNumberKey(event)" required>
+										</div>
+									</div>
+                                    <div class="form-group">
+										<label class="control-label col-lg-3">อาชีพ</label>
+										<div class="col-lg-9">
+											<input type="text" id="OccupationOfBeneficiary" class="form-control"
+													ng-model="beneficiary.occupation" required>
+										</div>
+									</div>
+                                    <div class="form-group">
+										<label class="control-label col-lg-3">เงินเดือน</label>
+										<div class="col-lg-9">
+											<input type="text" id="RevenueOfBeneficiary" class="form-control"
+													ng-model="beneficiary.revenue"  onkeypress="return isNumberKey(event)" required>
+										</div>
+									</div>
+                                    <div class="form-group">
+										<label class="control-label col-lg-3">ความสัมพันธ์</label>
+										<div class="col-lg-9">
+											<input type="text" id="Relationship" class="form-control"
+													ng-model="beneficiary.relationship" required>
+										</div>
+									</div>
+								</fieldset>
+
+								<div class="text-right">
+								<input type="hidden" ng-model="memberId">
+									<button type="button" class="btn btn-primary" id="updateMember"
+											ng-click="saveBeneficiary()" ng-disabled="addBeneficiaryForm.$invalid">บันทึก <i
+												class="icon-arrow-right14 position-right"></i>
+									</button>
+								</div>
+							</form>
+                  </div>
+                    
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+								data-dismiss="modal">ปิด</button>
+              </div>
+            </div>
+
+          </div>
+        </div>		
+        
+        <!-- Edit Beneficiary Information -->
+        <div id="editNewBeneficiaryModal" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header bg-teal-600">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">แก้ไขข้อมูลผู้รับผลประโยชน์</h4>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+                      <form name="editBeneficiaryForm" class="form-horizontal" action="#">
+								<fieldset class="content-group">
+                                    <legend class="text-bold">ผู้รับผลประโยชน์</legend>
+
+									<div class="form-group">
+										<label class="control-label col-lg-3">ชื่อ</label>
+										<div class="col-lg-9">
+											<input type="text" id="editFirstnameOfBeneficiary" class="form-control"
+													ng-model="editbeneficiary.firstName" required>
+										</div>
+									</div>
+                                    <div class="form-group">
+										<label class="control-label col-lg-3">นามสกุล</label>
+										<div class="col-lg-9">
+											<input type="text" id="editLastnameOfBeneficiary" class="form-control"
+													ng-model="editbeneficiary.lastName" required>
+										</div>
+									</div>
+                                    <div class="form-group">
+										<label class="control-label col-lg-3">วัน/เดือน/ปี เกิด</label>
+										<div class="col-lg-9">
+											<input type="date" id="editBirthDateOfBeneficiary"  class="form-control"
+													ng-model="editBeneficiaryBirthDate" required>
+										</div>
+									</div>
+									<div class="form-group">
+										<label class="control-label col-lg-3">รหัสบัตรประชาชน</label>
+										<div class="col-lg-9">
+											<input type="text" id="editcitizenIdOfBeneficiary" class="form-control" ng-model="editbeneficiary.citizenId" maxlength="13" onkeypress="return isNumberKey(event)" required>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-lg-3">ที่อยู่</label>
+										<div class="col-lg-9">
+											<textarea rows="5" cols="5" id="editAddressOfBeneficiary" class="form-control"
+													placeholder="Default textarea"
+													ng-model="editbeneficiary.address"></textarea>
+										</div>
+									</div>
+
+									<div class="form-group">
+										<label class="control-label col-md-3">เบอร์โทรศัพท์บ้าน</label>
+										<div class="col-md-9">
+											<input id="editTelephoneNumberOfBeneficiary" class="form-control" type="text"
+													ng-model="editbeneficiary.telephoneNumber" maxlength="9" onkeypress="return isNumberKey(event)" required>
+										</div>
+									</div>
+                                    
+									<div class="form-group">
+										<label class="control-label col-md-3">เบอร์โทรศัพท์มือถือ</label>
+										<div class="col-md-9">
+											<input id="editMobileTelOfBeneficiary" class="form-control" type="tel"
+													ng-model="editbeneficiary.mobileTel" maxlength="10" onkeypress="return isNumberKey(event)" required>
+										</div>
+									</div>
+                                    <div class="form-group">
+										<label class="control-label col-lg-3">อาชีพ</label>
+										<div class="col-lg-9">
+											<input type="text" id="editOccupationOfBeneficiary" class="form-control"
+													ng-model="editbeneficiary.occupation" required>
+										</div>
+									</div>
+                                    <div class="form-group">
+										<label class="control-label col-lg-3">เงินเดือน</label>
+										<div class="col-lg-9">
+											<input type="text" id="editRevenueOfBeneficiary" class="form-control"
+													ng-model="editbeneficiary.revenue"  onkeypress="return isNumberKey(event)" required>
+										</div>
+									</div>
+                                    <div class="form-group">
+										<label class="control-label col-lg-3">ความสัมพันธ์</label>
+										<div class="col-lg-9">
+											<input type="text" id="editRelationship" class="form-control"
+													ng-model="editbeneficiary.relationship" required>
+										</div>
+									</div>
+								</fieldset>
+
+								<div class="text-right">
+								<input type="hidden" ng-model="memberId">
+									<button type="button" class="btn btn-primary" id="updateMember"
+											ng-click="updateBeneficiary()">บันทึก <i
+												class="icon-arrow-right14 position-right"></i>
+									</button>
+								</div>
+							</form>
+                  </div>
+                    
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default"
+								data-dismiss="modal">ปิด</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        
 					</div>
-					
+		<script type="text/javascript">
+		function isNumberKey(evt){
+    	    var charCode = (evt.which) ? evt.which : event.keyCode
+    	    if (charCode > 31 && (charCode < 48 || charCode > 57))
+    	        return false;
+    	    return true;
+    	}
+		</script>			
 	</jsp:attribute>
 
 </welfare:staffTemplate>

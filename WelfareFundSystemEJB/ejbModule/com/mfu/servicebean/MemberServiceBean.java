@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.mfu.entity.Beneficiary;
 import com.mfu.entity.Member;
 import com.mfu.entity.ReceiveWelfare;
 import com.mfu.entity.Transaction;
@@ -65,5 +66,11 @@ public class MemberServiceBean implements MemberService {
 		}
 		
 		return member;
+	}
+
+	@Override
+	public List<Beneficiary> getBeneficiaryByMember(long memberId) {
+		// TODO Auto-generated method stub
+		return this.em.createQuery("SELECT ent FROM Beneficiary ent WHERE ent.member.memberId=:memberId").setParameter("memberId", memberId).getResultList();
 	}
 }

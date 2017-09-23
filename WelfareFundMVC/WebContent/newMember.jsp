@@ -60,9 +60,9 @@
 										</div>
 									</div>
                                     <div class="form-group">
-										<label class="control-label col-lg-2">อายุ</label>
+										<label class="control-label col-lg-2">วัน/เดือน/ปี เกิด</label>
 										<div class="col-lg-10">
-											<input type="text" id="age" class="form-control" ng-model="data.age" maxlength="3" onkeypress="return isNumberKey(event)" required>
+											<input type="date" id="birthDate" class="form-control" ng-model="data.birthDate"  required>
 										</div>
 									</div>
 									<div class="form-group">
@@ -103,79 +103,6 @@
 										<label class="control-label col-lg-2">รายได้ต่อเดือน</label>
 										<div class="col-lg-10">
 											<input type="text" id="revenue" class="form-control" ng-model="data.revenue" onkeypress="return isNumberKey(event)" required>
-										</div>
-									</div>
-                                    <h4>เงื่อนไขการเป็นสมาชิก</h4>
-                                    <p class="content-group-lg">
-                                        ข้อ 1 ข้าพเจ้าสมัครใจทำสัญญาด้วยตนเอง กับคณะกรรมการกองทุนสวัสดิการชุมชนตำบลธาตุเชิงชุม เพื่อร่วมทำสวัสดิการชุน และจะประพฤติตามข้อบังคับของกองทุนฯ ทุกประการ <br>
-                                    
-                                        ข้อ 2 ข้าพเจ้ามีคุณสมบัติครบถ้วนตามข้อบังคับของกองทุนฯ กำหนดทุกประการ<br>
-                                    
-                                        ข้อ 2 เมื่่อข้าพเจ้าถึงแก่กรรม ข้าพเจ้ามีความประสงค์ให้กองทุนฯ พิจารณาจ่ายเงินในส่วนที่เป็นประโยชน์ของข้าพเจ้าให้แก่ผู้มีรายชื่อดังนี้<br>
-                                    </p>
-									<legend class="text-bold">ผู้รับผลประโยชน์</legend>
-
-									<div class="form-group">
-										<label class="control-label col-lg-2">ชื่อ</label>
-										<div class="col-lg-10">
-											<input type="text" id="firstnameOfBeneficiary" class="form-control" ng-model="data.beneficiary.firstName" required>
-										</div>
-									</div>
-                                    <div class="form-group">
-										<label class="control-label col-lg-2">นามสกุล</label>
-										<div class="col-lg-10">
-											<input type="text" id="lastnameOfBeneficiary" class="form-control" ng-model="data.beneficiary.lastName" required>
-										</div>
-									</div>
-                                    <div class="form-group">
-										<label class="control-label col-lg-2">อายุ</label>
-										<div class="col-lg-10">
-											<input type="text" id="ageOfBeneficiary" class="form-control" ng-model="data.beneficiary.age" maxlength="3" onkeypress="return isNumberKey(event)" required>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-lg-2">รหัสบัตรประชาชน</label>
-										<div class="col-lg-10">
-											<input type="text" id="citizenIdOfBeneficiary" class="form-control" ng-model="data.beneficiary.citizenId" maxlength="13" onkeypress="return isNumberKey(event)" required>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label col-lg-2">ที่อยู่</label>
-										<div class="col-lg-10">
-											<textarea rows="5" cols="5" id="addressOfBeneficiary" class="form-control"
-										placeholder="ที่อยู่" ng-model="data.beneficiary.address" required></textarea>
-										</div>
-									</div>
-
-									<div class="form-group">
-										<label class="control-label col-md-2">เบอร์โทรศัพท์บ้าน</label>
-										<div class="col-md-10">
-											<input id="telephoneNumberOfBeneficiary" class="form-control" type="tel" ng-model="data.beneficiary.telephoneNumber" maxlength="9" onkeypress="return isNumberKey(event)" required>
-										</div>
-									</div>
-                                    
-									<div class="form-group">
-										<label class="control-label col-md-2" required>เบอร์โทรศัพท์มือถือ</label>
-										<div class="col-md-10">
-											<input id="mobileTelOfBeneficiary" class="form-control" type="tel" ng-model="data.beneficiary.mobileTel" maxlength="10" onkeypress="return isNumberKey(event)" required>
-										</div>
-									</div>
-                                    <div class="form-group">
-										<label class="control-label col-lg-2">อาชีพ</label>
-										<div class="col-lg-10">
-											<input type="text" id="occupationOfBeneficiary" class="form-control" ng-model="data.beneficiary.occupation" required>
-										</div>
-									</div>
-                                    <div class="form-group">
-										<label class="control-label col-lg-2">รายได้ต่อเดือน</label>
-										<div class="col-lg-10">
-											<input type="text" id="revenueOfBeneficiary" class="form-control" ng-model="data.beneficiary.revenue" onkeypress="return isNumberKey(event)" required>
-										</div>
-									</div>
-                                    <div class="form-group">
-										<label class="control-label col-lg-2">ความสัมพันธ์</label>
-										<div class="col-lg-10">
-											<input type="text" id="relationship" class="form-control" ng-model="data.beneficiary.relationship" required>
 										</div>
 									</div>
 								</fieldset>
